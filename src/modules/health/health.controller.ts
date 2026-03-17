@@ -5,7 +5,7 @@ import {
   getHealthReport,
   getLivenessReport,
   getReadinessReport,
-} from './service'
+} from './health.service'
 
 export const getHealth: RequestHandler = (request, response) => {
   const details =
