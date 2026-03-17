@@ -39,6 +39,54 @@ export const defaultPermissionSeeds: PermissionSeed[] = [
     description: 'Manage onboarding plan options and completion',
     module: 'onboarding',
   },
+  {
+    key: 'plans.view',
+    name: 'View Plans',
+    description: 'View subscription plans',
+    module: 'plans',
+  },
+  {
+    key: 'plans.manage',
+    name: 'Manage Plans',
+    description: 'Create and update subscription plans',
+    module: 'plans',
+  },
+  {
+    key: 'subscriptions.view',
+    name: 'View Subscriptions',
+    description: 'View subscription records',
+    module: 'subscriptions',
+  },
+  {
+    key: 'subscriptions.manage',
+    name: 'Manage Subscriptions',
+    description: 'Create and update subscription states',
+    module: 'subscriptions',
+  },
+  {
+    key: 'payments.view',
+    name: 'View Payments',
+    description: 'View payment records and statuses',
+    module: 'payments',
+  },
+  {
+    key: 'payments.manage',
+    name: 'Manage Payments',
+    description: 'Verify and refund payments',
+    module: 'payments',
+  },
+  {
+    key: 'promotions.view',
+    name: 'View Promotions',
+    description: 'View coupons and flash sales',
+    module: 'promotions',
+  },
+  {
+    key: 'promotions.manage',
+    name: 'Manage Promotions',
+    description: 'Create and update coupons and flash sales',
+    module: 'promotions',
+  },
 ]
 
 export const rbacService = {

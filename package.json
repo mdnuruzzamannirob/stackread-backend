@@ -11,6 +11,7 @@
     "start:worker": "node dist/app/worker.js",
     "typecheck": "tsc --noEmit",
     "seed:permissions": "tsx src/seeds/permissions.seed.ts",
+    "seed:plans": "tsx src/seeds/plans.seed.ts",
     "seed:super-admin": "tsx src/seeds/superAdmin.seed.ts"
   },
   "keywords": [],
