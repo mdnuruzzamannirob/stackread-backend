@@ -30,7 +30,7 @@ const paymentSchema = new Schema<IPayment>(
     },
     gateway: {
       type: String,
-      enum: ['bkash', 'nagad', 'paypal', 'mock'] satisfies PaymentGateway[],
+      enum: ['bkash', 'nagad', 'stripe', 'paypal'] satisfies PaymentGateway[],
       required: true,
       index: true,
     },
@@ -143,7 +143,7 @@ const webhookLogSchema = new Schema<IWebhookLog>(
     },
     gateway: {
       type: String,
-      enum: ['bkash', 'nagad', 'paypal', 'mock'] satisfies PaymentGateway[],
+      enum: ['bkash', 'nagad', 'stripe', 'paypal'] satisfies PaymentGateway[],
       required: true,
       index: true,
     },

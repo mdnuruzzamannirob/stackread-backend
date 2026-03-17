@@ -66,10 +66,7 @@ router.post(
 
 router.post(
   '/webhooks/:gateway',
-  validateRequest({
-    params: paymentsValidation.webhookParams,
-    body: paymentsValidation.webhookBody,
-  }),
+  validateRequest({ params: paymentsValidation.webhookParams }),
   handleWebhook,
 )
 

@@ -36,28 +36,6 @@ interface PaymentProvider {
   ): Promise<PaymentVerificationResult>
 }
 
-class MockPaymentProvider implements PaymentProvider {
-  async initiatePayment(
-    payload: PaymentInitiatePayload,
-  ): Promise<PaymentInitiateResult> {
-    return {
-      provider: 'mock',
-      paymentId: crypto.randomUUID(),
-      status: 'pending',
-      redirectUrl: `https://example.com/mock-pay?reference=${encodeURIComponent(payload.reference)}`,
-    }
-  }
-
-  async verifyWebhook(payload: string): Promise<PaymentVerificationResult> {
-    return {
-      provider: 'mock',
-      paymentId: crypto.randomUUID(),
-      status: 'success',
-      raw: payload,
-    }
-  }
-}
-
 class SslCommerzPaymentProvider implements PaymentProvider {
   private readonly storeId: string
   private readonly storePassword: string
@@ -282,22 +260,33 @@ const createPaymentProvider = (): PaymentProvider => {
     })
   }
 
-  return new MockPaymentProvider()
+  throw new AppError(
+    `Unsupported PAYMENT_PROVIDER value: "${config.providers.payment}". Supported: sslcommerz, paypal.`,
+    500,
+  )
 }
 
-const provider = createPaymentProvider()
+// Lazy singleton — only instantiated on first use, not at module load time.
+let _provider: PaymentProvider | null = null
+const getProvider = (): PaymentProvider => {
+  if (!_provider) {
+    _provider = createPaymentProvider()
+  }
+  return _provider
+}
 
 export const paymentProviderService = {
   initiatePayment: async (
     payload: PaymentInitiatePayload,
   ): Promise<PaymentInitiateResult> => {
-    return provider.initiatePayment(payload)
+    return getProvider().initiatePayment(payload)
   },
 
   verifyWebhook: async (
     payload: string,
     signature?: string,
   ): Promise<PaymentVerificationResult> => {
-    return provider.verifyWebhook(payload, signature)
+    return getProvider().verifyWebhook(payload, signature)
   },
 }
+

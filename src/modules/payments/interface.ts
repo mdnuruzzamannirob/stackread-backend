@@ -7,7 +7,7 @@ export type PaymentStatus =
   | 'failed'
   | 'refunded'
 
-export type PaymentGateway = 'bkash' | 'nagad' | 'paypal' | 'mock'
+export type PaymentGateway = 'bkash' | 'nagad' | 'stripe' | 'paypal'
 
 export type WebhookProcessingStatus =
   | 'received'
@@ -52,3 +52,4 @@ export interface IWebhookLog {
   createdAt: Date
   updatedAt: Date
 }
+

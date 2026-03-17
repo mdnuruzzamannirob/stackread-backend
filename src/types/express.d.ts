@@ -23,6 +23,7 @@ declare global {
         params?: unknown
       }
       auth?: BaseJwtPayload
+       rawBody?: Buffer
     }
 
     interface Locals {

@@ -7,7 +7,7 @@ const objectIdString = z
   .trim()
   .regex(/^[a-f\d]{24}$/i, 'Invalid ObjectId format')
 
-const gatewaySchema = z.enum(['bkash', 'nagad', 'paypal', 'mock'])
+const gatewaySchema = z.enum(['bkash', 'nagad', 'stripe', 'paypal'])
 
 export const paymentsValidation = {
   idParam: idParamSchema,
@@ -29,12 +29,8 @@ export const paymentsValidation = {
   webhookParams: z.object({
     gateway: gatewaySchema,
   }),
-  webhookBody: z.object({
-    eventId: z.string().trim().min(2).max(200),
-    reference: z.string().trim().min(8).max(120).optional(),
-    providerPaymentId: z.string().trim().min(2).max(200).optional(),
-    gatewayTransactionId: z.string().trim().min(2).max(200).optional(),
-    status: z.enum(['success', 'failed', 'pending']).optional(),
-    payload: z.record(z.unknown()).optional(),
-  }),
+  // Webhook bodies are validated per-adapter (SSLCommerz IPN, Stripe Event, PayPal Event);
+  // body schema enforcement is skipped on the route — adapters own this responsibility.
+  webhookBody: z.record(z.unknown()),
 }
+

@@ -50,7 +50,7 @@ const envSchema = z.object({
   CLOUDINARY_CLOUD_NAME: z.string().trim().optional(),
   CLOUDINARY_API_KEY: z.string().trim().optional(),
   CLOUDINARY_API_SECRET: z.string().trim().optional(),
-  PAYMENT_PROVIDER: z.enum(['mock', 'sslcommerz', 'paypal']).default('mock'),
+  PAYMENT_PROVIDER: z.enum(['sslcommerz', 'stripe', 'paypal']).default('sslcommerz'),
   SSLCOMMERZ_STORE_ID: z.string().trim().optional(),
   SSLCOMMERZ_STORE_PASSWORD: z.string().trim().optional(),
   SSLCOMMERZ_IS_LIVE: z
@@ -64,6 +64,11 @@ const envSchema = z.object({
   PAYPAL_CLIENT_ID: z.string().trim().optional(),
   PAYPAL_CLIENT_SECRET: z.string().trim().optional(),
   PAYPAL_MODE: z.enum(['sandbox', 'live']).default('sandbox'),
+  PAYPAL_WEBHOOK_ID: z.string().trim().optional(),
+  STRIPE_SECRET_KEY: z.string().trim().optional(),
+  STRIPE_WEBHOOK_SECRET: z.string().trim().optional(),
+  FRONTEND_URL: z.string().trim().default('http://localhost:3000'),
+  BACKEND_URL: z.string().trim().default('http://localhost:5000'),
   WORKER_ENABLED: z
     .preprocess((value) => {
       if (typeof value === 'string') {
@@ -140,7 +145,12 @@ export const env = {
     paypalClientId: rawEnv.PAYPAL_CLIENT_ID,
     paypalClientSecret: rawEnv.PAYPAL_CLIENT_SECRET,
     paypalMode: rawEnv.PAYPAL_MODE,
+    paypalWebhookId: rawEnv.PAYPAL_WEBHOOK_ID,
+    stripeSecretKey: rawEnv.STRIPE_SECRET_KEY,
+    stripeWebhookSecret: rawEnv.STRIPE_WEBHOOK_SECRET,
   },
+  frontendUrl: rawEnv.FRONTEND_URL,
+  backendUrl: rawEnv.BACKEND_URL,
   worker: {
     enabled: rawEnv.WORKER_ENABLED,
     pollIntervalMs: rawEnv.WORKER_POLL_INTERVAL_MS,

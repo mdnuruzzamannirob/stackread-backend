@@ -30,7 +30,7 @@ const getGatewayParam = (request: Parameters<RequestHandler>[0]) => {
     gateway !== 'bkash' &&
     gateway !== 'nagad' &&
     gateway !== 'paypal' &&
-    gateway !== 'mock'
+    gateway !== 'stripe'
   ) {
     throw new AppError('Invalid webhook gateway.', 400)
   }
@@ -144,12 +144,32 @@ export const refundPayment: RequestHandler = catchAsync(
 export const handleWebhook: RequestHandler = catchAsync(
   async (request, response) => {
     const gateway = getGatewayParam(request)
-    const signatureHeader = request.header('x-signature')
+
+    // For Stripe: rawBody is the exact bytes captured by express.json()'s verify
+    // callback, required for stripe.webhooks.constructEvent(). For all other
+    // gateways the parsed body (request.body) is used directly.
+    const rawBody =
+      request.rawBody?.toString('utf8') ?? JSON.stringify(request.body ?? {})
+    const parsedBody: unknown = request.body
+
+    // Use the gateway-specific signature header.
+    const signatureHeader =
+      gateway === 'stripe'
+        ? request.header('stripe-signature')
+        : request.header('x-signature')
+
+    // Collect all request headers to support PayPal webhook verification
+    // (requires paypal-auth-algo, paypal-cert-url, paypal-transmission-* headers).
+    const headers: Record<string, string | string[] | undefined> = {
+      ...request.headers,
+    }
 
     const data = await paymentsService.processWebhook(
       gateway,
-      request.body,
+      rawBody,
+      parsedBody,
       signatureHeader ?? undefined,
+      headers,
     )
 
     sendResponse(response, {
