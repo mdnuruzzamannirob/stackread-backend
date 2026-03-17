@@ -1,14 +1,28 @@
 import mongoose from 'mongoose'
-import env from './env'
 
-export const connectDB = async (): Promise<void> => {
-  await mongoose.connect(env.MONGODB_URI)
-  console.log(`MongoDB connected: ${mongoose.connection.host}`)
+import { config } from './index'
+import { logger } from './logger'
+
+export const connectToDatabase = async (): Promise<void> => {
+  await mongoose.connect(config.mongodbUri)
+  logger.info('MongoDB connection established', {
+    database: mongoose.connection.name,
+    host: mongoose.connection.host,
+  })
 }
 
-mongoose.connection.on('disconnected', () =>
-  console.warn('MongoDB disconnected'),
-)
-mongoose.connection.on('error', (err: Error) =>
-  console.error('MongoDB error:', err.message),
-)
+export const disconnectFromDatabase = async (): Promise<void> => {
+  await mongoose.disconnect()
+  logger.info('MongoDB connection closed')
+}
+
+export const getDatabaseState = (): string => {
+  const states: Record<number, string> = {
+    0: 'disconnected',
+    1: 'connected',
+    2: 'connecting',
+    3: 'disconnecting',
+  }
+
+  return states[mongoose.connection.readyState] ?? 'unknown'
+}
