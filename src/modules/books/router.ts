@@ -10,7 +10,6 @@ import {
   deleteBook,
   deleteBookFile,
   getBookPreview,
-  getBookReviewSummary,
   getPublicBookById,
   listFeaturedBooks,
   listPublicBooks,
@@ -37,11 +36,6 @@ router.get(
   '/books/:id/preview',
   validateRequest({ params: booksValidation.idParam }),
   getBookPreview,
-)
-router.get(
-  '/books/:id/reviews',
-  validateRequest({ params: booksValidation.idParam }),
-  getBookReviewSummary,
 )
 
 router.post(

@@ -123,6 +123,42 @@ export const defaultPermissionSeeds: PermissionSeed[] = [
     description: 'Create, update, delete books and manage files',
     module: 'books',
   },
+  {
+    key: 'borrows.view',
+    name: 'View Borrows',
+    description: 'View borrow records',
+    module: 'borrows',
+  },
+  {
+    key: 'borrows.manage',
+    name: 'Manage Borrows',
+    description: 'Manage borrow lifecycle and overrides',
+    module: 'borrows',
+  },
+  {
+    key: 'reservations.view',
+    name: 'View Reservations',
+    description: 'View reservation queues and status',
+    module: 'reservations',
+  },
+  {
+    key: 'reservations.manage',
+    name: 'Manage Reservations',
+    description: 'Manage reservation queue lifecycle',
+    module: 'reservations',
+  },
+  {
+    key: 'reviews.view',
+    name: 'View Reviews',
+    description: 'View all reviews in admin',
+    module: 'reviews',
+  },
+  {
+    key: 'reviews.manage',
+    name: 'Manage Reviews',
+    description: 'Moderate review visibility',
+    module: 'reviews',
+  },
 ]
 
 export const rbacService = {
