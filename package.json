@@ -1,5 +1,5 @@
 {
-  "name": "library-management-system-backend",
+  "name": "stackread-backend",
   "version": "1.0.0",
   "description": "Library Management System Backend — Node.js + Express + TypeScript + MongoDB",
   "main": "dist/app/server.js",
