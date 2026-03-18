@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+  lms-api:
+    build: .
+    container_name: lms-api
+    env_file:
+      - .env
+    ports:
+      - '5000:5000'
+    restart: unless-stopped
+    depends_on:
+      - mongo
+
+  lms-worker:
+    build: .
+    container_name: lms-worker
+    env_file:
+      - .env
+    command: ['node', 'dist/app/worker.js']
+    restart: unless-stopped
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:7
+    container_name: lms-mongo
+    restart: unless-stopped
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

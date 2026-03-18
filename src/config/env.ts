@@ -15,12 +15,28 @@ const envSchema = z.object({
     .enum(['error', 'warn', 'info', 'http', 'verbose', 'debug', 'silly'])
     .default('info'),
   LOG_DIR: z.string().trim().min(1).default('logs'),
+  LOG_ROTATE_MAX_SIZE: z.string().trim().default('20m'),
+  LOG_ROTATE_APP_MAX_FILES: z.string().trim().default('14d'),
+  LOG_ROTATE_ERROR_MAX_FILES: z.string().trim().default('30d'),
+  LOG_ZIPPED_ARCHIVE: z
+    .preprocess((value) => {
+      if (typeof value === 'string') {
+        return value.toLowerCase() === 'true'
+      }
+      return value
+    }, z.boolean())
+    .default(true),
   RATE_LIMIT_WINDOW_MS: z.coerce
     .number()
     .int()
     .positive()
     .default(15 * 60 * 1000),
   RATE_LIMIT_MAX: z.coerce.number().int().positive().default(200),
+  AUTH_RATE_LIMIT_MAX: z.coerce.number().int().positive().default(60),
+  ADMIN_RATE_LIMIT_MAX: z.coerce.number().int().positive().default(120),
+  SEARCH_RATE_LIMIT_MAX: z.coerce.number().int().positive().default(180),
+  WEBHOOK_RATE_LIMIT_MAX: z.coerce.number().int().positive().default(1000),
+  REPORT_RATE_LIMIT_MAX: z.coerce.number().int().positive().default(80),
   JWT_USER_SECRET: z.string().trim().min(1, 'JWT_USER_SECRET is required'),
   JWT_STAFF_SECRET: z.string().trim().min(1, 'JWT_STAFF_SECRET is required'),
   JWT_ACCESS_EXPIRES_IN: z.string().trim().default('1d'),
@@ -80,6 +96,9 @@ const envSchema = z.object({
     }, z.boolean())
     .default(true),
   WORKER_POLL_INTERVAL_MS: z.coerce.number().int().positive().default(30000),
+  JOB_RETRY_LIMIT: z.coerce.number().int().positive().default(3),
+  JOB_RETRY_BACKOFF_MS: z.coerce.number().int().positive().default(500),
+  SHUTDOWN_TIMEOUT_MS: z.coerce.number().int().positive().default(20000),
 })
 
 const parsedEnv = envSchema.safeParse(process.env)
@@ -94,6 +113,133 @@ if (!parsedEnv.success) {
 
 const rawEnv = parsedEnv.data
 
+if (rawEnv.NODE_ENV === 'production') {
+  const productionChecks: Array<{ ok: boolean; message: string }> = [
+    {
+      ok: rawEnv.JWT_USER_SECRET.length >= 16,
+      message: 'JWT_USER_SECRET must be at least 16 characters in production.',
+    },
+    {
+      ok: rawEnv.JWT_STAFF_SECRET.length >= 16,
+      message: 'JWT_STAFF_SECRET must be at least 16 characters in production.',
+    },
+    {
+      ok: rawEnv.CORS_ORIGINS !== '*',
+      message: 'CORS_ORIGINS cannot be wildcard in production.',
+    },
+  ]
+
+  if (rawEnv.EMAIL_PROVIDER === 'resend') {
+    productionChecks.push({
+      ok: Boolean(rawEnv.RESEND_API_KEY),
+      message:
+        'RESEND_API_KEY is required in production when EMAIL_PROVIDER=resend.',
+    })
+  }
+
+  if (rawEnv.SMS_PROVIDER === 'twilio') {
+    productionChecks.push(
+      {
+        ok: Boolean(rawEnv.TWILIO_ACCOUNT_SID),
+        message:
+          'TWILIO_ACCOUNT_SID is required in production when SMS_PROVIDER=twilio.',
+      },
+      {
+        ok: Boolean(rawEnv.TWILIO_AUTH_TOKEN),
+        message:
+          'TWILIO_AUTH_TOKEN is required in production when SMS_PROVIDER=twilio.',
+      },
+      {
+        ok: Boolean(rawEnv.TWILIO_FROM),
+        message:
+          'TWILIO_FROM is required in production when SMS_PROVIDER=twilio.',
+      },
+    )
+  }
+
+  if (rawEnv.PUSH_PROVIDER === 'fcm') {
+    productionChecks.push({
+      ok: Boolean(rawEnv.FCM_SERVER_KEY),
+      message:
+        'FCM_SERVER_KEY is required in production when PUSH_PROVIDER=fcm.',
+    })
+  }
+
+  if (rawEnv.STORAGE_PROVIDER === 'cloudinary') {
+    productionChecks.push(
+      {
+        ok: Boolean(rawEnv.CLOUDINARY_CLOUD_NAME),
+        message:
+          'CLOUDINARY_CLOUD_NAME is required in production when STORAGE_PROVIDER=cloudinary.',
+      },
+      {
+        ok: Boolean(rawEnv.CLOUDINARY_API_KEY),
+        message:
+          'CLOUDINARY_API_KEY is required in production when STORAGE_PROVIDER=cloudinary.',
+      },
+      {
+        ok: Boolean(rawEnv.CLOUDINARY_API_SECRET),
+        message:
+          'CLOUDINARY_API_SECRET is required in production when STORAGE_PROVIDER=cloudinary.',
+      },
+    )
+  }
+
+  if (rawEnv.PAYMENT_PROVIDER === 'sslcommerz') {
+    productionChecks.push(
+      {
+        ok: Boolean(rawEnv.SSLCOMMERZ_STORE_ID),
+        message:
+          'SSLCOMMERZ_STORE_ID is required in production when PAYMENT_PROVIDER=sslcommerz.',
+      },
+      {
+        ok: Boolean(rawEnv.SSLCOMMERZ_STORE_PASSWORD),
+        message:
+          'SSLCOMMERZ_STORE_PASSWORD is required in production when PAYMENT_PROVIDER=sslcommerz.',
+      },
+    )
+  }
+
+  if (rawEnv.PAYMENT_PROVIDER === 'stripe') {
+    productionChecks.push(
+      {
+        ok: Boolean(rawEnv.STRIPE_SECRET_KEY),
+        message:
+          'STRIPE_SECRET_KEY is required in production when PAYMENT_PROVIDER=stripe.',
+      },
+      {
+        ok: Boolean(rawEnv.STRIPE_WEBHOOK_SECRET),
+        message:
+          'STRIPE_WEBHOOK_SECRET is required in production when PAYMENT_PROVIDER=stripe.',
+      },
+    )
+  }
+
+  if (rawEnv.PAYMENT_PROVIDER === 'paypal') {
+    productionChecks.push(
+      {
+        ok: Boolean(rawEnv.PAYPAL_CLIENT_ID),
+        message:
+          'PAYPAL_CLIENT_ID is required in production when PAYMENT_PROVIDER=paypal.',
+      },
+      {
+        ok: Boolean(rawEnv.PAYPAL_CLIENT_SECRET),
+        message:
+          'PAYPAL_CLIENT_SECRET is required in production when PAYMENT_PROVIDER=paypal.',
+      },
+    )
+  }
+
+  const failedChecks = productionChecks.filter((check) => !check.ok)
+  if (failedChecks.length > 0) {
+    throw new Error(
+      `Production environment validation failed: ${failedChecks
+        .map((check) => check.message)
+        .join(' ')}`,
+    )
+  }
+}
+
 export const env = {
   nodeEnv: rawEnv.NODE_ENV,
   isDevelopment: rawEnv.NODE_ENV === 'development',
@@ -107,8 +253,21 @@ export const env = {
     .filter(Boolean),
   logLevel: rawEnv.LOG_LEVEL,
   logDir: rawEnv.LOG_DIR,
+  logRotation: {
+    maxSize: rawEnv.LOG_ROTATE_MAX_SIZE,
+    appMaxFiles: rawEnv.LOG_ROTATE_APP_MAX_FILES,
+    errorMaxFiles: rawEnv.LOG_ROTATE_ERROR_MAX_FILES,
+    zippedArchive: rawEnv.LOG_ZIPPED_ARCHIVE,
+  },
   rateLimitWindowMs: rawEnv.RATE_LIMIT_WINDOW_MS,
   rateLimitMax: rawEnv.RATE_LIMIT_MAX,
+  rateLimitByGroup: {
+    auth: rawEnv.AUTH_RATE_LIMIT_MAX,
+    admin: rawEnv.ADMIN_RATE_LIMIT_MAX,
+    search: rawEnv.SEARCH_RATE_LIMIT_MAX,
+    webhook: rawEnv.WEBHOOK_RATE_LIMIT_MAX,
+    reports: rawEnv.REPORT_RATE_LIMIT_MAX,
+  },
   jwt: {
     userSecret: rawEnv.JWT_USER_SECRET,
     staffSecret: rawEnv.JWT_STAFF_SECRET,
@@ -156,7 +315,11 @@ export const env = {
   worker: {
     enabled: rawEnv.WORKER_ENABLED,
     pollIntervalMs: rawEnv.WORKER_POLL_INTERVAL_MS,
+    jobRetryLimit: rawEnv.JOB_RETRY_LIMIT,
+    jobRetryBackoffMs: rawEnv.JOB_RETRY_BACKOFF_MS,
+    shutdownTimeoutMs: rawEnv.SHUTDOWN_TIMEOUT_MS,
   },
+  shutdownTimeoutMs: rawEnv.SHUTDOWN_TIMEOUT_MS,
 } as const
 
 export type Env = typeof env

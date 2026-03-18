@@ -30,10 +30,18 @@ const shutdown = async (signal: string, exitCode = 0): Promise<void> => {
   logger.info(`Worker received ${signal}. Starting graceful shutdown.`)
 
   try {
+    const shutdownTimer = setTimeout(() => {
+      logger.error('Worker graceful shutdown timeout reached. Forcing exit.', {
+        timeoutMs: config.worker.shutdownTimeoutMs,
+      })
+      process.exit(1)
+    }, config.worker.shutdownTimeoutMs)
+
     cronTasks.forEach((task) => task.stop())
     cronTasks = []
     schedulerService.stopAllJobs()
     await disconnectFromDatabase()
+    clearTimeout(shutdownTimer)
     logger.info('Worker graceful shutdown completed.')
     process.exit(exitCode)
   } catch (error) {

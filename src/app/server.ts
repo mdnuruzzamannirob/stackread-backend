@@ -3,6 +3,7 @@ import http from 'node:http'
 import { config } from '../config'
 import { connectToDatabase, disconnectFromDatabase } from '../config/db'
 import { logger } from '../config/logger'
+import { getReadinessReport } from '../modules/health/health.service'
 import { rbacService } from '../modules/rbac'
 import { app } from './app'
 
@@ -18,6 +19,13 @@ const shutdown = async (signal: string, exitCode = 0): Promise<void> => {
   logger.info(`Received ${signal}. Starting graceful shutdown.`)
 
   try {
+    const shutdownTimer = setTimeout(() => {
+      logger.error('Graceful shutdown timeout reached. Forcing process exit.', {
+        timeoutMs: config.shutdownTimeoutMs,
+      })
+      process.exit(1)
+    }, config.shutdownTimeoutMs)
+
     if (server) {
       await new Promise<void>((resolve, reject) => {
         server?.close((error) => {
@@ -32,6 +40,7 @@ const shutdown = async (signal: string, exitCode = 0): Promise<void> => {
     }
 
     await disconnectFromDatabase()
+    clearTimeout(shutdownTimer)
     logger.info('Graceful shutdown completed.')
     process.exit(exitCode)
   } catch (error) {
@@ -44,6 +53,10 @@ const shutdown = async (signal: string, exitCode = 0): Promise<void> => {
 
 const startServer = async (): Promise<void> => {
   await connectToDatabase()
+  const readiness = getReadinessReport()
+  if (readiness.statusCode !== 200) {
+    throw new Error('Health readiness check failed during startup.')
+  }
   await rbacService.ensurePermissionSeed()
 
   server = app.listen(config.port, () => {

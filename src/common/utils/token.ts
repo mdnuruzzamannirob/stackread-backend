@@ -20,7 +20,6 @@ const getSecretByActorType = (type: JwtActorType): string => {
 export const signAccessToken = (payload: SignPayloadInput): string => {
   const signOptions: jwt.SignOptions = {
     issuer: config.jwt.issuer,
-    subject: payload.sub,
   }
 
   if (config.jwt.accessExpiresIn) {

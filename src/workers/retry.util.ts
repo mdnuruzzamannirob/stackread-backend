@@ -1,3 +1,4 @@
+import { config } from '../config'
 import { logger } from '../config/logger'
 
 type RetryOptions = {
@@ -11,8 +12,8 @@ export const executeWithRetry = async (
   workerName: string,
   handler: () => Promise<void>,
   options: RetryOptions = {
-    maxAttempts: 3,
-    backoffMs: 500,
+    maxAttempts: config.worker.jobRetryLimit,
+    backoffMs: config.worker.jobRetryBackoffMs,
   },
 ): Promise<void> => {
   let attempt = 1

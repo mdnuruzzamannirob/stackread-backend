@@ -9,7 +9,14 @@ import path from 'node:path'
 
 import { globalErrorHandler } from '../common/errors/globalErrorHandler'
 import { notFound } from '../common/middlewares/notFound'
-import { apiRateLimiter } from '../common/middlewares/rateLimiter'
+import {
+  adminRateLimiter,
+  apiRateLimiter,
+  authRateLimiter,
+  reportsRateLimiter,
+  searchRateLimiter,
+  webhookRateLimiter,
+} from '../common/middlewares/rateLimiter'
 import { requestContext } from '../common/middlewares/requestContext'
 import { responseTime } from '../common/middlewares/responseTime'
 import { config } from '../config'
@@ -51,6 +58,12 @@ app.use(
 )
 app.use(helmet())
 app.use(apiRateLimiter)
+app.use(`${config.apiPrefix}/auth`, authRateLimiter)
+app.use(`${config.apiPrefix}/staff`, authRateLimiter)
+app.use(`${config.apiPrefix}/admin`, adminRateLimiter)
+app.use(`${config.apiPrefix}/search`, searchRateLimiter)
+app.use(`${config.apiPrefix}/admin/reports`, reportsRateLimiter)
+app.use(`${config.apiPrefix}/webhooks`, webhookRateLimiter)
 app.use(
   express.json({
     limit: '1mb',

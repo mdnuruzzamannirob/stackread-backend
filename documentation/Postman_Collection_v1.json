@@ -1,0 +1,153 @@
+{
+    "info": {
+        "name": "LMS Backend API v1",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": "Postman collection export for implemented LMS route groups"
+    },
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:5000/api/v1"
+        },
+        {
+            "key": "userToken",
+            "value": ""
+        },
+        {
+            "key": "staffToken",
+            "value": ""
+        }
+    ],
+    "item": [
+        {
+            "name": "Auth Register",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": "{{baseUrl}}/auth/register",
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"name\": \"Test User\",\n  \"email\": \"user@mail.test\",\n  \"password\": \"StrongPass123!\"\n}"
+                }
+            }
+        },
+        {
+            "name": "Auth Login",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": "{{baseUrl}}/auth/login",
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"email\": \"user@mail.test\",\n  \"password\": \"StrongPass123!\"\n}"
+                }
+            }
+        },
+        {
+            "name": "Get My Profile",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{userToken}}"
+                    }
+                ],
+                "url": "{{baseUrl}}/auth/me"
+            }
+        },
+        {
+            "name": "Initiate Payment",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{userToken}}"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": "{{baseUrl}}/payments/initiate",
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"planId\": \"PLAN_ID\",\n  \"gateway\": \"bkash\"\n}"
+                }
+            }
+        },
+        {
+            "name": "Create Borrow",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{userToken}}"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": "{{baseUrl}}/borrows",
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"bookId\": \"BOOK_ID\"\n}"
+                }
+            }
+        },
+        {
+            "name": "Create Reservation",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{userToken}}"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "url": "{{baseUrl}}/reservations",
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"bookId\": \"BOOK_ID\"\n}"
+                }
+            }
+        },
+        {
+            "name": "Admin List Reports",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{staffToken}}"
+                    }
+                ],
+                "url": "{{baseUrl}}/admin/reports"
+            }
+        },
+        {
+            "name": "Health Ready",
+            "request": {
+                "method": "GET",
+                "url": "{{baseUrl}}/health/ready"
+            }
+        }
+    ]
+}
