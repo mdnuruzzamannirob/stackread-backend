@@ -21,6 +21,7 @@
     "seed:all": "tsx src/seeds/all.seed.ts",
     "seed": "tsx src/scripts/seed.ts",
     "migrate": "tsx src/scripts/migrate.ts",
+    "docs:rebuild": "tsx src/scripts/rebuild-api-docs.ts",
     "export:openapi": "echo OpenAPI export available at documentation/OpenAPI_v1.json",
     "export:postman": "echo Postman export available at documentation/Postman_Collection_v1.json"
   },
