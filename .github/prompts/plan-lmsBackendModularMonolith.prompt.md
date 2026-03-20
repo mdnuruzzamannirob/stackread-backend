@@ -2,6 +2,25 @@
 
 Build the backend as a strict TypeScript modular monolith on Node.js + Express + Mongoose, using the attached docs as source of truth and normalizing a few documented inconsistencies. The recommended shape is domain-first modules with shared infrastructure, separate API and worker processes from day one, user auth and staff auth separated at the route/token layer, and Super Admin implemented as a privileged staff role. Bangladesh payments should be abstracted through a payment provider layer that can back bKash/Nagad via SSLCommerz while preserving the route intent from the REST design.
 
+## Integration contract for Web and Dashboard (very important)
+
+Backend changes must preserve stable contracts for `stackread-web` and `stackread-dashboard`.
+
+- Keep user-facing and staff-facing auth fully separated (`/auth/*` for users, `/staff/*` for staff).
+- Keep permission checks server-side only via RBAC + middleware; frontend should never be source of authorization truth.
+- Maintain soft-delete semantics for staff/users/members so dashboard lists remain historically auditable.
+- Ensure response shapes are backward-safe and include explicit nullable fields for optional profile metadata.
+- Keep refresh/session cookie behavior consistent across web and dashboard so SSR and proxy layers can rely on same cookie names and lifetimes.
+
+### Minimum readiness checklist before web/dashboard implementation
+
+1. `pnpm typecheck` passes.
+2. Unit tests pass for auth, staff, members, rbac, permissions integrity.
+3. `documentation/OpenAPI_v1.json` and `documentation/Postman_Collection_v1.json` are rebuilt after route/schema changes.
+4. New/changed endpoints are reflected in route docs and validation schemas.
+5. Seed flow is deterministic: entrypoint handles connect/disconnect, seed functions are pure (no direct DB lifecycle handling).
+6. API errors use consistent status semantics (401 auth, 403 permission, 404 missing resource).
+
 **Steps**
 
 1. Phase 1, foundation: scaffold the app, strict TypeScript config, Express bootstrap, config validation, logging, request tracing, security middleware, unified API response helpers, AppError/global error handling, async wrapper, health endpoint, DB connection, graceful shutdown, and API versioning. This blocks all other phases.

@@ -28,10 +28,13 @@ const random = (prefix: string) =>
 
 export const createUser = async () => {
   return UserModel.create({
-    name: random('user'),
+    firstName: random('user'),
+    lastName: 'test',
     email: `${random('user')}@mail.test`,
     provider: 'local',
     isEmailVerified: true,
+    isActive: true,
+    isSuspended: false,
     passwordHash: 'scrypt:test',
   })
 }

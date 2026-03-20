@@ -50,7 +50,6 @@ const emailOtpSchema = new Schema<EmailOtpDocument>(
     expiresAt: {
       type: Date,
       required: true,
-      index: true,
     },
     usedAt: {
       type: Date,

@@ -5661,6 +5661,410 @@
       }
     },
     "/api/v1/admin/members/{userId}": {
+      "delete": {
+        "tags": [
+          "members"
+        ],
+        "summary": "DELETE /api/v1/admin/members/:userId",
+        "description": "Endpoint in module 'members' defined in src/modules/members/router.ts.",
+        "operationId": "members_delete__api_v1_admin_members__userId",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Unique identifier for User.",
+            "example": "65f19a9a6f8f4a2b3c4d5e6f"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Deleted successfully."
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "id": "65f19a9a6f8f4a2b3c4d5e6f",
+                        "status": "active"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {}
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "success": true,
+                  "message": "Request successful.",
+                  "data": {
+                    "id": "65f19a9a6f8f4a2b3c4d5e6f",
+                    "status": "active"
+                  },
+                  "meta": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Bad request.",
+                  "code": "BAD_REQUEST",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized.",
+                  "code": "UNAUTHORIZED",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Forbidden.",
+                  "code": "FORBIDDEN",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Not found.",
+                  "code": "NOT_FOUND",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Internal server error.",
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerStaffAuth": []
+          }
+        ]
+      },
       "get": {
         "tags": [
           "members"
@@ -17045,6 +17449,407 @@
         }
       }
     },
+    "/api/v1/admin/staff/{id}/2fa/reset": {
+      "post": {
+        "tags": [
+          "staff"
+        ],
+        "summary": "Reset Two Factor",
+        "description": "Endpoint in module 'staff' defined in src/modules/staff/router.ts.",
+        "operationId": "staff_post__api_v1_admin_staff__id_2fa_reset",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Unique identifier for Id.",
+            "example": "65f19a9a6f8f4a2b3c4d5e6f"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Created successfully."
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "id": "65f19a9a6f8f4a2b3c4d5e6f",
+                        "status": "active"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {}
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "success": true,
+                  "message": "Created successfully.",
+                  "data": {
+                    "id": "65f19a9a6f8f4a2b3c4d5e6f",
+                    "status": "created"
+                  },
+                  "meta": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Bad request.",
+                  "code": "BAD_REQUEST",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized.",
+                  "code": "UNAUTHORIZED",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Forbidden.",
+                  "code": "FORBIDDEN",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Not found.",
+                  "code": "NOT_FOUND",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Internal server error.",
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/admin/staff/{id}/activity": {
       "get": {
         "tags": [
@@ -20445,26 +21250,8 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "tempToken": {
-                    "type": "string",
-                    "minLength": 20
-                  },
-                  "otp": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "tempToken",
-                  "otp"
-                ]
-              },
-              "example": {
-                "tempToken": "Temp Token sample",
-                "otp": "Otp sample"
-              }
+              "schema": {},
+              "example": {}
             }
           }
         }
@@ -20880,6 +21667,418 @@
               },
               "example": {
                 "otp": "Otp sample"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/2fa/email/send": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Send User Email Otp",
+        "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
+        "operationId": "auth_post__api_v1_auth_2fa_email_send",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Created successfully."
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "id": "65f19a9a6f8f4a2b3c4d5e6f",
+                        "status": "active"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {}
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "success": true,
+                  "message": "Created successfully.",
+                  "data": {
+                    "id": "65f19a9a6f8f4a2b3c4d5e6f",
+                    "status": "created"
+                  },
+                  "meta": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Bad request.",
+                  "code": "BAD_REQUEST",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized.",
+                  "code": "UNAUTHORIZED",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Forbidden.",
+                  "code": "FORBIDDEN",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Not found.",
+                  "code": "NOT_FOUND",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Internal server error.",
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "tempToken": {
+                    "type": "string",
+                    "minLength": 20
+                  }
+                },
+                "required": [
+                  "tempToken"
+                ]
+              },
+              "example": {
+                "tempToken": "Temp Token sample"
               }
             }
           }
@@ -26925,6 +28124,396 @@
         }
       }
     },
+    "/api/v1/auth/refresh": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Refresh Session",
+        "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
+        "operationId": "auth_post__api_v1_auth_refresh",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Created successfully."
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "id": "65f19a9a6f8f4a2b3c4d5e6f",
+                        "status": "active"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {}
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "success": true,
+                  "message": "Created successfully.",
+                  "data": {
+                    "id": "65f19a9a6f8f4a2b3c4d5e6f",
+                    "status": "created"
+                  },
+                  "meta": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Bad request.",
+                  "code": "BAD_REQUEST",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized.",
+                  "code": "UNAUTHORIZED",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Forbidden.",
+                  "code": "FORBIDDEN",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Not found.",
+                  "code": "NOT_FOUND",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Internal server error.",
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/auth/register": {
       "post": {
         "tags": [
@@ -27320,9 +28909,14 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "name": {
+                  "firstName": {
                     "type": "string",
-                    "minLength": 2,
+                    "minLength": 1,
+                    "maxLength": 100
+                  },
+                  "lastName": {
+                    "type": "string",
+                    "minLength": 1,
                     "maxLength": 100
                   },
                   "email": {
@@ -27339,17 +28933,430 @@
                   }
                 },
                 "required": [
-                  "name",
+                  "firstName",
                   "email",
                   "password",
                   "countryCode"
                 ]
               },
               "example": {
-                "name": "Ayesha Rahman",
+                "firstName": "Ayesha Rahman",
+                "lastName": "Ayesha Rahman",
                 "email": "reader@example.com",
                 "password": "P@ssw0rd123!",
                 "countryCode": "BD"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/resend-reset-otp": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Resend Reset Otp",
+        "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
+        "operationId": "auth_post__api_v1_auth_resend_reset_otp",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Created successfully."
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "id": "65f19a9a6f8f4a2b3c4d5e6f",
+                        "status": "active"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {}
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "success": true,
+                  "message": "Created successfully.",
+                  "data": {
+                    "id": "65f19a9a6f8f4a2b3c4d5e6f",
+                    "status": "created"
+                  },
+                  "meta": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Bad request.",
+                  "code": "BAD_REQUEST",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized.",
+                  "code": "UNAUTHORIZED",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Forbidden.",
+                  "code": "FORBIDDEN",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Not found.",
+                  "code": "NOT_FOUND",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Internal server error.",
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  }
+                },
+                "required": [
+                  "email"
+                ]
+              },
+              "example": {
+                "email": "reader@example.com"
               }
             }
           }
@@ -28163,7 +30170,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "token": {
+                  "resetToken": {
                     "type": "string",
                     "minLength": 10
                   },
@@ -28174,12 +30181,12 @@
                   }
                 },
                 "required": [
-                  "token",
+                  "resetToken",
                   "newPassword"
                 ]
               },
               "example": {
-                "token": "Token sample",
+                "resetToken": "Reset Token sample",
                 "newPassword": "P@ssw0rd123!"
               }
             }
@@ -28593,6 +30600,423 @@
               },
               "example": {
                 "token": "Token sample"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/verify-reset-otp": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Verify Reset Otp",
+        "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
+        "operationId": "auth_post__api_v1_auth_verify_reset_otp",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Created successfully."
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "id": "65f19a9a6f8f4a2b3c4d5e6f",
+                        "status": "active"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {}
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "success": true,
+                  "message": "Created successfully.",
+                  "data": {
+                    "id": "65f19a9a6f8f4a2b3c4d5e6f",
+                    "status": "created"
+                  },
+                  "meta": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Bad request.",
+                  "code": "BAD_REQUEST",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized.",
+                  "code": "UNAUTHORIZED",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Forbidden.",
+                  "code": "FORBIDDEN",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Not found.",
+                  "code": "NOT_FOUND",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Internal server error.",
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "otp": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "email",
+                  "otp"
+                ]
+              },
+              "example": {
+                "email": "reader@example.com",
+                "otp": "Otp sample"
               }
             }
           }
@@ -68938,6 +71362,396 @@
         }
       }
     },
+    "/api/v1/staff/2fa/email/send": {
+      "post": {
+        "tags": [
+          "staff-auth"
+        ],
+        "summary": "Send Staff Email Otp",
+        "description": "Endpoint in module 'staff-auth' defined in src/modules/staff-auth/router.ts.",
+        "operationId": "staff-auth_post__api_v1_staff_2fa_email_send",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Created successfully."
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "id": "65f19a9a6f8f4a2b3c4d5e6f",
+                        "status": "active"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {}
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "success": true,
+                  "message": "Created successfully.",
+                  "data": {
+                    "id": "65f19a9a6f8f4a2b3c4d5e6f",
+                    "status": "created"
+                  },
+                  "meta": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Bad request.",
+                  "code": "BAD_REQUEST",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized.",
+                  "code": "UNAUTHORIZED",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Forbidden.",
+                  "code": "FORBIDDEN",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Not found.",
+                  "code": "NOT_FOUND",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Internal server error.",
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/staff/2fa/enable": {
       "post": {
         "tags": [
@@ -69333,21 +72147,15 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "tempToken": {
-                    "type": "string",
-                    "minLength": 20
-                  },
                   "otp": {
                     "type": "string"
                   }
                 },
                 "required": [
-                  "tempToken",
                   "otp"
                 ]
               },
               "example": {
-                "tempToken": "Temp Token sample",
                 "otp": "Otp sample"
               }
             }
@@ -69749,19 +72557,9 @@
             "application/json": {
               "schema": {
                 "type": "object",
-                "properties": {
-                  "tempToken": {
-                    "type": "string",
-                    "minLength": 20
-                  }
-                },
-                "required": [
-                  "tempToken"
-                ]
+                "properties": {}
               },
-              "example": {
-                "tempToken": "Temp Token sample"
-              }
+              "example": {}
             }
           }
         }
@@ -70159,26 +72957,8 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "tempToken": {
-                    "type": "string",
-                    "minLength": 20
-                  },
-                  "otp": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "tempToken",
-                  "otp"
-                ]
-              },
-              "example": {
-                "tempToken": "Temp Token sample",
-                "otp": "Otp sample"
-              }
+              "schema": {},
+              "example": {}
             }
           }
         }
@@ -70597,6 +73377,418 @@
               "example": {
                 "token": "Token sample",
                 "password": "P@ssw0rd123!"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/staff/forgot-password": {
+      "post": {
+        "tags": [
+          "staff-auth"
+        ],
+        "summary": "Forgot Staff Password",
+        "description": "Endpoint in module 'staff-auth' defined in src/modules/staff-auth/router.ts.",
+        "operationId": "staff-auth_post__api_v1_staff_forgot_password",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Created successfully."
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "id": "65f19a9a6f8f4a2b3c4d5e6f",
+                        "status": "active"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {}
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "success": true,
+                  "message": "Created successfully.",
+                  "data": {
+                    "id": "65f19a9a6f8f4a2b3c4d5e6f",
+                    "status": "created"
+                  },
+                  "meta": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Bad request.",
+                  "code": "BAD_REQUEST",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized.",
+                  "code": "UNAUTHORIZED",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Forbidden.",
+                  "code": "FORBIDDEN",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Not found.",
+                  "code": "NOT_FOUND",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Internal server error.",
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  }
+                },
+                "required": [
+                  "email"
+                ]
+              },
+              "example": {
+                "email": "reader@example.com"
               }
             }
           }
@@ -72302,6 +75494,1644 @@
               "example": {
                 "currentPassword": "P@ssw0rd123!",
                 "newPassword": "P@ssw0rd123!"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/staff/refresh": {
+      "post": {
+        "tags": [
+          "staff-auth"
+        ],
+        "summary": "Refresh Staff Session",
+        "description": "Endpoint in module 'staff-auth' defined in src/modules/staff-auth/router.ts.",
+        "operationId": "staff-auth_post__api_v1_staff_refresh",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Created successfully."
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "id": "65f19a9a6f8f4a2b3c4d5e6f",
+                        "status": "active"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {}
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "success": true,
+                  "message": "Created successfully.",
+                  "data": {
+                    "id": "65f19a9a6f8f4a2b3c4d5e6f",
+                    "status": "created"
+                  },
+                  "meta": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Bad request.",
+                  "code": "BAD_REQUEST",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized.",
+                  "code": "UNAUTHORIZED",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Forbidden.",
+                  "code": "FORBIDDEN",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Not found.",
+                  "code": "NOT_FOUND",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Internal server error.",
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/staff/resend-reset-otp": {
+      "post": {
+        "tags": [
+          "staff-auth"
+        ],
+        "summary": "Resend Staff Reset Otp",
+        "description": "Endpoint in module 'staff-auth' defined in src/modules/staff-auth/router.ts.",
+        "operationId": "staff-auth_post__api_v1_staff_resend_reset_otp",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Created successfully."
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "id": "65f19a9a6f8f4a2b3c4d5e6f",
+                        "status": "active"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {}
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "success": true,
+                  "message": "Created successfully.",
+                  "data": {
+                    "id": "65f19a9a6f8f4a2b3c4d5e6f",
+                    "status": "created"
+                  },
+                  "meta": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Bad request.",
+                  "code": "BAD_REQUEST",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized.",
+                  "code": "UNAUTHORIZED",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Forbidden.",
+                  "code": "FORBIDDEN",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Not found.",
+                  "code": "NOT_FOUND",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Internal server error.",
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  }
+                },
+                "required": [
+                  "email"
+                ]
+              },
+              "example": {
+                "email": "reader@example.com"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/staff/reset-password": {
+      "post": {
+        "tags": [
+          "staff-auth"
+        ],
+        "summary": "Reset Staff Password",
+        "description": "Endpoint in module 'staff-auth' defined in src/modules/staff-auth/router.ts.",
+        "operationId": "staff-auth_post__api_v1_staff_reset_password",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Created successfully."
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "id": "65f19a9a6f8f4a2b3c4d5e6f",
+                        "status": "active"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {}
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "success": true,
+                  "message": "Created successfully.",
+                  "data": {
+                    "id": "65f19a9a6f8f4a2b3c4d5e6f",
+                    "status": "created"
+                  },
+                  "meta": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Bad request.",
+                  "code": "BAD_REQUEST",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized.",
+                  "code": "UNAUTHORIZED",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Forbidden.",
+                  "code": "FORBIDDEN",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Not found.",
+                  "code": "NOT_FOUND",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Internal server error.",
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "resetToken": {
+                    "type": "string",
+                    "minLength": 10
+                  },
+                  "newPassword": {
+                    "type": "string",
+                    "minLength": 8,
+                    "maxLength": 72
+                  }
+                },
+                "required": [
+                  "resetToken",
+                  "newPassword"
+                ]
+              },
+              "example": {
+                "resetToken": "Reset Token sample",
+                "newPassword": "P@ssw0rd123!"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/staff/verify-reset-otp": {
+      "post": {
+        "tags": [
+          "staff-auth"
+        ],
+        "summary": "Verify Staff Reset Otp",
+        "description": "Endpoint in module 'staff-auth' defined in src/modules/staff-auth/router.ts.",
+        "operationId": "staff-auth_post__api_v1_staff_verify_reset_otp",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Created successfully."
+                    },
+                    "data": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "id": "65f19a9a6f8f4a2b3c4d5e6f",
+                        "status": "active"
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {}
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "success": true,
+                  "message": "Created successfully.",
+                  "data": {
+                    "id": "65f19a9a6f8f4a2b3c4d5e6f",
+                    "status": "created"
+                  },
+                  "meta": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Bad request.",
+                  "code": "BAD_REQUEST",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized.",
+                  "code": "UNAUTHORIZED",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Forbidden.",
+                  "code": "FORBIDDEN",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Not found.",
+                  "code": "NOT_FOUND",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed."
+                    },
+                    "code": {
+                      "type": "string",
+                      "example": "BAD_REQUEST"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string",
+                            "example": "email"
+                          },
+                          "message": {
+                            "type": "string",
+                            "example": "Email is invalid."
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true,
+                      "example": null
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true,
+                      "example": {
+                        "timestamp": "2026-03-18T09:30:00.000Z",
+                        "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                      }
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Internal server error.",
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "data": null,
+                  "meta": {
+                    "timestamp": "2026-03-18T09:30:00.000Z",
+                    "requestId": "req_01HV4D2S5D4VTR2Y8YZVKB6Y6H"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "otp": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "email",
+                  "otp"
+                ]
+              },
+              "example": {
+                "email": "reader@example.com",
+                "otp": "Otp sample"
               }
             }
           }

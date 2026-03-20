@@ -1,6 +1,4 @@
-import { MongoMemoryServer } from 'mongodb-memory-server'
-import mongoose from 'mongoose'
-import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { ALL_PERMISSIONS } from '../../src/common/constants/permissions'
 import { PermissionModel } from '../../src/modules/rbac/model'
 import { seedPermissions } from '../../src/seeds/permissions.seed'
@@ -8,17 +6,8 @@ import { seedPermissions } from '../../src/seeds/permissions.seed'
 // Extend this pattern when new action types are added
 const FORMAT_PATTERN = /^[a-z]+\.(manage|view|refund|export)$/
 
-let mongo: MongoMemoryServer
-
-beforeAll(async () => {
-  mongo = await MongoMemoryServer.create()
-  await mongoose.connect(mongo.getUri())
+beforeEach(async () => {
   await seedPermissions()
-})
-
-afterAll(async () => {
-  await mongoose.disconnect()
-  await mongo.stop()
 })
 
 describe('Permission Integrity', () => {

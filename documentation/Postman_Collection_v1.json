@@ -427,7 +427,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"tempToken\": \"Temp Token sample\",\n  \"otp\": \"Otp sample\"\n}",
+              "raw": "{}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -490,6 +490,41 @@
               }
             }
           ]
+        },
+        {
+          "name": "POST /api/v1/auth/2fa/email/send",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/2fa/email/send",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "2fa",
+                "email",
+                "send"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tempToken\": \"Temp Token sample\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
         },
         {
           "name": "POST /api/v1/auth/2fa/enable",
@@ -1201,6 +1236,25 @@
           ]
         },
         {
+          "name": "POST /api/v1/auth/refresh",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/refresh",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "refresh"
+              ]
+            }
+          }
+        },
+        {
           "name": "POST /api/v1/auth/register",
           "request": {
             "method": "POST",
@@ -1224,7 +1278,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Ayesha Rahman\",\n  \"email\": \"reader@example.com\",\n  \"password\": \"P@ssw0rd123!\",\n  \"countryCode\": \"BD\"\n}",
+              "raw": "{\n  \"firstName\": \"Ayesha Rahman\",\n  \"lastName\": \"Ayesha Rahman\",\n  \"email\": \"reader@example.com\",\n  \"password\": \"P@ssw0rd123!\",\n  \"countryCode\": \"BD\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1245,6 +1299,39 @@
               }
             }
           ]
+        },
+        {
+          "name": "POST /api/v1/auth/resend-reset-otp",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/resend-reset-otp",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "resend-reset-otp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"reader@example.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
         },
         {
           "name": "POST /api/v1/auth/resend-verification",
@@ -1303,7 +1390,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"token\": \"Token sample\",\n  \"newPassword\": \"P@ssw0rd123!\"\n}",
+              "raw": "{\n  \"resetToken\": \"Reset Token sample\",\n  \"newPassword\": \"P@ssw0rd123!\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1337,6 +1424,39 @@
             "body": {
               "mode": "raw",
               "raw": "{\n  \"token\": \"Token sample\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST /api/v1/auth/verify-reset-otp",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/auth/verify-reset-otp",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "verify-reset-otp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"reader@example.com\",\n  \"otp\": \"Otp sample\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -3393,6 +3513,47 @@
                   "disabled": true,
                   "description": "Sorting order: asc or desc."
                 }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.collectionVariables.get(\"staffToken\")) { throw new Error(\"Missing staffToken collection variable.\"); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "DELETE /api/v1/admin/members/:userId",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{staffToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/admin/members/{{userId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "members",
+                "{{userId}}"
               ]
             }
           },
@@ -8565,6 +8726,28 @@
           }
         },
         {
+          "name": "POST /api/v1/admin/staff/:id/2fa/reset",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/admin/staff/:id/2fa/reset",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "admin",
+                "staff",
+                ":id",
+                "2fa",
+                "reset"
+              ]
+            }
+          }
+        },
+        {
           "name": "GET /api/v1/admin/staff/:id/activity",
           "request": {
             "method": "GET",
@@ -8810,6 +8993,27 @@
           ]
         },
         {
+          "name": "POST /api/v1/staff/2fa/email/send",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/staff/2fa/email/send",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "staff",
+                "2fa",
+                "email",
+                "send"
+              ]
+            }
+          }
+        },
+        {
           "name": "POST /api/v1/staff/2fa/enable",
           "request": {
             "method": "POST",
@@ -8834,7 +9038,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"tempToken\": \"Temp Token sample\",\n  \"otp\": \"Otp sample\"\n}",
+              "raw": "{\n  \"otp\": \"Otp sample\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -8881,7 +9085,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"tempToken\": \"Temp Token sample\"\n}",
+              "raw": "{}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -8915,7 +9119,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"tempToken\": \"Temp Token sample\",\n  \"otp\": \"Otp sample\"\n}",
+              "raw": "{}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -8962,6 +9166,39 @@
             "body": {
               "mode": "raw",
               "raw": "{\n  \"token\": \"Token sample\",\n  \"password\": \"P@ssw0rd123!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST /api/v1/staff/forgot-password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/staff/forgot-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "staff",
+                "forgot-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"reader@example.com\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -9182,6 +9419,124 @@
               }
             }
           ]
+        },
+        {
+          "name": "POST /api/v1/staff/refresh",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/staff/refresh",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "staff",
+                "refresh"
+              ]
+            }
+          }
+        },
+        {
+          "name": "POST /api/v1/staff/resend-reset-otp",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/staff/resend-reset-otp",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "staff",
+                "resend-reset-otp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"reader@example.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST /api/v1/staff/reset-password",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/staff/reset-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "staff",
+                "reset-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"resetToken\": \"Reset Token sample\",\n  \"newPassword\": \"P@ssw0rd123!\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "POST /api/v1/staff/verify-reset-otp",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/staff/verify-reset-otp",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "staff",
+                "verify-reset-otp"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"reader@example.com\",\n  \"otp\": \"Otp sample\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
         }
       ]
     },
