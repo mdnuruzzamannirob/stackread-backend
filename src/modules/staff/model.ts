@@ -30,11 +30,14 @@ const staffSchema = new Schema<StaffDocument>(
     roleId: {
       type: Schema.Types.ObjectId,
       ref: 'Role',
-      required: true,
+      required: function (this: StaffDocument) {
+        return !this.isSuperAdmin
+      },
       index: true,
     },
     isSuperAdmin: { type: Boolean, default: false, immutable: true },
     isActive: { type: Boolean, default: true, index: true },
+    deletedAt: { type: Date, required: false, default: undefined },
     twoFactor: {
       type: twoFactorSchema,
       default: () => ({
@@ -51,7 +54,7 @@ const staffSchema = new Schema<StaffDocument>(
   },
 )
 
-staffSchema.index({ roleId: 1, isActive: 1 })
+staffSchema.index({ roleId: 1, isActive: 1, deletedAt: 1 })
 
 export const StaffModel: Model<StaffDocument> = model<StaffDocument>(
   'Staff',

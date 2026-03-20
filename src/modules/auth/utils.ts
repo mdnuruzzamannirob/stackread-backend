@@ -79,14 +79,21 @@ export const buildUserJwtPayload = (
 export const sanitizeUser = (user: IUser): SanitizedUser => {
   const lastLoginAt = user.lastLoginAt?.toISOString()
   const countryCode = user.countryCode
+  const lastName = user.lastName
+  const phone = user.phone
+  const profilePicture = user.profilePicture
 
   return {
     id: user._id.toString(),
-    name: user.name,
+    firstName: user.firstName,
+    ...(lastName ? { lastName } : {}),
     email: user.email,
     ...(countryCode ? { countryCode } : {}),
+    ...(phone ? { phone } : {}),
+    ...(profilePicture ? { profilePicture } : {}),
     provider: user.provider,
     isEmailVerified: user.isEmailVerified,
+    isSuspended: user.isSuspended,
     twoFactorEnabled: user.twoFactor.enabled,
     notificationPreferences: user.notificationPreferences,
     ...(lastLoginAt ? { lastLoginAt } : {}),

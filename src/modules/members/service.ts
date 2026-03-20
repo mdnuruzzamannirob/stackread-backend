@@ -1,6 +1,7 @@
 import { Types } from 'mongoose'
 
 import { AppError } from '../../common/errors/AppError'
+import { auditService } from '../../common/services/audit.service'
 import {
   createPaginationMeta,
   getPaginationState,
@@ -137,11 +138,17 @@ export const membersService = {
     return memberDetail
   },
 
-  suspendMember: async (userId: string, reason: string) => {
+  suspendMember: async (
+    userId: string,
+    reason: string,
+    actorId?: string,
+    requestId?: string,
+  ) => {
     const user = await UserModel.findByIdAndUpdate(
       userId,
       {
         isSuspended: true,
+        isActive: false,
         suspendedAt: new Date(),
         suspensionReason: reason,
       },
@@ -152,15 +159,31 @@ export const membersService = {
       throw new AppError('Member not found.', 404)
     }
 
+    await auditService.logEvent({
+      actor: { id: actorId ?? 'system', type: 'staff' },
+      action: 'members.suspend',
+      module: 'members',
+      targetId: userId,
+      targetType: 'user',
+      description: 'Member account suspended.',
+      ...(requestId ? { requestId } : {}),
+      meta: { reason },
+    })
+
     const stats = await membersService.getUserStats(userId)
     return formatMember(user, stats)
   },
 
-  unsuspendMember: async (userId: string) => {
+  unsuspendMember: async (
+    userId: string,
+    actorId?: string,
+    requestId?: string,
+  ) => {
     const user = await UserModel.findByIdAndUpdate(
       userId,
       {
         isSuspended: false,
+        isActive: true,
         suspendedAt: undefined,
         suspensionReason: undefined,
       },
@@ -170,6 +193,45 @@ export const membersService = {
     if (!user) {
       throw new AppError('Member not found.', 404)
     }
+
+    await auditService.logEvent({
+      actor: { id: actorId ?? 'system', type: 'staff' },
+      action: 'members.unsuspend',
+      module: 'members',
+      targetId: userId,
+      targetType: 'user',
+      description: 'Member account unsuspended.',
+      ...(requestId ? { requestId } : {}),
+    })
+
+    const stats = await membersService.getUserStats(userId)
+    return formatMember(user, stats)
+  },
+
+  deleteMember: async (
+    userId: string,
+    actorId?: string,
+    requestId?: string,
+  ) => {
+    const user = await UserModel.findById(userId)
+
+    if (!user) {
+      throw new AppError('Member not found.', 404)
+    }
+
+    user.isActive = false
+    user.deletedAt = new Date()
+    await user.save()
+
+    await auditService.logEvent({
+      actor: { id: actorId ?? 'system', type: 'staff' },
+      action: 'members.delete',
+      module: 'members',
+      targetId: userId,
+      targetType: 'user',
+      description: 'Member account soft deleted.',
+      ...(requestId ? { requestId } : {}),
+    })
 
     const stats = await membersService.getUserStats(userId)
     return formatMember(user, stats)

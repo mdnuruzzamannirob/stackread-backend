@@ -16,13 +16,21 @@ export type UserTwoFactor = {
 
 export interface IUser {
   _id: Types.ObjectId
-  name: string
+  firstName: string
+  lastName: string | undefined
   email: string
   countryCode?: string
+  phone: string | undefined
+  profilePicture: string | undefined
   passwordHash?: string
   provider: UserAuthProvider
   socialProviderId?: string
   isEmailVerified: boolean
+  isActive: boolean
+  isSuspended: boolean
+  suspendedAt: Date | undefined
+  suspensionReason: string | undefined
+  deletedAt: Date | undefined
   notificationPreferences: UserNotificationPreferences
   twoFactor: UserTwoFactor
   lastLoginAt?: Date
@@ -31,7 +39,8 @@ export interface IUser {
 }
 
 export type RegisterPayload = {
-  name: string
+  firstName: string
+  lastName?: string
   email: string
   password: string
   countryCode: string
@@ -49,11 +58,15 @@ export type AuthTokens = {
 
 export type SanitizedUser = {
   id: string
-  name: string
+  firstName: string
+  lastName?: string
   email: string
   countryCode?: string
+  phone?: string
+  profilePicture?: string
   provider: UserAuthProvider
   isEmailVerified: boolean
+  isSuspended: boolean
   twoFactorEnabled: boolean
   notificationPreferences: UserNotificationPreferences
   lastLoginAt?: string

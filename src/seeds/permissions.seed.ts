@@ -30,24 +30,3 @@ export const seedPermissions = async (): Promise<void> => {
 
   logger.info(`Permissions seeded — created: ${created}, skipped: ${skipped}`)
 }
-
-if (require.main === module) {
-  void (async () => {
-    try {
-      await connectToDatabase()
-      await seedPermissions()
-      logger.info('Permission seed completed successfully.')
-      await disconnectFromDatabase()
-      process.exit(0)
-    } catch (error) {
-      logger.error('Permission seed failed.', {
-        error:
-          error instanceof Error
-            ? (error.stack ?? error.message)
-            : String(error),
-      })
-      await disconnectFromDatabase()
-      process.exit(1)
-    }
-  })()
-}

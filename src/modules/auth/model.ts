@@ -15,12 +15,6 @@ type UserEmailVerificationToken = {
   expiresAt: Date
 }
 
-type UserPasswordResetToken = {
-  userId: Schema.Types.ObjectId
-  tokenHash: string
-  expiresAt: Date
-}
-
 type UserLoginHistory = {
   userId: Schema.Types.ObjectId
   ipAddress?: string
@@ -52,7 +46,8 @@ const userTwoFactorSchema = new Schema<UserTwoFactor>(
 
 const userSchema = new Schema<UserDocument>(
   {
-    name: { type: String, required: true, trim: true },
+    firstName: { type: String, required: true, trim: true },
+    lastName: { type: String, required: false, trim: true },
     email: {
       type: String,
       required: true,
@@ -70,6 +65,8 @@ const userSchema = new Schema<UserDocument>(
       default: undefined,
       index: true,
     },
+    phone: { type: String, required: false, trim: true, default: undefined },
+    profilePicture: { type: String, required: false, default: undefined },
     passwordHash: { type: String, required: false },
     provider: {
       type: String,
@@ -79,6 +76,11 @@ const userSchema = new Schema<UserDocument>(
     },
     socialProviderId: { type: String, required: false, index: true },
     isEmailVerified: { type: Boolean, default: false },
+    isActive: { type: Boolean, default: true, index: true },
+    isSuspended: { type: Boolean, default: false, index: true },
+    suspendedAt: { type: Date, required: false, default: undefined },
+    suspensionReason: { type: String, required: false, default: undefined },
+    deletedAt: { type: Date, required: false, default: undefined },
     notificationPreferences: {
       type: notificationPreferencesSchema,
       default: () => ({ email: true, push: true }),
@@ -114,20 +116,6 @@ const emailVerificationTokenSchema = new Schema<UserEmailVerificationToken>(
 
 emailVerificationTokenSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 })
 
-const passwordResetTokenSchema = new Schema<UserPasswordResetToken>(
-  {
-    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    tokenHash: { type: String, required: true, unique: true, index: true },
-    expiresAt: { type: Date, required: true },
-  },
-  {
-    timestamps: true,
-    versionKey: false,
-  },
-)
-
-passwordResetTokenSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 })
-
 const loginHistorySchema = new Schema<UserLoginHistory>(
   {
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
@@ -152,11 +140,6 @@ export const UserEmailVerificationTokenModel =
     'UserEmailVerificationToken',
     emailVerificationTokenSchema,
   )
-
-export const UserPasswordResetTokenModel = model<UserPasswordResetToken>(
-  'UserPasswordResetToken',
-  passwordResetTokenSchema,
-)
 
 export const UserLoginHistoryModel = model<UserLoginHistory>(
   'UserLoginHistory',

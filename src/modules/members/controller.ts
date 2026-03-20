@@ -13,6 +13,16 @@ const getUserIdParam = (request: Parameters<RequestHandler>[0]): string => {
   return id
 }
 
+const getActorId = (
+  request: Parameters<RequestHandler>[0],
+): string | undefined => {
+  if (request.auth?.type !== 'staff') {
+    return undefined
+  }
+
+  return request.auth.sub
+}
+
 export const membersController = {
   listMembers: catchAsync(async (request: any, res: any) => {
     const query = request.query as any
@@ -50,7 +60,12 @@ export const membersController = {
     const userId = getUserIdParam(request)
     const { reason } = request.body
 
-    const result = await membersService.suspendMember(userId, reason)
+    const result = await membersService.suspendMember(
+      userId,
+      reason,
+      getActorId(request),
+      request.id,
+    )
 
     sendResponse(res, {
       statusCode: 200,
@@ -63,12 +78,33 @@ export const membersController = {
   unsuspendMember: catchAsync(async (request: any, res: any) => {
     const userId = getUserIdParam(request)
 
-    const result = await membersService.unsuspendMember(userId)
+    const result = await membersService.unsuspendMember(
+      userId,
+      getActorId(request),
+      request.id,
+    )
 
     sendResponse(res, {
       statusCode: 200,
       success: true,
-      message: 'Member unsuspended successfully.',
+      message: 'Member unsuspend successfully.',
+      data: result,
+    })
+  }) as RequestHandler,
+
+  deleteMember: catchAsync(async (request: any, res: any) => {
+    const userId = getUserIdParam(request)
+
+    const result = await membersService.deleteMember(
+      userId,
+      getActorId(request),
+      request.id,
+    )
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: 'Member deleted successfully.',
       data: result,
     })
   }) as RequestHandler,

@@ -13,9 +13,10 @@ export interface IStaff {
   email: string
   passwordHash: string
   phone: string | undefined
-  roleId: Types.ObjectId
+  roleId?: Types.ObjectId
   isSuperAdmin: boolean
   isActive: boolean
+  deletedAt?: Date
   twoFactor: IStaffTwoFactor
   createdAt: Date
   updatedAt: Date

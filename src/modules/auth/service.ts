@@ -155,7 +155,8 @@ export const authService = {
     const passwordHash = await hashWithScrypt(payload.password)
 
     const user = await UserModel.create({
-      name: payload.name,
+      firstName: payload.firstName,
+      ...(payload.lastName ? { lastName: payload.lastName } : {}),
       email: payload.email,
       countryCode: payload.countryCode.toUpperCase(),
       passwordHash,
@@ -450,6 +451,10 @@ export const authService = {
     profile: SocialProfile,
     request?: Request,
   ): Promise<{ user: SanitizedUser; tokens: AuthTokens }> => {
+    const nameParts = (profile.name ?? '').trim().split(/\s+/)
+    const firstName = nameParts[0] ?? profile.name
+    const lastName = nameParts.slice(1).join(' ') || undefined
+
     let user = await UserModel.findOne({
       $or: [
         { email: profile.email },
@@ -459,13 +464,16 @@ export const authService = {
 
     if (!user) {
       user = await UserModel.create({
-        name: profile.name,
+        firstName,
+        ...(lastName ? { lastName } : {}),
         email: profile.email,
         provider: profile.provider,
         socialProviderId: profile.providerId,
         isEmailVerified: true,
       })
     } else {
+      user.firstName = firstName
+      user.lastName = lastName
       user.provider = profile.provider
       user.socialProviderId = profile.providerId
       user.isEmailVerified = true
@@ -521,7 +529,10 @@ export const authService = {
   updateMe: async (
     userId: string,
     payload: {
-      name?: string
+      firstName?: string
+      lastName?: string
+      phone?: string
+      profilePicture?: string
       countryCode?: string
       notificationPreferences?: Partial<UserNotificationPreferences>
     },
@@ -532,8 +543,20 @@ export const authService = {
       throw new AppError('User not found.', 404)
     }
 
-    if (payload.name) {
-      user.name = payload.name
+    if (payload.firstName) {
+      user.firstName = payload.firstName
+    }
+
+    if (typeof payload.lastName !== 'undefined') {
+      user.lastName = payload.lastName || undefined
+    }
+
+    if (typeof payload.phone !== 'undefined') {
+      user.phone = payload.phone || undefined
+    }
+
+    if (typeof payload.profilePicture !== 'undefined') {
+      user.profilePicture = payload.profilePicture || undefined
     }
 
     if (payload.countryCode) {

@@ -24,8 +24,7 @@ const buildStaffSummary = (staff: IStaff | null) => {
     name: staff.name,
     email: staff.email,
     phone: staff.phone,
-    roleId: staff.roleId.toString(),
-    isSuperAdmin: staff.isSuperAdmin,
+    ...(staff.roleId ? { roleId: staff.roleId.toString() } : {}),
     isActive: staff.isActive,
     twoFactorEnabled: staff.twoFactor.enabled,
     createdAt: staff.createdAt.toISOString(),
@@ -110,6 +109,11 @@ export const staffService = {
       throw new AppError('Super Admin cannot be reinvited', 403)
     }
 
+    await StaffInviteTokenModel.deleteMany({
+      email: staff.email,
+      usedAt: null,
+    })
+
     const rawToken = generateRandomToken(24)
     const tokenHash = hashStringSha256(rawToken)
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
@@ -148,12 +152,19 @@ export const staffService = {
   },
 
   listStaff: async () => {
-    const staffRows = await StaffModel.find({}).sort({ createdAt: -1 })
+    const staffRows = await StaffModel.find({ deletedAt: null }).sort({
+      createdAt: -1,
+    })
     return staffRows.map((row) => buildStaffSummary(row))
   },
 
   getStaffById: async (staffId: string) => {
     const staff = await StaffModel.findById(staffId)
+
+    if (staff?.deletedAt) {
+      throw new AppError('Staff not found.', 404)
+    }
+
     return buildStaffSummary(staff)
   },
 
@@ -270,6 +281,7 @@ export const staffService = {
 
   removeStaff: async (
     staffId: string,
+    requestingStaffId: string,
     actorId?: string,
     requestId?: string,
   ) => {
@@ -283,7 +295,13 @@ export const staffService = {
       throw new AppError('Super Admin cannot be deleted', 403)
     }
 
-    await StaffModel.deleteOne({ _id: staff._id })
+    if (staffId === requestingStaffId) {
+      throw new AppError('You cannot delete your own account', 400)
+    }
+
+    staff.isActive = false
+    staff.deletedAt = new Date()
+    await staff.save()
 
     await auditService.logEvent({
       actor: { id: actorId ?? 'system', type: 'staff' },
@@ -294,6 +312,45 @@ export const staffService = {
       description: 'Staff account deleted.',
       ...(requestId ? { requestId } : {}),
     })
+  },
+
+  resetStaffTwoFactor: async (
+    staffId: string,
+    requestingStaffId: string,
+    actorId?: string,
+    requestId?: string,
+  ) => {
+    const staff = await StaffModel.findById(staffId)
+
+    if (!staff) {
+      throw new AppError('Staff not found.', 404)
+    }
+
+    if (staff.isSuperAdmin) {
+      throw new AppError('Super Admin 2FA cannot be reset', 403)
+    }
+
+    if (staffId === requestingStaffId) {
+      throw new AppError('Cannot reset your own 2FA', 400)
+    }
+
+    staff.twoFactor.enabled = false
+    staff.twoFactor.secret = undefined
+    staff.twoFactor.pendingSecret = undefined
+    staff.twoFactor.lastVerifiedAt = undefined
+    await staff.save()
+
+    await auditService.logEvent({
+      actor: { id: actorId ?? 'system', type: 'staff' },
+      action: 'staff.2fa.reset',
+      module: 'staff',
+      targetId: staffId,
+      targetType: 'staff',
+      description: 'Staff 2FA reset by admin.',
+      ...(requestId ? { requestId } : {}),
+    })
+
+    return buildStaffSummary(staff)
   },
 
   createStaffFromInvite: async (payload: {

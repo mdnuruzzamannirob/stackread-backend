@@ -161,17 +161,42 @@ export const removeStaff: RequestHandler = catchAsync(
     const staffId = getIdParam(request)
     const actorId = getActorId(request)
 
-    if (actorId === staffId) {
-      throw new AppError('You cannot delete yourself.', 400)
+    if (!actorId) {
+      throw new AppError('Staff authentication is required.', 401)
     }
 
-    await staffService.removeStaff(staffId, actorId, request.id)
+    await staffService.removeStaff(staffId, actorId, actorId, request.id)
 
     sendResponse(response, {
       statusCode: 200,
       success: true,
       message: 'Staff removed successfully.',
       data: null,
+    })
+  },
+)
+
+export const resetTwoFactor: RequestHandler = catchAsync(
+  async (request, response) => {
+    const staffId = getIdParam(request)
+    const actorId = getActorId(request)
+
+    if (!actorId) {
+      throw new AppError('Staff authentication is required.', 401)
+    }
+
+    const data = await staffService.resetStaffTwoFactor(
+      staffId,
+      actorId,
+      actorId,
+      request.id,
+    )
+
+    sendResponse(response, {
+      statusCode: 200,
+      success: true,
+      message: 'Staff 2FA reset successfully.',
+      data,
     })
   },
 )

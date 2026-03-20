@@ -11,6 +11,7 @@ import {
   listStaff,
   reinviteStaff,
   removeStaff,
+  resetTwoFactor,
   suspendStaff,
   unsuspendStaff,
   updateStaffRole,
@@ -67,6 +68,12 @@ router.patch(
   requirePermission(PERMISSIONS.STAFF_MANAGE),
   validateRequest({ params: staffValidation.idParam }),
   unsuspendStaff,
+)
+router.post(
+  '/:id/2fa/reset',
+  requirePermission(PERMISSIONS.STAFF_MANAGE),
+  validateRequest({ params: staffValidation.idParam }),
+  resetTwoFactor,
 )
 router.delete(
   '/:id',

@@ -2,7 +2,8 @@ import { z } from 'zod'
 
 export const authValidation = {
   registerBody: z.object({
-    name: z.string().trim().min(2).max(100),
+    firstName: z.string().trim().min(1).max(100),
+    lastName: z.string().trim().min(1).max(100).optional(),
     email: z.string().trim().email(),
     password: z.string().min(8).max(72),
     countryCode: z.string().trim().length(2).toUpperCase(),
@@ -74,7 +75,10 @@ export const authValidation = {
   }),
   updateMeBody: z
     .object({
-      name: z.string().trim().min(2).max(100).optional(),
+      firstName: z.string().trim().min(1).max(100).optional(),
+      lastName: z.string().trim().min(1).max(100).optional(),
+      phone: z.string().trim().min(6).max(32).optional(),
+      profilePicture: z.string().trim().url().optional(),
       countryCode: z.string().trim().min(2).max(3).toUpperCase().optional(),
       notificationPreferences: z
         .object({
@@ -85,7 +89,10 @@ export const authValidation = {
     })
     .refine(
       (value) =>
-        typeof value.name !== 'undefined' ||
+        typeof value.firstName !== 'undefined' ||
+        typeof value.lastName !== 'undefined' ||
+        typeof value.phone !== 'undefined' ||
+        typeof value.profilePicture !== 'undefined' ||
         typeof value.countryCode !== 'undefined' ||
         typeof value.notificationPreferences !== 'undefined',
       {

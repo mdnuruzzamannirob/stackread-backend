@@ -376,13 +376,16 @@ export const rbacService = {
       throw new AppError('System roles cannot be deleted.', 400)
     }
 
-    const superAdmin = await StaffModel.findOne({
-      isSuperAdmin: true,
+    const assignedStaffCount = await StaffModel.countDocuments({
       roleId: role._id,
+      deletedAt: null,
     })
 
-    if (superAdmin) {
-      throw new AppError('Cannot delete role assigned to Super Admin', 403)
+    if (assignedStaffCount > 0) {
+      throw new AppError(
+        `Cannot delete role — ${assignedStaffCount} staff member(s) are assigned to it`,
+        400,
+      )
     }
 
     await role.deleteOne()

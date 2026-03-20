@@ -51,6 +51,16 @@ router.patch(
   membersController.unsuspendMember,
 )
 
+router.delete(
+  '/:userId',
+  authenticateStaff,
+  requirePermission(PERMISSIONS.MEMBERS_MANAGE),
+  validateRequest({
+    params: membersValidation.userIdParam,
+  }),
+  membersController.deleteMember,
+)
+
 router.get(
   '/:userId/reading-history',
   authenticateStaff,

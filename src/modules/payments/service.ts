@@ -558,7 +558,7 @@ const getUserCountryCode = async (userId: string) => {
 
   return {
     countryCode: normalizeCountryCode(user.countryCode),
-    name: user.name,
+    name: [user.firstName, user.lastName].filter(Boolean).join(' ').trim(),
     email: user.email,
   }
 }
