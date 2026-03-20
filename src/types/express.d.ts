@@ -9,7 +9,9 @@ export interface BaseJwtPayload {
   type: AuthActorType
   email?: string
   role?: string
+  roleId?: string
   permissions?: string[]
+  isSuperAdmin?: boolean
   pending2FA?: boolean
   mustSetup2FA?: boolean
   iat?: number
@@ -26,7 +28,7 @@ declare global {
         query?: unknown
         params?: unknown
       }
-      auth?: BaseJwtPayload
+      auth: BaseJwtPayload
       rawBody?: Buffer
     }
 

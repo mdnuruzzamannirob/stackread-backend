@@ -1,5 +1,6 @@
 import { Router } from 'express'
 
+import { PERMISSIONS } from '../../common/constants/permissions'
 import { authenticateStaff } from '../../common/middlewares/auth'
 import { requirePermission } from '../../common/middlewares/requirePermission'
 import { validateRequest } from '../../common/middlewares/validateRequest'
@@ -41,21 +42,21 @@ router.get(
 router.post(
   '/admin/books',
   authenticateStaff,
-  requirePermission('books.manage'),
+  requirePermission(PERMISSIONS.BOOKS_MANAGE),
   validateRequest({ body: booksValidation.createBody }),
   createBook,
 )
 router.post(
   '/admin/books/bulk-import',
   authenticateStaff,
-  requirePermission('books.manage'),
+  requirePermission(PERMISSIONS.BOOKS_MANAGE),
   validateRequest({ body: booksValidation.bulkImportBody }),
   bulkImportBooks,
 )
 router.post(
   '/admin/books/:id/files',
   authenticateStaff,
-  requirePermission('books.manage'),
+  requirePermission(PERMISSIONS.BOOKS_MANAGE),
   validateRequest({
     params: booksValidation.idParam,
     body: booksValidation.addFileBody,
@@ -65,7 +66,7 @@ router.post(
 router.put(
   '/admin/books/:id',
   authenticateStaff,
-  requirePermission('books.manage'),
+  requirePermission(PERMISSIONS.BOOKS_MANAGE),
   validateRequest({
     params: booksValidation.idParam,
     body: booksValidation.updateBody,
@@ -75,7 +76,7 @@ router.put(
 router.patch(
   '/admin/books/:id/featured',
   authenticateStaff,
-  requirePermission('books.manage'),
+  requirePermission(PERMISSIONS.BOOKS_MANAGE),
   validateRequest({
     params: booksValidation.idParam,
     body: booksValidation.toggleFeaturedBody,
@@ -85,7 +86,7 @@ router.patch(
 router.patch(
   '/admin/books/:id/available',
   authenticateStaff,
-  requirePermission('books.manage'),
+  requirePermission(PERMISSIONS.BOOKS_MANAGE),
   validateRequest({
     params: booksValidation.idParam,
     body: booksValidation.toggleAvailabilityBody,
@@ -95,14 +96,14 @@ router.patch(
 router.delete(
   '/admin/books/:id',
   authenticateStaff,
-  requirePermission('books.manage'),
+  requirePermission(PERMISSIONS.BOOKS_MANAGE),
   validateRequest({ params: booksValidation.idParam }),
   deleteBook,
 )
 router.delete(
   '/admin/books/:id/files/:fid',
   authenticateStaff,
-  requirePermission('books.manage'),
+  requirePermission(PERMISSIONS.BOOKS_MANAGE),
   validateRequest({ params: booksValidation.idWithFileParam }),
   deleteBookFile,
 )

@@ -33,7 +33,7 @@ const staffSchema = new Schema<StaffDocument>(
       required: true,
       index: true,
     },
-    isSuperAdmin: { type: Boolean, default: false },
+    isSuperAdmin: { type: Boolean, default: false, immutable: true },
     isActive: { type: Boolean, default: true, index: true },
     twoFactor: {
       type: twoFactorSchema,

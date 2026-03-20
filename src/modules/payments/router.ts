@@ -1,5 +1,6 @@
 import { Router } from 'express'
 
+import { PERMISSIONS } from '../../common/constants/permissions'
 import {
   authenticateStaff,
   authenticateUser,
@@ -49,20 +50,20 @@ router.post(
 router.get(
   '/payments',
   authenticateStaff,
-  requirePermission('payments.view'),
+  requirePermission(PERMISSIONS.PAYMENTS_VIEW),
   listPayments,
 )
 router.get(
   '/payments/:id',
   authenticateStaff,
-  requirePermission('payments.view'),
+  requirePermission(PERMISSIONS.PAYMENTS_VIEW),
   validateRequest({ params: paymentsValidation.idParam }),
   getPaymentById,
 )
 router.post(
   '/payments/:id/refund',
   authenticateStaff,
-  requirePermission('payments.manage'),
+  requirePermission(PERMISSIONS.PAYMENTS_MANAGE),
   validateRequest({
     params: paymentsValidation.idParam,
     body: paymentsValidation.refundBody,

@@ -1,4 +1,5 @@
 import { AppError } from '../../common/errors/AppError'
+import { StaffModel } from '../staff/model'
 import type { PermissionSeed } from './interface'
 import { PermissionModel, RoleModel } from './model'
 
@@ -373,6 +374,15 @@ export const rbacService = {
 
     if (role.isSystem) {
       throw new AppError('System roles cannot be deleted.', 400)
+    }
+
+    const superAdmin = await StaffModel.findOne({
+      isSuperAdmin: true,
+      roleId: role._id,
+    })
+
+    if (superAdmin) {
+      throw new AppError('Cannot delete role assigned to Super Admin', 403)
     }
 
     await role.deleteOne()

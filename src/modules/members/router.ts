@@ -1,5 +1,6 @@
 import express from 'express'
 
+import { PERMISSIONS } from '../../common/constants/permissions'
 import { authenticateStaff } from '../../common/middlewares/auth'
 import { requirePermission } from '../../common/middlewares/requirePermission'
 import { validateRequest } from '../../common/middlewares/validateRequest'
@@ -12,7 +13,7 @@ const router = express.Router()
 router.get(
   '/',
   authenticateStaff,
-  requirePermission('members.view'),
+  requirePermission(PERMISSIONS.MEMBERS_VIEW),
   validateRequest({
     query: membersValidation.listQuery,
   }),
@@ -22,7 +23,7 @@ router.get(
 router.get(
   '/:userId',
   authenticateStaff,
-  requirePermission('members.view'),
+  requirePermission(PERMISSIONS.MEMBERS_VIEW),
   validateRequest({
     params: membersValidation.userIdParam,
   }),
@@ -32,7 +33,7 @@ router.get(
 router.patch(
   '/:userId/suspend',
   authenticateStaff,
-  requirePermission('members.manage'),
+  requirePermission(PERMISSIONS.MEMBERS_MANAGE),
   validateRequest({
     params: membersValidation.userIdParam,
     body: membersValidation.suspendBody,
@@ -43,7 +44,7 @@ router.patch(
 router.patch(
   '/:userId/unsuspend',
   authenticateStaff,
-  requirePermission('members.manage'),
+  requirePermission(PERMISSIONS.MEMBERS_MANAGE),
   validateRequest({
     params: membersValidation.userIdParam,
   }),
@@ -53,7 +54,7 @@ router.patch(
 router.get(
   '/:userId/reading-history',
   authenticateStaff,
-  requirePermission('members.view'),
+  requirePermission(PERMISSIONS.MEMBERS_VIEW),
   validateRequest({
     params: membersValidation.userIdParam,
     query: membersValidation.readingHistoryQuery,
@@ -64,7 +65,7 @@ router.get(
 router.get(
   '/:userId/payments',
   authenticateStaff,
-  requirePermission('members.view'),
+  requirePermission(PERMISSIONS.MEMBERS_VIEW),
   validateRequest({
     params: membersValidation.userIdParam,
     query: membersValidation.paymentHistoryQuery,

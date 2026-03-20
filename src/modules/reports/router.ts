@@ -1,6 +1,7 @@
 import type { RequestHandler } from 'express'
 import express from 'express'
 
+import { PERMISSIONS } from '../../common/constants/permissions'
 import { authenticateStaff } from '../../common/middlewares/auth'
 import { requirePermission } from '../../common/middlewares/requirePermission'
 import { validateRequest } from '../../common/middlewares/validateRequest'
@@ -12,7 +13,7 @@ const router = express.Router()
 router.post(
   '/',
   authenticateStaff,
-  requirePermission('reports.manage'),
+  requirePermission(PERMISSIONS.REPORTS_MANAGE),
   validateRequest({
     body: reportsValidation.createBody,
   }),
@@ -22,7 +23,7 @@ router.post(
 router.get(
   '/',
   authenticateStaff,
-  requirePermission('reports.view'),
+  requirePermission(PERMISSIONS.REPORTS_VIEW),
   validateRequest({
     query: reportsValidation.listQuery,
   }),
@@ -32,21 +33,21 @@ router.get(
 router.get(
   '/admin-overview',
   authenticateStaff,
-  requirePermission('reports.view'),
+  requirePermission(PERMISSIONS.REPORTS_VIEW),
   reportsController.adminOverviewSnapshot as RequestHandler,
 )
 
 router.post(
   '/process',
   authenticateStaff,
-  requirePermission('reports.manage'),
+  requirePermission(PERMISSIONS.REPORTS_MANAGE),
   reportsController.processPendingReports as RequestHandler,
 )
 
 router.get(
   '/:reportId',
   authenticateStaff,
-  requirePermission('reports.view'),
+  requirePermission(PERMISSIONS.REPORTS_VIEW),
   validateRequest({
     params: reportsValidation.reportIdParam,
   }),
@@ -56,7 +57,7 @@ router.get(
 router.get(
   '/:reportId/download',
   authenticateStaff,
-  requirePermission('reports.view'),
+  requirePermission(PERMISSIONS.REPORTS_VIEW),
   validateRequest({
     params: reportsValidation.reportIdParam,
   }),

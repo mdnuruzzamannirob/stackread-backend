@@ -1,5 +1,6 @@
 import { Router } from 'express'
 
+import { PERMISSIONS } from '../../common/constants/permissions'
 import {
   authenticateStaff,
   authenticateUser,
@@ -39,14 +40,14 @@ router.delete(
 router.get(
   '/reservations',
   authenticateStaff,
-  requirePermission('reservations.view'),
+  requirePermission(PERMISSIONS.RESERVATIONS_VIEW),
   validateRequest({ query: reservationsValidation.query }),
   listReservations,
 )
 router.patch(
   '/reservations/:id',
   authenticateStaff,
-  requirePermission('reservations.manage'),
+  requirePermission(PERMISSIONS.RESERVATIONS_MANAGE),
   validateRequest({
     params: reservationsValidation.idParam,
     body: reservationsValidation.staffUpdateBody,

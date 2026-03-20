@@ -1,6 +1,7 @@
 import type { RequestHandler } from 'express'
 import express from 'express'
 
+import { PERMISSIONS } from '../../common/constants/permissions'
 import { authenticateStaff } from '../../common/middlewares/auth'
 import { requirePermission } from '../../common/middlewares/requirePermission'
 import { validateRequest } from '../../common/middlewares/validateRequest'
@@ -12,14 +13,14 @@ const router = express.Router()
 router.get(
   '/',
   authenticateStaff,
-  requirePermission('settings.view'),
+  requirePermission(PERMISSIONS.SETTINGS_VIEW),
   settingsController.getGlobalSettings as RequestHandler,
 )
 
 router.put(
   '/',
   authenticateStaff,
-  requirePermission('settings.manage'),
+  requirePermission(PERMISSIONS.SETTINGS_MANAGE),
   validateRequest({
     body: settingsValidation.updateBody,
   }),

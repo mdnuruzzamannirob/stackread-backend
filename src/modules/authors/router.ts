@@ -1,5 +1,6 @@
 import { Router } from 'express'
 
+import { PERMISSIONS } from '../../common/constants/permissions'
 import { authenticateStaff } from '../../common/middlewares/auth'
 import { requirePermission } from '../../common/middlewares/requirePermission'
 import { validateRequest } from '../../common/middlewares/validateRequest'
@@ -28,14 +29,14 @@ router.get(
 router.post(
   '/',
   authenticateStaff,
-  requirePermission('authors.manage'),
+  requirePermission(PERMISSIONS.AUTHORS_MANAGE),
   validateRequest({ body: authorsValidation.createBody }),
   createAuthor,
 )
 router.put(
   '/:id',
   authenticateStaff,
-  requirePermission('authors.manage'),
+  requirePermission(PERMISSIONS.AUTHORS_MANAGE),
   validateRequest({
     params: authorsValidation.idParam,
     body: authorsValidation.updateBody,
@@ -45,7 +46,7 @@ router.put(
 router.delete(
   '/:id',
   authenticateStaff,
-  requirePermission('authors.manage'),
+  requirePermission(PERMISSIONS.AUTHORS_MANAGE),
   validateRequest({ params: authorsValidation.idParam }),
   deleteAuthor,
 )

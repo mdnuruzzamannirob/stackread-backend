@@ -1,5 +1,6 @@
 import express from 'express'
 
+import { PERMISSIONS } from '../../common/constants/permissions'
 import {
   authenticateStaff,
   authenticateUser,
@@ -49,7 +50,7 @@ router.get(
 router.post(
   '/bulk-send',
   authenticateStaff,
-  requirePermission('notifications.manage'),
+  requirePermission(PERMISSIONS.NOTIFICATIONS_MANAGE),
   validateRequest({
     body: notificationsValidation.bulkSendBody,
   }),

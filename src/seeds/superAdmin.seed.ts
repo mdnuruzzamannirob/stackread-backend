@@ -9,6 +9,13 @@ import { StaffModel } from '../modules/staff/model'
 export const seedSuperAdmin = async (): Promise<void> => {
   await rbacService.ensurePermissionSeed()
 
+  const existingSuperAdmin = await StaffModel.findOne({ isSuperAdmin: true })
+
+  if (existingSuperAdmin) {
+    logger.info('Super Admin already exists — skipping seed')
+    return
+  }
+
   const allPermissionKeys = defaultPermissionSeeds.map(
     (permission) => permission.key,
   )
@@ -32,27 +39,28 @@ export const seedSuperAdmin = async (): Promise<void> => {
   const password = config.superAdmin.password
   const name = config.superAdmin.name
 
-  const existing = await StaffModel.findOne({ email })
-
-  if (existing) {
-    existing.isSuperAdmin = true
-    existing.isActive = true
-    existing.roleId = role._id
-    await existing.save()
-    return
-  }
-
   const passwordHash = await hashWithScrypt(password)
 
-  await StaffModel.create({
-    name,
-    email,
-    passwordHash,
-    roleId: role._id,
-    isSuperAdmin: true,
-    isActive: true,
-    twoFactor: { enabled: false },
-  })
+  await StaffModel.findOneAndUpdate(
+    { isSuperAdmin: true },
+    {
+      $setOnInsert: {
+        name,
+        email,
+        passwordHash,
+        roleId: role._id,
+        isSuperAdmin: true,
+        isActive: true,
+        twoFactor: { enabled: false },
+      },
+    },
+    {
+      upsert: true,
+      new: true,
+    },
+  )
+
+  logger.info('Super Admin seeded successfully')
 }
 
 if (require.main === module) {

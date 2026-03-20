@@ -1,6 +1,7 @@
 import type { RequestHandler } from 'express'
 import express from 'express'
 
+import { PERMISSIONS } from '../../common/constants/permissions'
 import { authenticateStaff } from '../../common/middlewares/auth'
 import { requirePermission } from '../../common/middlewares/requirePermission'
 import { validateRequest } from '../../common/middlewares/validateRequest'
@@ -12,7 +13,7 @@ const router = express.Router()
 router.post(
   '/activity',
   authenticateStaff,
-  requirePermission('audit.manage'),
+  requirePermission(PERMISSIONS.AUDIT_MANAGE),
   validateRequest({
     body: auditValidation.createBody,
   }),
@@ -22,7 +23,7 @@ router.post(
 router.get(
   '/logs',
   authenticateStaff,
-  requirePermission('audit.view'),
+  requirePermission(PERMISSIONS.AUDIT_VIEW),
   validateRequest({
     query: auditValidation.listQuery,
   }),
@@ -32,7 +33,7 @@ router.get(
 router.get(
   '/logs/export',
   authenticateStaff,
-  requirePermission('audit.view'),
+  requirePermission(PERMISSIONS.AUDIT_VIEW),
   validateRequest({
     query: auditValidation.exportQuery,
   }),

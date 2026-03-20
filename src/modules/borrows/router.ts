@@ -1,5 +1,6 @@
 import { Router } from 'express'
 
+import { PERMISSIONS } from '../../common/constants/permissions'
 import {
   authenticateStaff,
   authenticateUser,
@@ -42,14 +43,14 @@ router.post(
 router.get(
   '/borrows',
   authenticateStaff,
-  requirePermission('borrows.view'),
+  requirePermission(PERMISSIONS.BORROWS_VIEW),
   validateRequest({ query: borrowsValidation.query }),
   listBorrows,
 )
 router.patch(
   '/borrows/:id',
   authenticateStaff,
-  requirePermission('borrows.manage'),
+  requirePermission(PERMISSIONS.BORROWS_MANAGE),
   validateRequest({
     params: borrowsValidation.idParam,
     body: borrowsValidation.staffUpdateBody,

@@ -1,5 +1,6 @@
 import { Router } from 'express'
 
+import { PERMISSIONS } from '../../common/constants/permissions'
 import {
   authenticateStaff,
   authenticateUser,
@@ -47,27 +48,27 @@ router.patch(
 router.get(
   '/',
   authenticateStaff,
-  requirePermission('subscriptions.view'),
+  requirePermission(PERMISSIONS.SUBSCRIPTIONS_VIEW),
   listSubscriptions,
 )
 router.get(
   '/:id',
   authenticateStaff,
-  requirePermission('subscriptions.view'),
+  requirePermission(PERMISSIONS.SUBSCRIPTIONS_VIEW),
   validateRequest({ params: subscriptionsValidation.idParam }),
   getSubscriptionById,
 )
 router.post(
   '/',
   authenticateStaff,
-  requirePermission('subscriptions.manage'),
+  requirePermission(PERMISSIONS.SUBSCRIPTIONS_MANAGE),
   validateRequest({ body: subscriptionsValidation.createBody }),
   createSubscription,
 )
 router.patch(
   '/:id',
   authenticateStaff,
-  requirePermission('subscriptions.manage'),
+  requirePermission(PERMISSIONS.SUBSCRIPTIONS_MANAGE),
   validateRequest({
     params: subscriptionsValidation.idParam,
     body: subscriptionsValidation.adminUpdateBody,

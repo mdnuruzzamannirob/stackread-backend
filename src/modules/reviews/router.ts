@@ -1,5 +1,6 @@
 import { Router } from 'express'
 
+import { PERMISSIONS } from '../../common/constants/permissions'
 import {
   authenticateStaff,
   authenticateUser,
@@ -54,14 +55,14 @@ router.delete(
 router.get(
   '/admin/reviews',
   authenticateStaff,
-  requirePermission('reviews.view'),
+  requirePermission(PERMISSIONS.REVIEWS_VIEW),
   validateRequest({ query: reviewsValidation.query }),
   listReviewsForAdmin,
 )
 router.patch(
   '/admin/reviews/:id/toggle',
   authenticateStaff,
-  requirePermission('reviews.manage'),
+  requirePermission(PERMISSIONS.REVIEWS_MANAGE),
   validateRequest({
     params: reviewsValidation.idParam,
     body: reviewsValidation.toggleVisibilityBody,

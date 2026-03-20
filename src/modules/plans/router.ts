@@ -1,5 +1,6 @@
 import { Router } from 'express'
 
+import { PERMISSIONS } from '../../common/constants/permissions'
 import { authenticateStaff } from '../../common/middlewares/auth'
 import { requirePermission } from '../../common/middlewares/requirePermission'
 import { validateRequest } from '../../common/middlewares/validateRequest'
@@ -24,14 +25,14 @@ router.get(
 router.post(
   '/',
   authenticateStaff,
-  requirePermission('plans.manage'),
+  requirePermission(PERMISSIONS.PLANS_MANAGE),
   validateRequest({ body: plansValidation.createBody }),
   createPlan,
 )
 router.put(
   '/:id',
   authenticateStaff,
-  requirePermission('plans.manage'),
+  requirePermission(PERMISSIONS.PLANS_MANAGE),
   validateRequest({
     params: plansValidation.idParam,
     body: plansValidation.updateBody,
@@ -41,7 +42,7 @@ router.put(
 router.patch(
   '/:id/toggle',
   authenticateStaff,
-  requirePermission('plans.manage'),
+  requirePermission(PERMISSIONS.PLANS_MANAGE),
   validateRequest({ params: plansValidation.idParam }),
   togglePlan,
 )

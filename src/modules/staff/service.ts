@@ -106,6 +106,10 @@ export const staffService = {
       throw new AppError('Staff not found.', 404)
     }
 
+    if (staff.isSuperAdmin) {
+      throw new AppError('Super Admin cannot be reinvited', 403)
+    }
+
     const rawToken = generateRandomToken(24)
     const tokenHash = hashStringSha256(rawToken)
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
@@ -179,6 +183,10 @@ export const staffService = {
       throw new AppError('Staff not found.', 404)
     }
 
+    if (staff.isSuperAdmin) {
+      throw new AppError('Super Admin role cannot be modified', 403)
+    }
+
     const role = await RoleModel.findById(roleId)
 
     if (!role) {
@@ -211,6 +219,10 @@ export const staffService = {
 
     if (!staff) {
       throw new AppError('Staff not found.', 404)
+    }
+
+    if (staff.isSuperAdmin) {
+      throw new AppError('Super Admin cannot be suspended', 403)
     }
 
     staff.isActive = false
@@ -265,6 +277,10 @@ export const staffService = {
 
     if (!staff) {
       throw new AppError('Staff not found.', 404)
+    }
+
+    if (staff.isSuperAdmin) {
+      throw new AppError('Super Admin cannot be deleted', 403)
     }
 
     await StaffModel.deleteOne({ _id: staff._id })

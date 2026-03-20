@@ -1,5 +1,6 @@
 import { Router } from 'express'
 
+import { PERMISSIONS } from '../../common/constants/permissions'
 import { authenticateStaff } from '../../common/middlewares/auth'
 import { requirePermission } from '../../common/middlewares/requirePermission'
 import { validateRequest } from '../../common/middlewares/validateRequest'
@@ -17,23 +18,27 @@ const router = Router()
 
 router.use(authenticateStaff)
 
-router.get('/permissions', requirePermission('rbac.view'), listPermissions)
-router.get('/roles', requirePermission('rbac.view'), listRoles)
+router.get(
+  '/permissions',
+  requirePermission(PERMISSIONS.RBAC_VIEW),
+  listPermissions,
+)
+router.get('/roles', requirePermission(PERMISSIONS.RBAC_VIEW), listRoles)
 router.get(
   '/roles/:id',
-  requirePermission('rbac.view'),
+  requirePermission(PERMISSIONS.RBAC_VIEW),
   validateRequest({ params: rbacValidation.idParam }),
   getRoleById,
 )
 router.post(
   '/roles',
-  requirePermission('rbac.manage'),
+  requirePermission(PERMISSIONS.RBAC_MANAGE),
   validateRequest({ body: rbacValidation.createRoleBody }),
   createRole,
 )
 router.put(
   '/roles/:id',
-  requirePermission('rbac.manage'),
+  requirePermission(PERMISSIONS.RBAC_MANAGE),
   validateRequest({
     params: rbacValidation.idParam,
     body: rbacValidation.updateRoleBody,
@@ -42,7 +47,7 @@ router.put(
 )
 router.delete(
   '/roles/:id',
-  requirePermission('rbac.manage'),
+  requirePermission(PERMISSIONS.RBAC_MANAGE),
   validateRequest({ params: rbacValidation.idParam }),
   deleteRole,
 )

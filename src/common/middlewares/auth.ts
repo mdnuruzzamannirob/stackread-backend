@@ -1,5 +1,7 @@
 import type { RequestHandler } from 'express'
 
+import { RoleModel } from '../../modules/rbac/model'
+import { StaffModel } from '../../modules/staff/model'
 import { AppError } from '../errors/AppError'
 import { extractBearerToken, verifyAccessToken } from '../utils/token'
 
@@ -28,11 +30,49 @@ export const authenticateUser: RequestHandler = (request, _response, next) => {
   }
 }
 
-export const authenticateStaff: RequestHandler = (request, _response, next) => {
+export const authenticateStaff: RequestHandler = async (
+  request,
+  _response,
+  next,
+) => {
   try {
     const token = resolveTokenFromRequest(request.header('authorization'))
     const payload = verifyAccessToken(token, 'staff')
-    request.auth = payload
+    const staffId = payload.id ?? payload.sub
+
+    if (!staffId) {
+      throw new AppError('Unauthorized. Invalid or expired staff token.', 401)
+    }
+
+    const staff = await StaffModel.findById(staffId)
+      .select('_id email roleId isSuperAdmin isActive')
+      .lean()
+
+    if (!staff || !staff.isActive) {
+      throw new AppError('Unauthorized. Invalid or expired staff token.', 401)
+    }
+
+    const role = await RoleModel.findById(staff.roleId)
+      .select('name permissions')
+      .lean()
+
+    if (!role) {
+      throw new AppError('Unauthorized. Invalid or expired staff token.', 401)
+    }
+
+    request.auth = {
+      ...payload,
+      id: staff._id.toString(),
+      sub: staff._id.toString(),
+      email: staff.email,
+      roleId: staff.roleId.toString(),
+      role: staff.isSuperAdmin ? 'super-admin' : role.name,
+      permissions: staff.isSuperAdmin ? ['*'] : role.permissions,
+      isSuperAdmin: staff.isSuperAdmin,
+      type: 'staff',
+      actorType: 'staff',
+    }
+
     next()
   } catch (error) {
     next(
