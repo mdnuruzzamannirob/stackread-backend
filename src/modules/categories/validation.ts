@@ -17,7 +17,8 @@ const baseCategoryBodySchema = z.object({
     .min(2)
     .max(140)
     .toLowerCase()
-    .regex(slugRegex, 'Slug must be lowercase alphanumeric with hyphens'),
+    .regex(slugRegex, 'Slug must be lowercase alphanumeric with hyphens')
+    .optional(),
   description: z.string().trim().min(3).max(2000).optional(),
   parentId: objectIdString.optional(),
   sortOrder: z.coerce.number().int().min(0).default(0),

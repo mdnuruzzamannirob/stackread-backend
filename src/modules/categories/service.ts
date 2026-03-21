@@ -23,6 +23,13 @@ type FormattedCategory = {
   updatedAt: string
 }
 
+const generateSlug = (name: string) =>
+  name
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '')
+
 type CategoryTreeNode = FormattedCategory & { children: CategoryTreeNode[] }
 
 const formatCategory = (
@@ -229,7 +236,7 @@ export const categoriesService = {
 
   createCategory: async (payload: {
     name: string
-    slug: string
+    slug?: string
     description?: string
     parentId?: string
     sortOrder: number
@@ -237,14 +244,16 @@ export const categoriesService = {
   }) => {
     await ensureParentIsValid(undefined, payload.parentId)
 
-    const existingSlug = await CategoryModel.findOne({ slug: payload.slug })
+    const slug = payload.slug ?? generateSlug(payload.name)
+
+    const existingSlug = await CategoryModel.findOne({ slug })
     if (existingSlug) {
       throw new AppError('Category slug already exists.', 409)
     }
 
     const category = await CategoryModel.create({
       name: payload.name,
-      slug: payload.slug,
+      slug,
       description: payload.description,
       parentId: payload.parentId
         ? new Types.ObjectId(payload.parentId)
