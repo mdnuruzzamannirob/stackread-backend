@@ -38,26 +38,6 @@ const logStaffActivity = async (
   })
 }
 
-const issueStaffToken = async (staffId: string): Promise<string> => {
-  const staff = await StaffModel.findById(staffId)
-
-  if (!staff || !staff.isActive) {
-    throw new AppError('Staff account not found or inactive.', 401)
-  }
-
-  return signAccessToken(
-    {
-      id: staff._id.toString(),
-      sub: staff._id.toString(),
-      actorType: 'staff',
-      type: 'staff',
-      email: staff.email,
-    },
-    config.jwt.staffSecret,
-    config.jwt.accessExpiresIn,
-  )
-}
-
 const issueStaffTokens = async (
   staffId: string,
 ): Promise<{ accessToken: string; refreshToken: string }> => {
