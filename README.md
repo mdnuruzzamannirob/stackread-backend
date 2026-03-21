@@ -443,8 +443,8 @@ GET http://localhost:5000/api/docs/openapi.json
 
 - File: `documentation/OpenAPI_v1.json`
 - Auto-generated from module routers and validation schemas
-- Rebuild command: `pnpm docs:rebuild`
-- Covers all 170+ routes across 25 modules
+- Rebuild command: `pnpm generate:docs`
+- Current inventory baseline: 154 paths across 25 module groups
 - Compatible with SwaggerUI, Stoplight Studio, and other OpenAPI viewers
 
 ### Postman Collection
@@ -481,30 +481,48 @@ http://localhost:5000/api/v1
 
 ## 9. 🧪 Available Scripts
 
-| Script             | Command                               | Description                          |
-| ------------------ | ------------------------------------- | ------------------------------------ |
-| `dev`              | `tsx watch src/app/server.ts`         | Start API server in watch mode.      |
-| `dev:worker`       | `tsx watch src/app/worker.ts`         | Start worker process in watch mode.  |
-| `build`            | `tsc -p tsconfig.json`                | Compile TypeScript to `dist`.        |
-| `start`            | `node dist/app/server.js`             | Start compiled API server.           |
-| `start:worker`     | `node dist/app/worker.js`             | Start compiled worker process.       |
-| `typecheck`        | `tsc --noEmit`                        | Run strict type checking only.       |
-| `test`             | `vitest run`                          | Run all tests once.                  |
-| `test:watch`       | `vitest`                              | Run tests in watch mode.             |
-| `test:integration` | `vitest run tests/integration`        | Run integration test suite.          |
-| `test:unit`        | `vitest run tests/unit`               | Run unit test suite.                 |
-| `seed:permissions` | `tsx src/seeds/permissions.seed.ts`   | Seed RBAC permissions.               |
-| `seed:plans`       | `tsx src/seeds/plans.seed.ts`         | Seed subscription plans.             |
-| `seed:settings`    | `tsx src/seeds/settings.seed.ts`      | Seed global settings defaults.       |
-| `seed:super-admin` | `tsx src/seeds/superAdmin.seed.ts`    | Seed super-admin account.            |
-| `seed:all`         | `tsx src/seeds/all.seed.ts`           | Run all individual seeds.            |
-| `seed`             | `tsx src/scripts/seed.ts`             | Run seed runner script entrypoint.   |
-| `migrate`          | `tsx src/scripts/migrate.ts`          | Execute migration script.            |
-| `docs:rebuild`     | `tsx src/scripts/rebuild-api-docs.ts` | Regenerate OpenAPI and Postman docs. |
-| `export:openapi`   | `echo .../OpenAPI_v1.json`            | Print OpenAPI export path.           |
-| `export:postman`   | `echo .../Postman_Collection_v1.json` | Print Postman export path.           |
+| Script                 | Command                                   | Description                               |
+| ---------------------- | ----------------------------------------- | ----------------------------------------- |
+| `dev`                  | `tsx watch src/app/server.ts`             | Start API server in watch mode.           |
+| `dev:worker`           | `tsx watch src/app/worker.ts`             | Start worker process in watch mode.       |
+| `build`                | `tsc -p tsconfig.json`                    | Compile TypeScript to `dist`.             |
+| `start`                | `node dist/app/server.js`                 | Start compiled API server.                |
+| `start:worker`         | `node dist/app/worker.js`                 | Start compiled worker process.            |
+| `typecheck`            | `tsc --noEmit`                            | Run strict type checking only.            |
+| `test`                 | `vitest run`                              | Run all tests once.                       |
+| `test:watch`           | `vitest`                                  | Run tests in watch mode.                  |
+| `test:integration`     | `vitest run tests/integration`            | Run integration test suite.               |
+| `test:unit`            | `vitest run tests/unit`                   | Run unit test suite.                      |
+| `seed:permissions`     | `tsx src/seeds/permissions.seed.ts`       | Seed RBAC permissions.                    |
+| `seed:plans`           | `tsx src/seeds/plans.seed.ts`             | Seed subscription plans.                  |
+| `seed:settings`        | `tsx src/seeds/settings.seed.ts`          | Seed global settings defaults.            |
+| `seed:super-admin`     | `tsx src/seeds/superAdmin.seed.ts`        | Seed super-admin account.                 |
+| `seed:all`             | `tsx src/scripts/seed.ts`                 | Run deterministic seed runner entrypoint. |
+| `migrate`              | `tsx src/scripts/migrate.ts`              | Execute migration script.                 |
+| `generate:docs`        | `tsx src/scripts/rebuild-api-docs.ts`     | Regenerate OpenAPI and Postman docs.      |
+| `generate:permissions` | `tsx src/scripts/generate-permissions.ts` | Regenerate permission definitions.        |
+| `export:openapi`       | `echo .../OpenAPI_v1.json`                | Print OpenAPI export path.                |
+| `export:postman`       | `echo .../Postman_Collection_v1.json`     | Print Postman export path.                |
 
-## 10. 🧩 Module Overview
+## 10. 🧱 Request Pipeline and Middleware
+
+Global middleware pipeline (in order):
+
+1. `requestContext` (request id)
+2. `responseTime`
+3. `morgan` request logging
+4. `cors`
+5. `helmet`
+6. `apiRateLimiter`
+7. route-segment limiters: `authRateLimiter`, `adminRateLimiter`, `searchRateLimiter`, `reportsRateLimiter`, `webhookRateLimiter`
+8. `express.json` / `express.urlencoded` (with rawBody capture for webhook verification)
+9. `mongoSanitizeSafe`
+10. passport initialization
+11. app routes mount (`config.apiPrefix`)
+12. `notFound`
+13. `globalErrorHandler`
+
+## 11. 🧩 Module Overview
 
 | Module          | Description                                          | Key routes                                                                                                        |
 | --------------- | ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
@@ -534,7 +552,7 @@ http://localhost:5000/api/v1
 | `settings`      | Global/system settings                               | `GET /admin/settings`, `PUT /admin/settings`, `GET /admin/settings/maintenance`                                   |
 | `health`        | Service liveness and readiness                       | `GET /health`, `GET /health/live`, `GET /health/ready`                                                            |
 
-## 11. 💳 Payment Gateways
+## 12. 💳 Payment Gateways
 
 Stackread uses a payment provider abstraction that supports country-appropriate gateways.
 
@@ -555,7 +573,7 @@ Typical strategy:
 
 This keeps checkout localized while preserving a single API contract.
 
-## 12. 🗄️ Database
+## 13. 🗄️ Database
 
 ### MongoDB + Mongoose
 
@@ -617,7 +635,7 @@ Benefits:
 - Less manual cleanup logic
 - Better compliance hygiene for time-bound data
 
-## 13. ⚙️ Workers and Jobs
+## 14. ⚙️ Workers and Jobs
 
 ### Background Workers
 
@@ -640,7 +658,7 @@ Benefits:
 | `job.reservation-claim-expiry` | `*/30 * * * *` | Expires claimable reservations past claim window.      |
 | `job.report-scheduling`        | `*/10 * * * *` | Processes queued report jobs in periodic batches.      |
 
-## 14. 🧪 Testing
+## 15. 🧪 Testing
 
 ### Run tests
 
@@ -668,7 +686,7 @@ Test folders:
 - `tests/fixtures`
 - `tests/setup`
 
-## 15. 🚢 Deployment
+## 16. 🚢 Deployment
 
 ### Docker setup
 
@@ -710,9 +728,9 @@ PM2 apps:
 - [ ] Restrict `CORS_ORIGINS` to real domains
 - [ ] Enable log retention/rotation strategy
 - [ ] Run `pnpm typecheck && pnpm test`
-- [ ] Run `pnpm docs:rebuild` before release if APIs changed
+- [ ] Run `pnpm generate:docs` before release if APIs changed
 
-## 16. 🤝 Contributing
+## 17. 🤝 Contributing
 
 ### Code style
 
