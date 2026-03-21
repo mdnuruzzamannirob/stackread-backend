@@ -1,9 +1,7 @@
 import { promises as fs } from 'node:fs'
 import path from 'node:path'
 
-import mongoose from 'mongoose'
-
-import { env } from '../config/env'
+import { connectToDatabase, disconnectFromDatabase } from '../config/db'
 import { logger } from '../config/logger'
 import { PermissionModel } from '../modules/rbac/model'
 
@@ -229,8 +227,8 @@ const run = async (): Promise<void> => {
   }
 
   if (discoveredPermissions.size === 0 && fallbackRefPermissions.size > 0) {
-    logger.warn(
-      'No literal requirePermission("module.action") entries found; using PERMISSIONS.* references as fallback.',
+    logger.info(
+      'Permissions loaded from PERMISSIONS.* constants in router files.',
     )
 
     for (const fallbackPermission of fallbackRefPermissions) {
@@ -251,7 +249,7 @@ const run = async (): Promise<void> => {
 
   await fs.writeFile(PERMISSIONS_FILE, source, 'utf8')
 
-  await mongoose.connect(env.mongodbUri)
+  await connectToDatabase()
 
   try {
     const permissionSeeds: PermissionSeed[] = permissions.map((permission) => {
@@ -282,7 +280,7 @@ const run = async (): Promise<void> => {
       `Generated ${permissions.length} permissions across ${moduleCount} modules`,
     )
   } finally {
-    await mongoose.disconnect()
+    await disconnectFromDatabase()
   }
 }
 

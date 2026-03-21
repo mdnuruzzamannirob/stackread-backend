@@ -7,7 +7,6 @@ if (require.main === module) {
     try {
       await connectToDatabase()
       await runAllSeeds()
-      logger.info('All seeds executed successfully.')
       await disconnectFromDatabase()
       process.exit(0)
     } catch (error) {

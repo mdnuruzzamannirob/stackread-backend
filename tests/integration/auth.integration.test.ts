@@ -8,7 +8,8 @@ describe('Auth integration flow', () => {
     const password = 'StrongPass123!'
 
     const registered = await authService.register({
-      name: 'Auth User',
+      firstName: 'Auth',
+      lastName: 'User',
       email,
       password,
       countryCode: 'BD',
