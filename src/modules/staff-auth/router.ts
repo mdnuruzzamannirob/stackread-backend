@@ -63,12 +63,7 @@ router.patch(
   validateRequest({ body: staffAuthValidation.changePasswordBody }),
   changeStaffPassword,
 )
-router.post(
-  '/2fa/setup',
-  authenticateTempToken,
-  validateRequest({ body: staffAuthValidation.staffTwoFactorSetupBody }),
-  setupTwoFactor,
-)
+router.post('/2fa/setup', authenticateTempToken, setupTwoFactor)
 router.post(
   '/2fa/enable',
   authenticateTempToken,

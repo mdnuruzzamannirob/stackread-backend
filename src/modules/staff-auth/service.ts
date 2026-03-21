@@ -137,11 +137,15 @@ const buildQrCodeUrl = (otpauthUrl: string): string => {
 }
 
 const verifyStaffTotp = (secret: string, otp: string): boolean => {
+  if (!secret || !otp) {
+    return false
+  }
+
   return speakeasy.totp.verify({
-    secret,
+    secret: secret.trim(),
     encoding: 'base32',
-    token: otp,
-    window: 1,
+    token: otp.trim(),
+    window: 2, // Allow ±2 time windows for time sync tolerance
   })
 }
 

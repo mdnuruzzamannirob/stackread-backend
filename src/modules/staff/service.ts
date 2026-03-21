@@ -6,6 +6,7 @@ import {
   hashStringSha256,
   hashWithScrypt,
 } from '../../common/utils/crypto'
+import { config } from '../../config'
 import { RoleModel } from '../rbac/model'
 import {
   StaffActivityLogModel,
@@ -72,10 +73,15 @@ export const staffService = {
       invitedBy: actorId,
     })
 
+    const inviteUrl = `${config.staffPortalUrl.replace(/\/$/, '')}/accept-invite?token=${encodeURIComponent(rawToken)}`
+    const roleName = role.name
+    const expiryHours = payload.expiresInDays * 24
+
     await emailService.sendEmail({
       to: payload.email,
-      subject: 'LMS Staff Invitation',
-      text: `Your invitation token is: ${rawToken}`,
+      subject: "You've been invited to Stackread Dashboard",
+      text: `Hi ${payload.name},\n\nYou have been invited to join Stackread as ${roleName}.\nActivate your account using this link:\n${inviteUrl}\n\nThis link expires in ${expiryHours} hours.`,
+      html: `<p>Hi ${payload.name},</p><p>You have been invited to join Stackread as <strong>${roleName}</strong>.</p><p><a href="${inviteUrl}">Activate Account</a></p><p>This link expires in ${expiryHours} hours.</p>`,
     })
 
     await auditService.logEvent({
@@ -128,10 +134,16 @@ export const staffService = {
       invitedBy: actorId,
     })
 
+    const inviteUrl = `${config.staffPortalUrl.replace(/\/$/, '')}/accept-invite?token=${encodeURIComponent(rawToken)}`
+    const expiryHours = 7 * 24
+    const role = staff.roleId ? await RoleModel.findById(staff.roleId) : null
+    const roleName = role?.name ?? 'staff'
+
     await emailService.sendEmail({
       to: staff.email,
-      subject: 'LMS Staff Re-Invitation',
-      text: `Your new invitation token is: ${rawToken}`,
+      subject: "You've been invited to Stackread Dashboard",
+      text: `Hi ${staff.name},\n\nYou have been invited to join Stackread as ${roleName}.\nActivate your account using this link:\n${inviteUrl}\n\nThis link expires in ${expiryHours} hours.`,
+      html: `<p>Hi ${staff.name},</p><p>You have been invited to join Stackread as <strong>${roleName}</strong>.</p><p><a href="${inviteUrl}">Activate Account</a></p><p>This link expires in ${expiryHours} hours.</p>`,
     })
 
     await auditService.logEvent({
