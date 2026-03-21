@@ -112,10 +112,6 @@ const buildStaffAuthResponse = async (staffId: string) => {
   }
 }
 
-const buildQrCodeUrl = (otpauthUrl: string): string => {
-  return `https://chart.googleapis.com/chart?chs=256x256&cht=qr&chl=${encodeURIComponent(otpauthUrl)}`
-}
-
 const verifyStaffTotp = (secret: string, otp: string): boolean => {
   if (!secret || !otp) {
     return false
@@ -279,7 +275,7 @@ export const staffAuthService = {
 
     return {
       secret: secret.base32,
-      qrCodeUrl: buildQrCodeUrl(secret.otpauth_url),
+      qrCodeUrl: secret.otpauth_url,
     }
   },
 
