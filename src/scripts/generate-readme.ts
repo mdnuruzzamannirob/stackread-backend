@@ -66,7 +66,9 @@ const extractJobs = async (): Promise<JobInfo[]> => {
   try {
     const indexPath = path.join(jobsPath, 'index.ts')
     const content = await fs.readFile(indexPath, 'utf8')
-    const jobMatches = content.matchAll(/(?:import|from)\s+['"]\.\/([^'"]+)\.job/gi)
+    const jobMatches = content.matchAll(
+      /(?:import|from)\s+['"]\.\/([^'"]+)\.job/gi,
+    )
     const jobs: JobInfo[] = []
     const seen = new Set<string>()
 
@@ -166,7 +168,8 @@ const classifyScript = (name: string): string => {
   if (name.includes('test')) return 'Testing'
   if (name.includes('generate')) return 'Code Generation'
   if (name.includes('check') || name.includes('lint')) return 'Code Quality'
-  if (name.includes('start') || name.includes('migrate')) return 'Database & Migration'
+  if (name.includes('start') || name.includes('migrate'))
+    return 'Database & Migration'
   if (name.includes('seed')) return 'Database & Migration'
   return 'Utilities'
 }
@@ -220,14 +223,46 @@ export const run = async () => {
 
     // Build sections
     const runtimeRows = [
-      ['Node.js', '22.x', 'Modern async runtime with native ES modules support'],
-      ['TypeScript', getVersion(devDependencies, 'typescript'), 'Strict typing for large modular backends'],
-      ['Express', getVersion(dependencies, 'express'), 'Lightweight HTTP framework with middleware ecosystem'],
-      ['Mongoose', getVersion(dependencies, 'mongoose'), 'MongoDB ODM with schema validation and hooks'],
-      ['Zod', getVersion(dependencies, 'zod'), 'Runtime schema validation with TypeScript inference'],
-      ['Winston', getVersion(dependencies, 'winston'), 'Structured logging with rotation and archival'],
-      ['Vitest', getVersion(devDependencies, 'vitest'), 'Fast unit and integration test framework'],
-      ['pnpm', packageJson.packageManager?.split('@')[1] ?? 'N/A', 'Fast deterministic package management'],
+      [
+        'Node.js',
+        '22.x',
+        'Modern async runtime with native ES modules support',
+      ],
+      [
+        'TypeScript',
+        getVersion(devDependencies, 'typescript'),
+        'Strict typing for large modular backends',
+      ],
+      [
+        'Express',
+        getVersion(dependencies, 'express'),
+        'Lightweight HTTP framework with middleware ecosystem',
+      ],
+      [
+        'Mongoose',
+        getVersion(dependencies, 'mongoose'),
+        'MongoDB ODM with schema validation and hooks',
+      ],
+      [
+        'Zod',
+        getVersion(dependencies, 'zod'),
+        'Runtime schema validation with TypeScript inference',
+      ],
+      [
+        'Winston',
+        getVersion(dependencies, 'winston'),
+        'Structured logging with rotation and archival',
+      ],
+      [
+        'Vitest',
+        getVersion(devDependencies, 'vitest'),
+        'Fast unit and integration test framework',
+      ],
+      [
+        'pnpm',
+        packageJson.packageManager?.split('@')[1] ?? 'N/A',
+        'Fast deterministic package management',
+      ],
     ]
 
     const scriptsSection = sortedScriptGroups
