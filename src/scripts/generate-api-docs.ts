@@ -849,6 +849,55 @@ const buildOperation = async (route: RouteDef) => {
     ? prettify(route.handlerName)
     : `${route.method.toUpperCase()} ${route.fullPath}`
 
+  // Determine success status code based on HTTP method
+  const successStatusCode =
+    route.method === 'post' ? '201' : route.method === 'delete' ? '204' : '200'
+
+  // Build success response with appropriate format
+  const successResponse =
+    route.method === 'delete'
+      ? {
+          [successStatusCode]: {
+            description: 'Deleted successfully.',
+            content: {
+              'application/json': {
+                schema: buildSuccessSchema(route),
+                example: {
+                  success: true,
+                  message: 'Deleted successfully.',
+                  data: { id: objectIdExample },
+                  meta: { timestamp: nowIsoExample },
+                },
+              },
+            },
+          },
+        }
+      : {
+          [successStatusCode]: {
+            description:
+              successStatusCode === '201'
+                ? 'Created successfully.'
+                : 'Request successful.',
+            content: {
+              'application/json': {
+                schema: buildSuccessSchema(route),
+                example: {
+                  success: true,
+                  message:
+                    successStatusCode === '201'
+                      ? 'Created successfully.'
+                      : 'Request successful.',
+                  data: { id: objectIdExample, status: 'active' },
+                  meta:
+                    route.method === 'get'
+                      ? { page: 1, limit: 20, total: 1 }
+                      : { timestamp: nowIsoExample },
+                },
+              },
+            },
+          },
+        }
+
   const op: Record<string, unknown> = {
     tags: [route.tag],
     summary: summarySource,
@@ -856,46 +905,12 @@ const buildOperation = async (route: RouteDef) => {
     operationId: `${route.tag}_${route.method}_${route.fullPath.replace(/[^a-zA-Z0-9]/g, '_')}`,
     parameters,
     responses: {
-      ...(route.method === 'post'
-        ? {
-            '201': {
-              description: 'Created successfully.',
-              content: {
-                'application/json': {
-                  schema: buildSuccessSchema(route),
-                  example: {
-                    success: true,
-                    message: 'Created successfully.',
-                    data: { id: objectIdExample, status: 'created' },
-                    meta: {},
-                  },
-                },
-              },
-            },
-          }
-        : {
-            '200': {
-              description: 'Request successful.',
-              content: {
-                'application/json': {
-                  schema: buildSuccessSchema(route),
-                  example: {
-                    success: true,
-                    message: 'Request successful.',
-                    data: { id: objectIdExample, status: 'active' },
-                    meta:
-                      route.method === 'get'
-                        ? { page: 1, limit: 20, total: 1 }
-                        : {},
-                  },
-                },
-              },
-            },
-          }),
+      ...successResponse,
       ...standardErrorResponse('400', 'Bad request.'),
       ...standardErrorResponse('401', 'Unauthorized.'),
       ...standardErrorResponse('403', 'Forbidden.'),
       ...standardErrorResponse('404', 'Not found.'),
+      ...standardErrorResponse('429', 'Too many requests (rate limited).'),
       ...standardErrorResponse('500', 'Internal server error.'),
     },
   }
