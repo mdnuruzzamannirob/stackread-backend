@@ -1,7 +1,11 @@
 import type { RequestHandler } from 'express'
 
-import { AppError } from '../../common/errors/AppError'
 import { catchAsync } from '../../common/utils/catchAsync'
+import {
+  getFileIdParam,
+  getIdParam,
+  getStaffId,
+} from '../../common/utils/getParam'
 import { sendResponse } from '../../common/utils/sendResponse'
 import type {
   AddBookFilePayload,
@@ -14,34 +18,6 @@ import type {
   UpdateBookPayload,
 } from './interface'
 import { booksService } from './service'
-
-const getIdParam = (request: Parameters<RequestHandler>[0]): string => {
-  const id = request.params.id
-
-  if (typeof id !== 'string') {
-    throw new AppError('Invalid id parameter.', 400)
-  }
-
-  return id
-}
-
-const getFileIdParam = (request: Parameters<RequestHandler>[0]): string => {
-  const fileId = request.params.fid
-
-  if (typeof fileId !== 'string') {
-    throw new AppError('Invalid file id parameter.', 400)
-  }
-
-  return fileId
-}
-
-const getStaffId = (request: Parameters<RequestHandler>[0]): string => {
-  if (!request.auth || request.auth.type !== 'staff') {
-    throw new AppError('Staff authentication is required.', 401)
-  }
-
-  return request.auth.sub
-}
 
 export const listPublicBooks: RequestHandler = catchAsync(
   async (request, response) => {

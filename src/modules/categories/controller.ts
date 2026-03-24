@@ -1,7 +1,7 @@
 import type { RequestHandler } from 'express'
 
-import { AppError } from '../../common/errors/AppError'
 import { catchAsync } from '../../common/utils/catchAsync'
+import { getIdParam } from '../../common/utils/getParam'
 import { sendResponse } from '../../common/utils/sendResponse'
 import type {
   CategoriesListQuery,
@@ -9,16 +9,6 @@ import type {
   UpdateCategoryPayload,
 } from './interface'
 import { categoriesService } from './service'
-
-const getIdParam = (request: Parameters<RequestHandler>[0]): string => {
-  const id = request.params.id
-
-  if (typeof id !== 'string') {
-    throw new AppError('Invalid id parameter.', 400)
-  }
-
-  return id
-}
 
 export const listCategories: RequestHandler = catchAsync(
   async (request, response) => {

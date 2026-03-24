@@ -3,61 +3,16 @@ import {
   createPaginationMeta,
   getPaginationState,
 } from '../../common/utils/pagination'
+import { sanitizeRequiredText, sanitizeOptionalText } from '../../common/utils/sanitize'
 import type {
   AuthorsListQuery,
   CreateAuthorPayload,
-  IAuthor,
   UpdateAuthorPayload,
 } from './interface'
 import { AuthorModel } from './model'
-
-const stripHtml = (value: string) =>
-  value
-    .replace(/<[^>]*>/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim()
-
-const sanitizeRequiredText = (
-  value: string,
-  fieldName: string,
-  minLength = 1,
-) => {
-  const sanitized = stripHtml(value)
-
-  if (sanitized.length < minLength) {
-    throw new AppError(`${fieldName} is invalid after sanitization.`, 400)
-  }
-
-  return sanitized
-}
-
-const sanitizeOptionalText = (value: string | null | undefined) => {
-  if (typeof value !== 'string') {
-    return value
-  }
-
-  const sanitized = stripHtml(value)
-  return sanitized.length > 0 ? sanitized : null
-}
-
-const formatAuthor = (author: IAuthor | null) => {
-  if (!author) {
-    throw new AppError('Author not found.', 404)
-  }
-
-  return {
-    id: author._id.toString(),
-    name: author.name,
-    slug: author.slug,
-    bio: author.bio,
-    countryCode: author.countryCode,
-    avatar: author.avatar ?? null,
-    website: author.website,
-    isActive: author.isActive,
-    createdAt: author.createdAt.toISOString(),
-    updatedAt: author.updatedAt.toISOString(),
-  }
-}
+import {
+  formatAuthor,
+} from './utils'
 
 export const authorsService = {
   listAuthors: async (query: AuthorsListQuery) => {

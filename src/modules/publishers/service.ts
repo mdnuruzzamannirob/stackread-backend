@@ -4,58 +4,16 @@ import {
   getPaginationState,
 } from '../../common/utils/pagination'
 import {
+  sanitizeOptionalText,
+  sanitizeRequiredText,
+} from '../../common/utils/sanitize'
+import {
   type CreatePublisherPayload,
-  type IPublisher,
   type PublishersListQuery,
   type UpdatePublisherPayload,
 } from './interface'
 import { PublisherModel } from './model'
-
-const stripHtml = (value: string) =>
-  value
-    .replace(/<[^>]*>/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim()
-
-const sanitizeRequiredText = (
-  value: string,
-  fieldName: string,
-  minLength = 1,
-) => {
-  const sanitized = stripHtml(value)
-
-  if (sanitized.length < minLength) {
-    throw new AppError(`${fieldName} is invalid after sanitization.`, 400)
-  }
-
-  return sanitized
-}
-
-const sanitizeOptionalText = (value: string | null | undefined) => {
-  if (typeof value !== 'string') {
-    return value
-  }
-
-  const sanitized = stripHtml(value)
-  return sanitized.length > 0 ? sanitized : null
-}
-
-const formatPublisher = (publisher: IPublisher | null) => {
-  if (!publisher) throw new AppError('Publisher not found.', 404)
-  return {
-    id: publisher._id.toString(),
-    name: publisher.name,
-    slug: publisher.slug,
-    description: publisher.description,
-    website: publisher.website,
-    logo: publisher.logo ?? null,
-    countryCode: publisher.countryCode,
-    foundedYear: publisher.foundedYear,
-    isActive: publisher.isActive,
-    createdAt: publisher.createdAt.toISOString(),
-    updatedAt: publisher.updatedAt.toISOString(),
-  }
-}
+import { formatPublisher } from './utils'
 
 export const publishersService = {
   listPublishers: async (query: PublishersListQuery) => {

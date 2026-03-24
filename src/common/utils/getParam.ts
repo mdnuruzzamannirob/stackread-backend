@@ -1,0 +1,32 @@
+import { RequestHandler } from 'express'
+import { AppError } from '../errors/AppError'
+
+export const getIdParam = (request: Parameters<RequestHandler>[0]): string => {
+  const id = request.params.id
+
+  if (typeof id !== 'string') {
+    throw new AppError('Invalid id parameter.', 400)
+  }
+
+  return id
+}
+
+export const getFileIdParam = (
+  request: Parameters<RequestHandler>[0],
+): string => {
+  const fileId = request.params.fid
+
+  if (typeof fileId !== 'string') {
+    throw new AppError('Invalid file id parameter.', 400)
+  }
+
+  return fileId
+}
+
+export const getStaffId = (request: Parameters<RequestHandler>[0]): string => {
+  if (!request.auth || request.auth.type !== 'staff') {
+    throw new AppError('Staff authentication is required.', 401)
+  }
+
+  return request.auth.sub
+}
