@@ -7,7 +7,7 @@ import { SubscriptionModel } from './model'
 import {
   computeEndAt,
   getActiveSubscription,
-  getSubscriptionById,
+  getSubscriptionById as getSubscriptionByIdWithSession,
   toSubscriptionSummary,
 } from './utils'
 
@@ -40,6 +40,16 @@ const listSubscriptions = async () => {
   return subscriptions.map((subscription) =>
     toSubscriptionSummary(subscription),
   )
+}
+
+const getSubscriptionById = async (id: string) => {
+  const subscription = await SubscriptionModel.findById(id)
+
+  if (!subscription) {
+    throw new AppError('Subscription not found.', 404)
+  }
+
+  return toSubscriptionSummary(subscription)
 }
 
 const createSubscription = async (payload: {
@@ -125,7 +135,7 @@ const activateSubscriptionFromPayment = async (
   session?: ClientSession,
 ) => {
   const applyActivation = async (transactionSession: ClientSession) => {
-    const target = await getSubscriptionById(
+    const target = await getSubscriptionByIdWithSession(
       payload.subscriptionId,
       transactionSession,
     )

@@ -39,12 +39,4 @@ export const getSubscriptionById = async (
 ) => {
   return SubscriptionModel.findById(id).session(session ?? null)
 }
-// const getSubscriptionById = async (id: string) => {
-//   const subscription = await SubscriptionModel.findById(id)
 
-//   if (!subscription) {
-//     throw new AppError('Subscription not found.', 404)
-//   }
-
-//   return toSubscriptionSummary(subscription)
-// }
