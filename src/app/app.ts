@@ -34,7 +34,7 @@ app.disable('x-powered-by')
 
 if (config.isDevelopment) {
   app.get('/api/docs/openapi.json', (_req, res) => {
-    res.sendFile(path.join(process.cwd(), 'documentation', 'OpenAPI_v1.json'))
+    res.sendFile(path.join(process.cwd(), 'docs', 'openAPI.json'))
   })
 
   app.use(

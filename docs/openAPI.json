@@ -1852,7 +1852,7 @@
         "tags": [
           "books"
         ],
-        "summary": "Create Book",
+        "summary": "POST /api/v1/admin/books",
         "description": "Endpoint in module 'books' defined in src/modules/books/router.ts.",
         "operationId": "books_post__api_v1_admin_books",
         "parameters": [],
@@ -2499,7 +2499,7 @@
         "tags": [
           "books"
         ],
-        "summary": "Delete Book",
+        "summary": "DELETE /api/v1/admin/books/:id",
         "description": "Endpoint in module 'books' defined in src/modules/books/router.ts.",
         "operationId": "books_delete__api_v1_admin_books__id",
         "parameters": [
@@ -2970,7 +2970,7 @@
         "tags": [
           "books"
         ],
-        "summary": "Update Book",
+        "summary": "PUT /api/v1/admin/books/:id",
         "description": "Endpoint in module 'books' defined in src/modules/books/router.ts.",
         "operationId": "books_put__api_v1_admin_books__id",
         "parameters": [
@@ -3453,7 +3453,7 @@
         "tags": [
           "books"
         ],
-        "summary": "Set Book Availability",
+        "summary": "PATCH /api/v1/admin/books/:id/availability",
         "description": "Endpoint in module 'books' defined in src/modules/books/router.ts.",
         "operationId": "books_patch__api_v1_admin_books__id_availability",
         "parameters": [
@@ -3953,7 +3953,7 @@
         "tags": [
           "books"
         ],
-        "summary": "Set Book Featured",
+        "summary": "PATCH /api/v1/admin/books/:id/featured",
         "description": "Endpoint in module 'books' defined in src/modules/books/router.ts.",
         "operationId": "books_patch__api_v1_admin_books__id_featured",
         "parameters": [
@@ -4448,7 +4448,7 @@
         "tags": [
           "books"
         ],
-        "summary": "Add Book File",
+        "summary": "POST /api/v1/admin/books/:id/files",
         "description": "Endpoint in module 'books' defined in src/modules/books/router.ts.",
         "operationId": "books_post__api_v1_admin_books__id_files",
         "parameters": [
@@ -4931,7 +4931,7 @@
         "tags": [
           "books"
         ],
-        "summary": "Delete Book File",
+        "summary": "DELETE /api/v1/admin/books/:id/files/:fid",
         "description": "Endpoint in module 'books' defined in src/modules/books/router.ts.",
         "operationId": "books_delete__api_v1_admin_books__id_files__fid",
         "parameters": [
@@ -5414,7 +5414,7 @@
         "tags": [
           "books"
         ],
-        "summary": "Set Book Status",
+        "summary": "PATCH /api/v1/admin/books/:id/status",
         "description": "Endpoint in module 'books' defined in src/modules/books/router.ts.",
         "operationId": "books_patch__api_v1_admin_books__id_status",
         "parameters": [
@@ -5914,7 +5914,7 @@
         "tags": [
           "books"
         ],
-        "summary": "Bulk Import Books",
+        "summary": "POST /api/v1/admin/books/bulk-import",
         "description": "Endpoint in module 'books' defined in src/modules/books/router.ts.",
         "operationId": "books_post__api_v1_admin_books_bulk_import",
         "parameters": [],
@@ -10199,7 +10199,7 @@
         "tags": [
           "rbac"
         ],
-        "summary": "List Permissions",
+        "summary": "GET /api/v1/admin/permissions",
         "description": "Endpoint in module 'rbac' defined in src/modules/rbac/router.ts.",
         "operationId": "rbac_get__api_v1_admin_permissions",
         "parameters": [
@@ -13873,7 +13873,7 @@
         "tags": [
           "reviews"
         ],
-        "summary": "List Reviews For Admin",
+        "summary": "GET /api/v1/admin/reviews",
         "description": "Endpoint in module 'reviews' defined in src/modules/reviews/router.ts.",
         "operationId": "reviews_get__api_v1_admin_reviews",
         "parameters": [
@@ -14433,7 +14433,7 @@
         "tags": [
           "reviews"
         ],
-        "summary": "Toggle Review Visibility",
+        "summary": "PATCH /api/v1/admin/reviews/:id/toggle",
         "description": "Endpoint in module 'reviews' defined in src/modules/reviews/router.ts.",
         "operationId": "reviews_patch__api_v1_admin_reviews__id_toggle",
         "parameters": [
@@ -14928,7 +14928,7 @@
         "tags": [
           "rbac"
         ],
-        "summary": "List Roles",
+        "summary": "GET /api/v1/admin/roles",
         "description": "Endpoint in module 'rbac' defined in src/modules/rbac/router.ts.",
         "operationId": "rbac_get__api_v1_admin_roles",
         "parameters": [
@@ -15453,7 +15453,7 @@
         "tags": [
           "rbac"
         ],
-        "summary": "Create Role",
+        "summary": "POST /api/v1/admin/roles",
         "description": "Endpoint in module 'rbac' defined in src/modules/rbac/router.ts.",
         "operationId": "rbac_post__api_v1_admin_roles",
         "parameters": [],
@@ -15956,7 +15956,7 @@
         "tags": [
           "rbac"
         ],
-        "summary": "Delete Role",
+        "summary": "DELETE /api/v1/admin/roles/:id",
         "description": "Endpoint in module 'rbac' defined in src/modules/rbac/router.ts.",
         "operationId": "rbac_delete__api_v1_admin_roles__id",
         "parameters": [
@@ -16422,7 +16422,7 @@
         "tags": [
           "rbac"
         ],
-        "summary": "Get Role By Id",
+        "summary": "GET /api/v1/admin/roles/:id",
         "description": "Endpoint in module 'rbac' defined in src/modules/rbac/router.ts.",
         "operationId": "rbac_get__api_v1_admin_roles__id",
         "parameters": [
@@ -16957,7 +16957,7 @@
         "tags": [
           "rbac"
         ],
-        "summary": "Update Role",
+        "summary": "PUT /api/v1/admin/roles/:id",
         "description": "Endpoint in module 'rbac' defined in src/modules/rbac/router.ts.",
         "operationId": "rbac_put__api_v1_admin_roles__id",
         "parameters": [
@@ -19119,7 +19119,7 @@
         "tags": [
           "staff"
         ],
-        "summary": "List Staff",
+        "summary": "GET /api/v1/admin/staff",
         "description": "Endpoint in module 'staff' defined in src/modules/staff/router.ts.",
         "operationId": "staff_get__api_v1_admin_staff",
         "parameters": [
@@ -19646,7 +19646,7 @@
         "tags": [
           "staff"
         ],
-        "summary": "Remove Staff",
+        "summary": "DELETE /api/v1/admin/staff/:id",
         "description": "Endpoint in module 'staff' defined in src/modules/staff/router.ts.",
         "operationId": "staff_delete__api_v1_admin_staff__id",
         "parameters": [
@@ -20112,7 +20112,7 @@
         "tags": [
           "staff"
         ],
-        "summary": "Get Staff By Id",
+        "summary": "GET /api/v1/admin/staff/:id",
         "description": "Endpoint in module 'staff' defined in src/modules/staff/router.ts.",
         "operationId": "staff_get__api_v1_admin_staff__id",
         "parameters": [
@@ -20649,7 +20649,7 @@
         "tags": [
           "staff"
         ],
-        "summary": "Reset Two Factor",
+        "summary": "POST /api/v1/admin/staff/:id/2fa/reset",
         "description": "Endpoint in module 'staff' defined in src/modules/staff/router.ts.",
         "operationId": "staff_post__api_v1_admin_staff__id_2fa_reset",
         "parameters": [
@@ -21118,7 +21118,7 @@
         "tags": [
           "staff"
         ],
-        "summary": "Get Staff Activity",
+        "summary": "GET /api/v1/admin/staff/:id/activity",
         "description": "Endpoint in module 'staff' defined in src/modules/staff/router.ts.",
         "operationId": "staff_get__api_v1_admin_staff__id_activity",
         "parameters": [
@@ -21655,7 +21655,7 @@
         "tags": [
           "staff"
         ],
-        "summary": "Reinvite Staff",
+        "summary": "POST /api/v1/admin/staff/:id/reinvite",
         "description": "Endpoint in module 'staff' defined in src/modules/staff/router.ts.",
         "operationId": "staff_post__api_v1_admin_staff__id_reinvite",
         "parameters": [
@@ -22124,7 +22124,7 @@
         "tags": [
           "staff"
         ],
-        "summary": "Update Staff Role",
+        "summary": "PATCH /api/v1/admin/staff/:id/role",
         "description": "Endpoint in module 'staff' defined in src/modules/staff/router.ts.",
         "operationId": "staff_patch__api_v1_admin_staff__id_role",
         "parameters": [
@@ -22614,7 +22614,7 @@
         "tags": [
           "staff"
         ],
-        "summary": "Suspend Staff",
+        "summary": "PATCH /api/v1/admin/staff/:id/suspend",
         "description": "Endpoint in module 'staff' defined in src/modules/staff/router.ts.",
         "operationId": "staff_patch__api_v1_admin_staff__id_suspend",
         "parameters": [
@@ -23083,7 +23083,7 @@
         "tags": [
           "staff"
         ],
-        "summary": "Unsuspend Staff",
+        "summary": "PATCH /api/v1/admin/staff/:id/unsuspend",
         "description": "Endpoint in module 'staff' defined in src/modules/staff/router.ts.",
         "operationId": "staff_patch__api_v1_admin_staff__id_unsuspend",
         "parameters": [
@@ -23552,7 +23552,7 @@
         "tags": [
           "staff"
         ],
-        "summary": "Invite Staff",
+        "summary": "POST /api/v1/admin/staff/invite",
         "description": "Endpoint in module 'staff' defined in src/modules/staff/router.ts.",
         "operationId": "staff_post__api_v1_admin_staff_invite",
         "parameters": [],
@@ -24056,7 +24056,7 @@
         "tags": [
           "auth"
         ],
-        "summary": "Get Backup Codes Count",
+        "summary": "GET /api/v1/auth/2fa/backup-codes",
         "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
         "operationId": "auth_get__api_v1_auth_2fa_backup_codes",
         "parameters": [
@@ -24598,7 +24598,7 @@
         "tags": [
           "auth"
         ],
-        "summary": "Challenge Two Factor",
+        "summary": "POST /api/v1/auth/2fa/challenge",
         "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
         "operationId": "auth_post__api_v1_auth_2fa_challenge",
         "parameters": [],
@@ -25065,7 +25065,7 @@
         "tags": [
           "auth"
         ],
-        "summary": "Disable Two Factor",
+        "summary": "POST /api/v1/auth/2fa/disable",
         "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
         "operationId": "auth_post__api_v1_auth_2fa_disable",
         "parameters": [],
@@ -25549,7 +25549,7 @@
         "tags": [
           "auth"
         ],
-        "summary": "Send User Email Otp",
+        "summary": "POST /api/v1/auth/2fa/email/send",
         "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
         "operationId": "auth_post__api_v1_auth_2fa_email_send",
         "parameters": [],
@@ -26029,7 +26029,7 @@
         "tags": [
           "auth"
         ],
-        "summary": "Enable Two Factor",
+        "summary": "POST /api/v1/auth/2fa/enable",
         "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
         "operationId": "auth_post__api_v1_auth_2fa_enable",
         "parameters": [],
@@ -26492,7 +26492,7 @@
         "tags": [
           "auth"
         ],
-        "summary": "Verify Two Factor",
+        "summary": "POST /api/v1/auth/2fa/verify",
         "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
         "operationId": "auth_post__api_v1_auth_2fa_verify",
         "parameters": [],
@@ -27503,7 +27503,7 @@
         "tags": [
           "auth"
         ],
-        "summary": "Social Callback",
+        "summary": "GET /api/v1/auth/facebook/callback",
         "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
         "operationId": "auth_get__api_v1_auth_facebook_callback",
         "parameters": [
@@ -28030,7 +28030,7 @@
         "tags": [
           "auth"
         ],
-        "summary": "Forgot Password",
+        "summary": "POST /api/v1/auth/forgot-password",
         "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
         "operationId": "auth_post__api_v1_auth_forgot_password",
         "parameters": [],
@@ -29037,7 +29037,7 @@
         "tags": [
           "auth"
         ],
-        "summary": "Social Callback",
+        "summary": "GET /api/v1/auth/google/callback",
         "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
         "operationId": "auth_get__api_v1_auth_google_callback",
         "parameters": [
@@ -29564,7 +29564,7 @@
         "tags": [
           "auth"
         ],
-        "summary": "Login",
+        "summary": "POST /api/v1/auth/login",
         "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
         "operationId": "auth_post__api_v1_auth_login",
         "parameters": [],
@@ -30051,7 +30051,7 @@
         "tags": [
           "auth"
         ],
-        "summary": "Logout",
+        "summary": "POST /api/v1/auth/logout",
         "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
         "operationId": "auth_post__api_v1_auth_logout",
         "parameters": [],
@@ -30509,7 +30509,7 @@
         "tags": [
           "auth"
         ],
-        "summary": "Get Me",
+        "summary": "GET /api/v1/auth/me",
         "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
         "operationId": "auth_get__api_v1_auth_me",
         "parameters": [
@@ -31039,7 +31039,7 @@
         "tags": [
           "auth"
         ],
-        "summary": "Update Me",
+        "summary": "PATCH /api/v1/auth/me",
         "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
         "operationId": "auth_patch__api_v1_auth_me",
         "parameters": [],
@@ -31511,7 +31511,7 @@
         "tags": [
           "auth"
         ],
-        "summary": "Get My Login History",
+        "summary": "GET /api/v1/auth/me/login-history",
         "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
         "operationId": "auth_get__api_v1_auth_me_login_history",
         "parameters": [
@@ -32043,7 +32043,7 @@
         "tags": [
           "auth"
         ],
-        "summary": "Update My Notification Preferences",
+        "summary": "PATCH /api/v1/auth/me/notification-prefs",
         "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
         "operationId": "auth_patch__api_v1_auth_me_notification_prefs",
         "parameters": [],
@@ -32515,7 +32515,7 @@
         "tags": [
           "auth"
         ],
-        "summary": "Change My Password",
+        "summary": "PATCH /api/v1/auth/me/password",
         "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
         "operationId": "auth_patch__api_v1_auth_me_password",
         "parameters": [],
@@ -33008,7 +33008,7 @@
         "tags": [
           "auth"
         ],
-        "summary": "Refresh Session",
+        "summary": "POST /api/v1/auth/refresh",
         "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
         "operationId": "auth_post__api_v1_auth_refresh",
         "parameters": [],
@@ -33466,7 +33466,7 @@
         "tags": [
           "auth"
         ],
-        "summary": "Register",
+        "summary": "POST /api/v1/auth/register",
         "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
         "operationId": "auth_post__api_v1_auth_register",
         "parameters": [],
@@ -33971,7 +33971,7 @@
         "tags": [
           "auth"
         ],
-        "summary": "Resend Reset Otp",
+        "summary": "POST /api/v1/auth/resend-reset-otp",
         "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
         "operationId": "auth_post__api_v1_auth_resend_reset_otp",
         "parameters": [],
@@ -34451,7 +34451,7 @@
         "tags": [
           "auth"
         ],
-        "summary": "Resend Verification",
+        "summary": "POST /api/v1/auth/resend-verification",
         "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
         "operationId": "auth_post__api_v1_auth_resend_verification",
         "parameters": [],
@@ -34931,7 +34931,7 @@
         "tags": [
           "auth"
         ],
-        "summary": "Reset Password",
+        "summary": "POST /api/v1/auth/reset-password",
         "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
         "operationId": "auth_post__api_v1_auth_reset_password",
         "parameters": [],
@@ -35418,7 +35418,7 @@
         "tags": [
           "auth"
         ],
-        "summary": "Verify Email",
+        "summary": "POST /api/v1/auth/verify-email",
         "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
         "operationId": "auth_post__api_v1_auth_verify_email",
         "parameters": [],
@@ -35898,7 +35898,7 @@
         "tags": [
           "auth"
         ],
-        "summary": "Verify Reset Otp",
+        "summary": "POST /api/v1/auth/verify-reset-otp",
         "description": "Endpoint in module 'auth' defined in src/modules/auth/router.ts.",
         "operationId": "auth_post__api_v1_auth_verify_reset_otp",
         "parameters": [],
@@ -36383,7 +36383,7 @@
         "tags": [
           "authors"
         ],
-        "summary": "List Authors",
+        "summary": "GET /api/v1/authors",
         "description": "Endpoint in module 'authors' defined in src/modules/authors/router.ts.",
         "operationId": "authors_get__api_v1_authors",
         "parameters": [
@@ -36917,7 +36917,7 @@
         "tags": [
           "authors"
         ],
-        "summary": "Create Author",
+        "summary": "POST /api/v1/authors",
         "description": "Endpoint in module 'authors' defined in src/modules/authors/router.ts.",
         "operationId": "authors_post__api_v1_authors",
         "parameters": [],
@@ -37460,7 +37460,7 @@
         "tags": [
           "authors"
         ],
-        "summary": "Delete Author",
+        "summary": "DELETE /api/v1/authors/:id",
         "description": "Endpoint in module 'authors' defined in src/modules/authors/router.ts.",
         "operationId": "authors_delete__api_v1_authors__id",
         "parameters": [
@@ -37931,7 +37931,7 @@
         "tags": [
           "authors"
         ],
-        "summary": "Get Author By Id",
+        "summary": "GET /api/v1/authors/:id",
         "description": "Endpoint in module 'authors' defined in src/modules/authors/router.ts.",
         "operationId": "authors_get__api_v1_authors__id",
         "parameters": [
@@ -38466,7 +38466,7 @@
         "tags": [
           "authors"
         ],
-        "summary": "Update Author",
+        "summary": "PUT /api/v1/authors/:id",
         "description": "Endpoint in module 'authors' defined in src/modules/authors/router.ts.",
         "operationId": "authors_put__api_v1_authors__id",
         "parameters": [
@@ -38949,7 +38949,7 @@
         "tags": [
           "books"
         ],
-        "summary": "List Public Books",
+        "summary": "GET /api/v1/books",
         "description": "Endpoint in module 'books' defined in src/modules/books/router.ts.",
         "operationId": "books_get__api_v1_books",
         "parameters": [
@@ -39575,7 +39575,7 @@
         "tags": [
           "reading"
         ],
-        "summary": "List Bookmarks",
+        "summary": "GET /api/v1/books/:bookId/bookmarks",
         "description": "Endpoint in module 'reading' defined in src/modules/reading/router.ts.",
         "operationId": "reading_get__api_v1_books__bookId_bookmarks",
         "parameters": [
@@ -40115,7 +40115,7 @@
         "tags": [
           "reading"
         ],
-        "summary": "Create Bookmark",
+        "summary": "POST /api/v1/books/:bookId/bookmarks",
         "description": "Endpoint in module 'reading' defined in src/modules/reading/router.ts.",
         "operationId": "reading_post__api_v1_books__bookId_bookmarks",
         "parameters": [
@@ -40627,7 +40627,7 @@
         "tags": [
           "reading"
         ],
-        "summary": "Delete Bookmark",
+        "summary": "DELETE /api/v1/books/:bookId/bookmarks/:id",
         "description": "Endpoint in module 'reading' defined in src/modules/reading/router.ts.",
         "operationId": "reading_delete__api_v1_books__bookId_bookmarks__id",
         "parameters": [
@@ -41108,7 +41108,7 @@
         "tags": [
           "reading"
         ],
-        "summary": "Update Bookmark",
+        "summary": "PATCH /api/v1/books/:bookId/bookmarks/:id",
         "description": "Endpoint in module 'reading' defined in src/modules/reading/router.ts.",
         "operationId": "reading_patch__api_v1_books__bookId_bookmarks__id",
         "parameters": [
@@ -41601,7 +41601,7 @@
         "tags": [
           "reading"
         ],
-        "summary": "List Highlights",
+        "summary": "GET /api/v1/books/:bookId/highlights",
         "description": "Endpoint in module 'reading' defined in src/modules/reading/router.ts.",
         "operationId": "reading_get__api_v1_books__bookId_highlights",
         "parameters": [
@@ -42141,7 +42141,7 @@
         "tags": [
           "reading"
         ],
-        "summary": "Create Highlight",
+        "summary": "POST /api/v1/books/:bookId/highlights",
         "description": "Endpoint in module 'reading' defined in src/modules/reading/router.ts.",
         "operationId": "reading_post__api_v1_books__bookId_highlights",
         "parameters": [
@@ -42624,7 +42624,7 @@
         "tags": [
           "reading"
         ],
-        "summary": "Delete Highlight",
+        "summary": "DELETE /api/v1/books/:bookId/highlights/:id",
         "description": "Endpoint in module 'reading' defined in src/modules/reading/router.ts.",
         "operationId": "reading_delete__api_v1_books__bookId_highlights__id",
         "parameters": [
@@ -43105,7 +43105,7 @@
         "tags": [
           "reading"
         ],
-        "summary": "Update Highlight",
+        "summary": "PATCH /api/v1/books/:bookId/highlights/:id",
         "description": "Endpoint in module 'reading' defined in src/modules/reading/router.ts.",
         "operationId": "reading_patch__api_v1_books__bookId_highlights__id",
         "parameters": [
@@ -43598,7 +43598,7 @@
         "tags": [
           "reviews"
         ],
-        "summary": "List Public Book Reviews",
+        "summary": "GET /api/v1/books/:bookId/reviews",
         "description": "Endpoint in module 'reviews' defined in src/modules/reviews/router.ts.",
         "operationId": "reviews_get__api_v1_books__bookId_reviews",
         "parameters": [
@@ -44161,7 +44161,7 @@
         "tags": [
           "reviews"
         ],
-        "summary": "Create Review",
+        "summary": "POST /api/v1/books/:bookId/reviews",
         "description": "Endpoint in module 'reviews' defined in src/modules/reviews/router.ts.",
         "operationId": "reviews_post__api_v1_books__bookId_reviews",
         "parameters": [
@@ -44671,7 +44671,7 @@
         "tags": [
           "reviews"
         ],
-        "summary": "Delete Review",
+        "summary": "DELETE /api/v1/books/:bookId/reviews/:id",
         "description": "Endpoint in module 'reviews' defined in src/modules/reviews/router.ts.",
         "operationId": "reviews_delete__api_v1_books__bookId_reviews__id",
         "parameters": [
@@ -45152,7 +45152,7 @@
         "tags": [
           "reviews"
         ],
-        "summary": "Update Review",
+        "summary": "PATCH /api/v1/books/:bookId/reviews/:id",
         "description": "Endpoint in module 'reviews' defined in src/modules/reviews/router.ts.",
         "operationId": "reviews_patch__api_v1_books__bookId_reviews__id",
         "parameters": [
@@ -45645,7 +45645,7 @@
         "tags": [
           "books"
         ],
-        "summary": "Get Public Book By Id",
+        "summary": "GET /api/v1/books/:id",
         "description": "Endpoint in module 'books' defined in src/modules/books/router.ts.",
         "operationId": "books_get__api_v1_books__id",
         "parameters": [
@@ -46182,7 +46182,7 @@
         "tags": [
           "books"
         ],
-        "summary": "Get Book Preview",
+        "summary": "GET /api/v1/books/:id/preview",
         "description": "Endpoint in module 'books' defined in src/modules/books/router.ts.",
         "operationId": "books_get__api_v1_books__id_preview",
         "parameters": [
@@ -46719,7 +46719,7 @@
         "tags": [
           "books"
         ],
-        "summary": "List Featured Books",
+        "summary": "GET /api/v1/books/featured",
         "description": "Endpoint in module 'books' defined in src/modules/books/router.ts.",
         "operationId": "books_get__api_v1_books_featured",
         "parameters": [
@@ -47246,7 +47246,7 @@
         "tags": [
           "categories"
         ],
-        "summary": "List Categories",
+        "summary": "GET /api/v1/categories",
         "description": "Endpoint in module 'categories' defined in src/modules/categories/router.ts.",
         "operationId": "categories_get__api_v1_categories",
         "parameters": [
@@ -47800,7 +47800,7 @@
         "tags": [
           "categories"
         ],
-        "summary": "Create Category",
+        "summary": "POST /api/v1/categories",
         "description": "Endpoint in module 'categories' defined in src/modules/categories/router.ts.",
         "operationId": "categories_post__api_v1_categories",
         "parameters": [],
@@ -48312,7 +48312,7 @@
         "tags": [
           "categories"
         ],
-        "summary": "Delete Category",
+        "summary": "DELETE /api/v1/categories/:id",
         "description": "Endpoint in module 'categories' defined in src/modules/categories/router.ts.",
         "operationId": "categories_delete__api_v1_categories__id",
         "parameters": [
@@ -48783,7 +48783,7 @@
         "tags": [
           "categories"
         ],
-        "summary": "Get Category By Id",
+        "summary": "GET /api/v1/categories/:id",
         "description": "Endpoint in module 'categories' defined in src/modules/categories/router.ts.",
         "operationId": "categories_get__api_v1_categories__id",
         "parameters": [
@@ -49318,7 +49318,7 @@
         "tags": [
           "categories"
         ],
-        "summary": "Update Category",
+        "summary": "PUT /api/v1/categories/:id",
         "description": "Endpoint in module 'categories' defined in src/modules/categories/router.ts.",
         "operationId": "categories_put__api_v1_categories__id",
         "parameters": [
@@ -49801,7 +49801,7 @@
         "tags": [
           "promotions"
         ],
-        "summary": "List Coupons",
+        "summary": "GET /api/v1/coupons",
         "description": "Endpoint in module 'promotions' defined in src/modules/promotions/router.ts.",
         "operationId": "promotions_get__api_v1_coupons",
         "parameters": [
@@ -50331,7 +50331,7 @@
         "tags": [
           "promotions"
         ],
-        "summary": "Create Coupon",
+        "summary": "POST /api/v1/coupons",
         "description": "Endpoint in module 'promotions' defined in src/modules/promotions/router.ts.",
         "operationId": "promotions_post__api_v1_coupons",
         "parameters": [],
@@ -50886,7 +50886,7 @@
         "tags": [
           "promotions"
         ],
-        "summary": "Delete Coupon",
+        "summary": "DELETE /api/v1/coupons/:id",
         "description": "Endpoint in module 'promotions' defined in src/modules/promotions/router.ts.",
         "operationId": "promotions_delete__api_v1_coupons__id",
         "parameters": [
@@ -51357,7 +51357,7 @@
         "tags": [
           "promotions"
         ],
-        "summary": "Get Coupon By Id",
+        "summary": "GET /api/v1/coupons/:id",
         "description": "Endpoint in module 'promotions' defined in src/modules/promotions/router.ts.",
         "operationId": "promotions_get__api_v1_coupons__id",
         "parameters": [
@@ -51897,7 +51897,7 @@
         "tags": [
           "promotions"
         ],
-        "summary": "Update Coupon",
+        "summary": "PUT /api/v1/coupons/:id",
         "description": "Endpoint in module 'promotions' defined in src/modules/promotions/router.ts.",
         "operationId": "promotions_put__api_v1_coupons__id",
         "parameters": [
@@ -52380,7 +52380,7 @@
         "tags": [
           "promotions"
         ],
-        "summary": "Toggle Coupon",
+        "summary": "PATCH /api/v1/coupons/:id/toggle",
         "description": "Endpoint in module 'promotions' defined in src/modules/promotions/router.ts.",
         "operationId": "promotions_patch__api_v1_coupons__id_toggle",
         "parameters": [
@@ -52854,7 +52854,7 @@
         "tags": [
           "promotions"
         ],
-        "summary": "Validate Coupon",
+        "summary": "POST /api/v1/coupons/validate",
         "description": "Endpoint in module 'promotions' defined in src/modules/promotions/router.ts.",
         "operationId": "promotions_post__api_v1_coupons_validate",
         "parameters": [],
@@ -55470,7 +55470,7 @@
         "tags": [
           "promotions"
         ],
-        "summary": "List Flash Sales",
+        "summary": "GET /api/v1/flash-sales",
         "description": "Endpoint in module 'promotions' defined in src/modules/promotions/router.ts.",
         "operationId": "promotions_get__api_v1_flash_sales",
         "parameters": [
@@ -56000,7 +56000,7 @@
         "tags": [
           "promotions"
         ],
-        "summary": "Create Flash Sale",
+        "summary": "POST /api/v1/flash-sales",
         "description": "Endpoint in module 'promotions' defined in src/modules/promotions/router.ts.",
         "operationId": "promotions_post__api_v1_flash_sales",
         "parameters": [],
@@ -56525,7 +56525,7 @@
         "tags": [
           "promotions"
         ],
-        "summary": "Delete Flash Sale",
+        "summary": "DELETE /api/v1/flash-sales/:id",
         "description": "Endpoint in module 'promotions' defined in src/modules/promotions/router.ts.",
         "operationId": "promotions_delete__api_v1_flash_sales__id",
         "parameters": [
@@ -56996,7 +56996,7 @@
         "tags": [
           "promotions"
         ],
-        "summary": "Update Flash Sale",
+        "summary": "PUT /api/v1/flash-sales/:id",
         "description": "Endpoint in module 'promotions' defined in src/modules/promotions/router.ts.",
         "operationId": "promotions_put__api_v1_flash_sales__id",
         "parameters": [
@@ -57479,7 +57479,7 @@
         "tags": [
           "promotions"
         ],
-        "summary": "Toggle Flash Sale",
+        "summary": "PATCH /api/v1/flash-sales/:id/toggle",
         "description": "Endpoint in module 'promotions' defined in src/modules/promotions/router.ts.",
         "operationId": "promotions_patch__api_v1_flash_sales__id_toggle",
         "parameters": [
@@ -57953,7 +57953,7 @@
         "tags": [
           "promotions"
         ],
-        "summary": "Get Active Flash Sales",
+        "summary": "GET /api/v1/flash-sales/active",
         "description": "Endpoint in module 'promotions' defined in src/modules/promotions/router.ts.",
         "operationId": "promotions_get__api_v1_flash_sales_active",
         "parameters": [
@@ -62622,7 +62622,7 @@
         "tags": [
           "onboarding"
         ],
-        "summary": "Complete Onboarding",
+        "summary": "POST /api/v1/onboarding/complete",
         "description": "Endpoint in module 'onboarding' defined in src/modules/onboarding/router.ts.",
         "operationId": "onboarding_post__api_v1_onboarding_complete",
         "parameters": [],
@@ -63109,7 +63109,7 @@
         "tags": [
           "onboarding"
         ],
-        "summary": "Get Plan Options",
+        "summary": "GET /api/v1/onboarding/plans",
         "description": "Endpoint in module 'onboarding' defined in src/modules/onboarding/router.ts.",
         "operationId": "onboarding_get__api_v1_onboarding_plans",
         "parameters": [
@@ -63636,7 +63636,7 @@
         "tags": [
           "onboarding"
         ],
-        "summary": "Select Plan",
+        "summary": "POST /api/v1/onboarding/select",
         "description": "Endpoint in module 'onboarding' defined in src/modules/onboarding/router.ts.",
         "operationId": "onboarding_post__api_v1_onboarding_select",
         "parameters": [],
@@ -64122,7 +64122,7 @@
         "tags": [
           "onboarding"
         ],
-        "summary": "Get My Onboarding Status",
+        "summary": "GET /api/v1/onboarding/status",
         "description": "Endpoint in module 'onboarding' defined in src/modules/onboarding/router.ts.",
         "operationId": "onboarding_get__api_v1_onboarding_status",
         "parameters": [
@@ -68844,7 +68844,7 @@
         "tags": [
           "plans"
         ],
-        "summary": "List Plans",
+        "summary": "GET /api/v1/plans",
         "description": "Endpoint in module 'plans' defined in src/modules/plans/router.ts.",
         "operationId": "plans_get__api_v1_plans",
         "parameters": [
@@ -69379,7 +69379,7 @@
         "tags": [
           "plans"
         ],
-        "summary": "Create Plan",
+        "summary": "POST /api/v1/plans",
         "description": "Endpoint in module 'plans' defined in src/modules/plans/router.ts.",
         "operationId": "plans_post__api_v1_plans",
         "parameters": [],
@@ -69941,7 +69941,7 @@
         "tags": [
           "plans"
         ],
-        "summary": "Get Plan By Id",
+        "summary": "GET /api/v1/plans/:id",
         "description": "Endpoint in module 'plans' defined in src/modules/plans/router.ts.",
         "operationId": "plans_get__api_v1_plans__id",
         "parameters": [
@@ -70476,7 +70476,7 @@
         "tags": [
           "plans"
         ],
-        "summary": "Update Plan",
+        "summary": "PUT /api/v1/plans/:id",
         "description": "Endpoint in module 'plans' defined in src/modules/plans/router.ts.",
         "operationId": "plans_put__api_v1_plans__id",
         "parameters": [
@@ -70959,7 +70959,7 @@
         "tags": [
           "plans"
         ],
-        "summary": "Toggle Plan",
+        "summary": "PATCH /api/v1/plans/:id/toggle",
         "description": "Endpoint in module 'plans' defined in src/modules/plans/router.ts.",
         "operationId": "plans_patch__api_v1_plans__id_toggle",
         "parameters": [
@@ -74005,7 +74005,7 @@
         "tags": [
           "reading"
         ],
-        "summary": "Update Reading Progress",
+        "summary": "PATCH /api/v1/reading/:bookId/progress",
         "description": "Endpoint in module 'reading' defined in src/modules/reading/router.ts.",
         "operationId": "reading_patch__api_v1_reading__bookId_progress",
         "parameters": [
@@ -74519,7 +74519,7 @@
         "tags": [
           "reading"
         ],
-        "summary": "Create Reading Session",
+        "summary": "POST /api/v1/reading/:bookId/session",
         "description": "Endpoint in module 'reading' defined in src/modules/reading/router.ts.",
         "operationId": "reading_post__api_v1_reading__bookId_session",
         "parameters": [
@@ -75037,7 +75037,7 @@
         "tags": [
           "reading"
         ],
-        "summary": "Start Reading",
+        "summary": "POST /api/v1/reading/:bookId/start",
         "description": "Endpoint in module 'reading' defined in src/modules/reading/router.ts.",
         "operationId": "reading_post__api_v1_reading__bookId_start",
         "parameters": [
@@ -75534,7 +75534,7 @@
         "tags": [
           "reading"
         ],
-        "summary": "Get Completed Reading",
+        "summary": "GET /api/v1/reading/completed",
         "description": "Endpoint in module 'reading' defined in src/modules/reading/router.ts.",
         "operationId": "reading_get__api_v1_reading_completed",
         "parameters": [
@@ -76064,7 +76064,7 @@
         "tags": [
           "reading"
         ],
-        "summary": "Get Currently Reading",
+        "summary": "GET /api/v1/reading/currently-reading",
         "description": "Endpoint in module 'reading' defined in src/modules/reading/router.ts.",
         "operationId": "reading_get__api_v1_reading_currently_reading",
         "parameters": [
@@ -76594,7 +76594,7 @@
         "tags": [
           "reading"
         ],
-        "summary": "Get Reading History",
+        "summary": "GET /api/v1/reading/history",
         "description": "Endpoint in module 'reading' defined in src/modules/reading/router.ts.",
         "operationId": "reading_get__api_v1_reading_history",
         "parameters": [
@@ -79763,7 +79763,7 @@
         "tags": [
           "staff-auth"
         ],
-        "summary": "Disable Two Factor",
+        "summary": "POST /api/v1/staff/2fa/disable",
         "description": "Endpoint in module 'staff-auth' defined in src/modules/staff-auth/router.ts.",
         "operationId": "staff-auth_post__api_v1_staff_2fa_disable",
         "parameters": [],
@@ -80247,7 +80247,7 @@
         "tags": [
           "staff-auth"
         ],
-        "summary": "Send Staff Email Otp",
+        "summary": "POST /api/v1/staff/2fa/email/send",
         "description": "Endpoint in module 'staff-auth' defined in src/modules/staff-auth/router.ts.",
         "operationId": "staff-auth_post__api_v1_staff_2fa_email_send",
         "parameters": [],
@@ -80705,7 +80705,7 @@
         "tags": [
           "staff-auth"
         ],
-        "summary": "Enable Two Factor",
+        "summary": "POST /api/v1/staff/2fa/enable",
         "description": "Endpoint in module 'staff-auth' defined in src/modules/staff-auth/router.ts.",
         "operationId": "staff-auth_post__api_v1_staff_2fa_enable",
         "parameters": [],
@@ -81184,7 +81184,7 @@
         "tags": [
           "staff-auth"
         ],
-        "summary": "Setup Two Factor",
+        "summary": "POST /api/v1/staff/2fa/setup",
         "description": "Endpoint in module 'staff-auth' defined in src/modules/staff-auth/router.ts.",
         "operationId": "staff-auth_post__api_v1_staff_2fa_setup",
         "parameters": [],
@@ -81642,7 +81642,7 @@
         "tags": [
           "staff-auth"
         ],
-        "summary": "Verify Two Factor",
+        "summary": "POST /api/v1/staff/2fa/verify",
         "description": "Endpoint in module 'staff-auth' defined in src/modules/staff-auth/router.ts.",
         "operationId": "staff-auth_post__api_v1_staff_2fa_verify",
         "parameters": [],
@@ -82109,7 +82109,7 @@
         "tags": [
           "staff-auth"
         ],
-        "summary": "Accept Invite",
+        "summary": "POST /api/v1/staff/accept-invite",
         "description": "Endpoint in module 'staff-auth' defined in src/modules/staff-auth/router.ts.",
         "operationId": "staff-auth_post__api_v1_staff_accept_invite",
         "parameters": [],
@@ -82596,7 +82596,7 @@
         "tags": [
           "staff-auth"
         ],
-        "summary": "Forgot Staff Password",
+        "summary": "POST /api/v1/staff/forgot-password",
         "description": "Endpoint in module 'staff-auth' defined in src/modules/staff-auth/router.ts.",
         "operationId": "staff-auth_post__api_v1_staff_forgot_password",
         "parameters": [],
@@ -83076,7 +83076,7 @@
         "tags": [
           "staff-auth"
         ],
-        "summary": "Staff Login",
+        "summary": "POST /api/v1/staff/login",
         "description": "Endpoint in module 'staff-auth' defined in src/modules/staff-auth/router.ts.",
         "operationId": "staff-auth_post__api_v1_staff_login",
         "parameters": [],
@@ -83563,7 +83563,7 @@
         "tags": [
           "staff-auth"
         ],
-        "summary": "Staff Logout",
+        "summary": "POST /api/v1/staff/logout",
         "description": "Endpoint in module 'staff-auth' defined in src/modules/staff-auth/router.ts.",
         "operationId": "staff-auth_post__api_v1_staff_logout",
         "parameters": [],
@@ -84026,7 +84026,7 @@
         "tags": [
           "staff-auth"
         ],
-        "summary": "Get Staff Me",
+        "summary": "GET /api/v1/staff/me",
         "description": "Endpoint in module 'staff-auth' defined in src/modules/staff-auth/router.ts.",
         "operationId": "staff-auth_get__api_v1_staff_me",
         "parameters": [
@@ -84558,7 +84558,7 @@
         "tags": [
           "staff-auth"
         ],
-        "summary": "Change Staff Password",
+        "summary": "PATCH /api/v1/staff/me/password",
         "description": "Endpoint in module 'staff-auth' defined in src/modules/staff-auth/router.ts.",
         "operationId": "staff-auth_patch__api_v1_staff_me_password",
         "parameters": [],
@@ -85051,7 +85051,7 @@
         "tags": [
           "staff-auth"
         ],
-        "summary": "Refresh Staff Session",
+        "summary": "POST /api/v1/staff/refresh",
         "description": "Endpoint in module 'staff-auth' defined in src/modules/staff-auth/router.ts.",
         "operationId": "staff-auth_post__api_v1_staff_refresh",
         "parameters": [],
@@ -85509,7 +85509,7 @@
         "tags": [
           "staff-auth"
         ],
-        "summary": "Resend Staff Reset Otp",
+        "summary": "POST /api/v1/staff/resend-reset-otp",
         "description": "Endpoint in module 'staff-auth' defined in src/modules/staff-auth/router.ts.",
         "operationId": "staff-auth_post__api_v1_staff_resend_reset_otp",
         "parameters": [],
@@ -85989,7 +85989,7 @@
         "tags": [
           "staff-auth"
         ],
-        "summary": "Reset Staff Password",
+        "summary": "POST /api/v1/staff/reset-password",
         "description": "Endpoint in module 'staff-auth' defined in src/modules/staff-auth/router.ts.",
         "operationId": "staff-auth_post__api_v1_staff_reset_password",
         "parameters": [],
@@ -86476,7 +86476,7 @@
         "tags": [
           "staff-auth"
         ],
-        "summary": "Verify Staff Reset Otp",
+        "summary": "POST /api/v1/staff/verify-reset-otp",
         "description": "Endpoint in module 'staff-auth' defined in src/modules/staff-auth/router.ts.",
         "operationId": "staff-auth_post__api_v1_staff_verify_reset_otp",
         "parameters": [],
@@ -86961,7 +86961,7 @@
         "tags": [
           "subscriptions"
         ],
-        "summary": "List Subscriptions",
+        "summary": "GET /api/v1/subscriptions",
         "description": "Endpoint in module 'subscriptions' defined in src/modules/subscriptions/router.ts.",
         "operationId": "subscriptions_get__api_v1_subscriptions",
         "parameters": [
@@ -87491,7 +87491,7 @@
         "tags": [
           "subscriptions"
         ],
-        "summary": "Create Subscription",
+        "summary": "POST /api/v1/subscriptions",
         "description": "Endpoint in module 'subscriptions' defined in src/modules/subscriptions/router.ts.",
         "operationId": "subscriptions_post__api_v1_subscriptions",
         "parameters": [],
@@ -87984,7 +87984,7 @@
         "tags": [
           "subscriptions"
         ],
-        "summary": "Get Subscription By Id",
+        "summary": "GET /api/v1/subscriptions/:id",
         "description": "Endpoint in module 'subscriptions' defined in src/modules/subscriptions/router.ts.",
         "operationId": "subscriptions_get__api_v1_subscriptions__id",
         "parameters": [
@@ -88524,7 +88524,7 @@
         "tags": [
           "subscriptions"
         ],
-        "summary": "Admin Update Subscription",
+        "summary": "PATCH /api/v1/subscriptions/:id",
         "description": "Endpoint in module 'subscriptions' defined in src/modules/subscriptions/router.ts.",
         "operationId": "subscriptions_patch__api_v1_subscriptions__id",
         "parameters": [
@@ -89007,7 +89007,7 @@
         "tags": [
           "subscriptions"
         ],
-        "summary": "Get My Current Subscription",
+        "summary": "GET /api/v1/subscriptions/my",
         "description": "Endpoint in module 'subscriptions' defined in src/modules/subscriptions/router.ts.",
         "operationId": "subscriptions_get__api_v1_subscriptions_my",
         "parameters": [
@@ -89539,7 +89539,7 @@
         "tags": [
           "subscriptions"
         ],
-        "summary": "Cancel My Subscription",
+        "summary": "PATCH /api/v1/subscriptions/my/cancel",
         "description": "Endpoint in module 'subscriptions' defined in src/modules/subscriptions/router.ts.",
         "operationId": "subscriptions_patch__api_v1_subscriptions_my_cancel",
         "parameters": [],
@@ -90025,7 +90025,7 @@
         "tags": [
           "subscriptions"
         ],
-        "summary": "Downgrade My Subscription",
+        "summary": "PATCH /api/v1/subscriptions/my/downgrade",
         "description": "Endpoint in module 'subscriptions' defined in src/modules/subscriptions/router.ts.",
         "operationId": "subscriptions_patch__api_v1_subscriptions_my_downgrade",
         "parameters": [],
@@ -90509,7 +90509,7 @@
         "tags": [
           "subscriptions"
         ],
-        "summary": "Get My Subscription History",
+        "summary": "GET /api/v1/subscriptions/my/history",
         "description": "Endpoint in module 'subscriptions' defined in src/modules/subscriptions/router.ts.",
         "operationId": "subscriptions_get__api_v1_subscriptions_my_history",
         "parameters": [
@@ -91041,7 +91041,7 @@
         "tags": [
           "subscriptions"
         ],
-        "summary": "Renew My Subscription",
+        "summary": "PATCH /api/v1/subscriptions/my/renew",
         "description": "Endpoint in module 'subscriptions' defined in src/modules/subscriptions/router.ts.",
         "operationId": "subscriptions_patch__api_v1_subscriptions_my_renew",
         "parameters": [],
@@ -91504,7 +91504,7 @@
         "tags": [
           "subscriptions"
         ],
-        "summary": "Upgrade My Subscription",
+        "summary": "PATCH /api/v1/subscriptions/my/upgrade",
         "description": "Endpoint in module 'subscriptions' defined in src/modules/subscriptions/router.ts.",
         "operationId": "subscriptions_patch__api_v1_subscriptions_my_upgrade",
         "parameters": [],
@@ -92463,7 +92463,7 @@
         "tags": [
           "wishlist"
         ],
-        "summary": "Get My Wishlist",
+        "summary": "GET /api/v1/wishlist",
         "description": "Endpoint in module 'wishlist' defined in src/modules/wishlist/router.ts.",
         "operationId": "wishlist_get__api_v1_wishlist",
         "parameters": [
@@ -92993,7 +92993,7 @@
         "tags": [
           "wishlist"
         ],
-        "summary": "Remove From Wishlist",
+        "summary": "DELETE /api/v1/wishlist/:bookId",
         "description": "Endpoint in module 'wishlist' defined in src/modules/wishlist/router.ts.",
         "operationId": "wishlist_delete__api_v1_wishlist__bookId",
         "parameters": [
@@ -93464,7 +93464,7 @@
         "tags": [
           "wishlist"
         ],
-        "summary": "Add To Wishlist",
+        "summary": "POST /api/v1/wishlist/:bookId",
         "description": "Endpoint in module 'wishlist' defined in src/modules/wishlist/router.ts.",
         "operationId": "wishlist_post__api_v1_wishlist__bookId",
         "parameters": [

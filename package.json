@@ -23,8 +23,8 @@
     "seed:settings": "tsx src/seeds/settings.seed.ts",
     "seed:super-admin": "tsx src/seeds/superAdmin.seed.ts",
     "seed:all": "tsx src/scripts/seed.ts",
-    "export:openapi": "echo OpenAPI export available at documentation/OpenAPI_v1.json",
-    "export:postman": "echo Postman export available at documentation/Postman_Collection_v1.json"
+    "export:openapi": "echo OpenAPI export available at /docs/openAPI.json",
+    "export:postman": "echo Postman export available at /docs/postman-collection.json"
   },
   "keywords": [
     "stackread",

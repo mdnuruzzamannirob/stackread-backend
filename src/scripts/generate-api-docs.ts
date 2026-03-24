@@ -44,9 +44,9 @@ type PostmanQueryParam = {
 
 const projectRoot = process.cwd()
 const apiPrefix = '/api/v1'
-const docsDir = path.join(projectRoot, 'documentation')
-const openApiPath = path.join(docsDir, 'OpenAPI_v1.json')
-const postmanPath = path.join(docsDir, 'Postman_Collection_v1.json')
+const docsDir = path.join(projectRoot, 'docs')
+const openApiPath = path.join(docsDir, 'openAPI.json')
+const postmanPath = path.join(docsDir, 'postman-collection.json')
 const nowIsoExample = '2026-03-18T09:30:00.000Z'
 const objectIdExample = '65f19a9a6f8f4a2b3c4d5e6f'
 const knownIdVariables = new Set([

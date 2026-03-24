@@ -580,7 +580,7 @@ pnpm dev:worker   # Terminal 2: Background worker
 
 **API Documentation:**
 - Interactive: http://localhost:5000/api/docs
-- OpenAPI: documentation/OpenAPI_v1.json
+- OpenAPI: docs/openAPI.json
 
 ---
 
@@ -619,7 +619,7 @@ ${scriptsSection}
 - Code snippets (cURL, JS, Python)
 - Full search
 
-**Postman Collection:** documentation/Postman_Collection_v1.json
+**Postman Collection:** docs/postman-collection.json
 
 ---
 
