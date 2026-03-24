@@ -6,6 +6,35 @@ import {
 import type { IAuthor } from './interface'
 import { AuthorModel } from './model'
 
+const stripHtml = (value: string) =>
+  value
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+
+const sanitizeRequiredText = (
+  value: string,
+  fieldName: string,
+  minLength = 1,
+) => {
+  const sanitized = stripHtml(value)
+
+  if (sanitized.length < minLength) {
+    throw new AppError(`${fieldName} is invalid after sanitization.`, 400)
+  }
+
+  return sanitized
+}
+
+const sanitizeOptionalText = (value: string | null | undefined) => {
+  if (typeof value !== 'string') {
+    return value
+  }
+
+  const sanitized = stripHtml(value)
+  return sanitized.length > 0 ? sanitized : null
+}
+
 const formatAuthor = (author: IAuthor | null) => {
   if (!author) {
     throw new AppError('Author not found.', 404)
@@ -14,6 +43,7 @@ const formatAuthor = (author: IAuthor | null) => {
   return {
     id: author._id.toString(),
     name: author.name,
+    slug: author.slug,
     bio: author.bio,
     countryCode: author.countryCode,
     avatar: author.avatar ?? null,
@@ -39,15 +69,18 @@ export const authorsService = {
     }
 
     if (query.search) {
-      filter.$or = [
-        { name: { $regex: query.search, $options: 'i' } },
-        { bio: { $regex: query.search, $options: 'i' } },
-      ]
+      filter.$text = { $search: query.search }
     }
 
+    const projection = query.search ? { score: { $meta: 'textScore' } } : {}
+
     const [authors, total] = await Promise.all([
-      AuthorModel.find(filter)
-        .sort({ name: 1, createdAt: -1 })
+      AuthorModel.find(filter, projection)
+        .sort(
+          query.search
+            ? ({ score: { $meta: 'textScore' }, name: 1 } as const)
+            : ({ name: 1, createdAt: -1 } as const),
+        )
         .skip(pagination.skip)
         .limit(pagination.limit),
       AuthorModel.countDocuments(filter),
@@ -66,21 +99,30 @@ export const authorsService = {
 
   createAuthor: async (payload: {
     name: string
-    bio?: string
-    countryCode?: string
-    avatar?: { publicId: string; url: string }
-    website?: string
+    slug: string
+    bio?: string | null
+    countryCode?: string | null
+    avatar?: { provider: 'cloudinary'; publicId: string; url: string } | null
+    website?: string | null
     isActive: boolean
   }) => {
-    const existing = await AuthorModel.findOne({ name: payload.name })
+    const [existingName, existingSlug] = await Promise.all([
+      AuthorModel.findOne({ name: payload.name }),
+      AuthorModel.findOne({ slug: payload.slug }),
+    ])
 
-    if (existing) {
+    if (existingName) {
       throw new AppError('Author with this name already exists.', 409)
     }
 
+    if (existingSlug) {
+      throw new AppError('Author slug already exists.', 409)
+    }
+
     const author = await AuthorModel.create({
-      name: payload.name,
-      bio: payload.bio,
+      name: sanitizeRequiredText(payload.name, 'Name', 2),
+      slug: payload.slug,
+      bio: sanitizeOptionalText(payload.bio),
       countryCode: payload.countryCode,
       avatar: payload.avatar,
       website: payload.website,
@@ -94,10 +136,11 @@ export const authorsService = {
     id: string,
     payload: Partial<{
       name: string
-      bio: string
-      countryCode: string
-      avatar: { publicId: string; url: string }
-      website: string
+      slug: string
+      bio: string | null
+      countryCode: string | null
+      avatar: { provider: 'cloudinary'; publicId: string; url: string } | null
+      website: string | null
       isActive: boolean
     }>,
   ) => {
@@ -108,14 +151,39 @@ export const authorsService = {
     }
 
     if (typeof payload.name === 'string') {
-      author.name = payload.name
+      const existing = await AuthorModel.findOne({
+        name: payload.name,
+        _id: { $ne: author._id },
+      })
+
+      if (existing) {
+        throw new AppError('Author with this name already exists.', 409)
+      }
+
+      author.name = sanitizeRequiredText(payload.name, 'Name', 2)
     }
 
-    if (typeof payload.bio === 'string') {
-      author.bio = payload.bio
+    if (typeof payload.slug === 'string') {
+      const existing = await AuthorModel.findOne({
+        slug: payload.slug,
+        _id: { $ne: author._id },
+      })
+
+      if (existing) {
+        throw new AppError('Author slug already exists.', 409)
+      }
+
+      author.slug = payload.slug
     }
 
-    if (typeof payload.countryCode === 'string') {
+    if (typeof payload.bio !== 'undefined') {
+      author.bio = sanitizeOptionalText(payload.bio) ?? null
+    }
+
+    if (
+      typeof payload.countryCode === 'string' ||
+      payload.countryCode === null
+    ) {
       author.countryCode = payload.countryCode
     }
 
@@ -123,7 +191,7 @@ export const authorsService = {
       author.avatar = payload.avatar
     }
 
-    if (typeof payload.website === 'string') {
+    if (typeof payload.website === 'string' || payload.website === null) {
       author.website = payload.website
     }
 

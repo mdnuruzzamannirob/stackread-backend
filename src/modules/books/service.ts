@@ -10,6 +10,7 @@ import {
 } from '../../common/utils/pagination'
 import { AuthorModel } from '../authors/model'
 import { CategoryModel } from '../categories/model'
+import { PublisherModel } from '../publishers/model'
 import type { IBook } from './interface'
 import { BookModel } from './model'
 
@@ -18,10 +19,26 @@ type BookQuery = {
   limit?: number
   search?: string
   featured?: boolean
-  isAvailable?: boolean
+  status?: 'draft' | 'published' | 'archived'
+  availabilityStatus?: 'available' | 'unavailable' | 'coming_soon'
   authorId?: string
   categoryId?: string
+  publisherId?: string
+  accessLevel?: 'free' | 'basic' | 'premium'
+  language?: 'bn' | 'en' | 'hi'
 }
+
+type BookStatus = 'draft' | 'published' | 'archived'
+type BookAvailabilityStatus = 'available' | 'unavailable' | 'coming_soon'
+type BookFileFormat = 'pdf' | 'epub' | 'mobi' | 'txt' | 'azw3'
+
+const allowedBookFormats = new Set<BookFileFormat>([
+  'pdf',
+  'epub',
+  'mobi',
+  'txt',
+  'azw3',
+])
 
 const toObjectIdArray = (values: string[]) => {
   const uniqueValues = [...new Set(values)]
@@ -41,6 +58,39 @@ const parseBase64 = (value: string): Buffer => {
   return buffer
 }
 
+const stripHtml = (value: string) =>
+  value
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+
+const sanitizeRequiredText = (
+  value: string,
+  fieldName: string,
+  minLength = 1,
+) => {
+  const sanitized = stripHtml(value)
+
+  if (sanitized.length < minLength) {
+    throw new AppError(`${fieldName} is invalid after sanitization.`, 400)
+  }
+
+  return sanitized
+}
+
+const sanitizeOptionalText = (value: string | null | undefined) => {
+  if (typeof value !== 'string') {
+    return value
+  }
+
+  const sanitized = stripHtml(value)
+  return sanitized.length > 0 ? sanitized : null
+}
+
+const sanitizeTags = (tags: string[]) => [
+  ...new Set(tags.map((tag) => stripHtml(tag).toLowerCase()).filter(Boolean)),
+]
+
 const formatBook = (book: IBook | null) => {
   if (!book) {
     throw new AppError('Book not found.', 404)
@@ -59,9 +109,9 @@ const formatBook = (book: IBook | null) => {
     coverImage: book.coverImage ?? null,
     edition: book.edition,
     featured: book.featured,
-    isAvailable: book.isAvailable,
+    availabilityStatus: book.availabilityStatus,
     accessLevel: book.accessLevel,
-    isPublished: book.isPublished,
+    status: book.status,
     authorIds: book.authorIds.map((authorId) => authorId.toString()),
     categoryIds: book.categoryIds.map((categoryId) => categoryId.toString()),
     publisherId: book.publisherId?.toString(),
@@ -120,24 +170,47 @@ const validateAuthorAndCategoryLinks = async (
   }
 }
 
+const validatePublisherLink = async (
+  publisherId: string | null | undefined,
+) => {
+  if (!publisherId) {
+    return
+  }
+
+  const publisher = await PublisherModel.findOne({
+    _id: publisherId,
+    isActive: true,
+  })
+
+  if (!publisher) {
+    throw new AppError('Publisher is invalid or inactive.', 400)
+  }
+}
+
 const applyBookUpdates = async (
   book: IBook,
   payload: Partial<{
     title: string
     slug: string
-    isbn: string
+    isbn: string | null
     summary: string
-    description: string
-    language: string
-    pageCount: number
-    publicationDate: Date
-    coverImage: { publicId: string; url: string; width: number; height: number }
-    publisherId: string
+    description: string | null
+    language: 'bn' | 'en' | 'hi'
+    pageCount: number | null
+    publicationDate: Date | null
+    coverImage: {
+      provider: 'cloudinary'
+      publicId: string
+      url: string
+      width: number
+      height: number
+    }
+    publisherId: string | null
     accessLevel: 'free' | 'basic' | 'premium'
-    isPublished: boolean
-    edition: string
+    status: BookStatus
+    edition: string | null
     featured: boolean
-    isAvailable: boolean
+    availabilityStatus: BookAvailabilityStatus
     authorIds: string[]
     categoryIds: string[]
     tags: string[]
@@ -169,27 +242,34 @@ const applyBookUpdates = async (
     book.isbn = payload.isbn
   }
 
+  if (payload.isbn === null) {
+    book.isbn = null
+  }
+
   if (typeof payload.title === 'string') {
-    book.title = payload.title
+    book.title = sanitizeRequiredText(payload.title, 'Title', 2)
   }
 
   if (typeof payload.summary === 'string') {
-    book.summary = payload.summary
+    book.summary = sanitizeRequiredText(payload.summary, 'Summary', 10)
   }
 
-  if (typeof payload.description === 'string') {
-    book.description = payload.description
+  if (typeof payload.description !== 'undefined') {
+    book.description = sanitizeOptionalText(payload.description) ?? null
   }
 
   if (typeof payload.language === 'string') {
     book.language = payload.language
   }
 
-  if (typeof payload.pageCount === 'number') {
+  if (typeof payload.pageCount === 'number' || payload.pageCount === null) {
     book.pageCount = payload.pageCount
   }
 
-  if (payload.publicationDate instanceof Date) {
+  if (
+    payload.publicationDate instanceof Date ||
+    payload.publicationDate === null
+  ) {
     book.publicationDate = payload.publicationDate
   }
 
@@ -197,28 +277,34 @@ const applyBookUpdates = async (
     book.coverImage = payload.coverImage
   }
 
-  if (typeof payload.publisherId === 'string') {
-    book.publisherId = new Types.ObjectId(payload.publisherId)
+  if (typeof payload.publisherId !== 'undefined') {
+    book.publisherId = payload.publisherId
+      ? new Types.ObjectId(payload.publisherId)
+      : null
   }
 
   if (typeof payload.accessLevel === 'string') {
     book.accessLevel = payload.accessLevel
   }
 
-  if (typeof payload.isPublished === 'boolean') {
-    book.isPublished = payload.isPublished
+  if (typeof payload.status === 'string') {
+    book.status = payload.status
   }
 
   if (typeof payload.edition === 'string') {
-    book.edition = payload.edition
+    book.edition = sanitizeRequiredText(payload.edition, 'Edition', 1)
+  }
+
+  if (payload.edition === null) {
+    book.edition = null
   }
 
   if (typeof payload.featured === 'boolean') {
     book.featured = payload.featured
   }
 
-  if (typeof payload.isAvailable === 'boolean') {
-    book.isAvailable = payload.isAvailable
+  if (typeof payload.availabilityStatus === 'string') {
+    book.availabilityStatus = payload.availabilityStatus
   }
 
   if (Array.isArray(payload.authorIds)) {
@@ -230,14 +316,17 @@ const applyBookUpdates = async (
   }
 
   if (Array.isArray(payload.tags)) {
-    book.tags = [...new Set(payload.tags)]
+    book.tags = sanitizeTags(payload.tags)
   }
 }
 
 export const booksService = {
   listPublicBooks: async (query: BookQuery) => {
     const pagination = getPaginationState(query)
-    const filter: Record<string, unknown> = { isAvailable: true }
+    const filter: Record<string, unknown> = {
+      status: query.status ?? 'published',
+      availabilityStatus: query.availabilityStatus ?? 'available',
+    }
 
     if (typeof query.featured === 'boolean') {
       filter.featured = query.featured
@@ -249,6 +338,18 @@ export const booksService = {
 
     if (query.categoryId) {
       filter.categoryIds = new Types.ObjectId(query.categoryId)
+    }
+
+    if (query.publisherId) {
+      filter.publisherId = new Types.ObjectId(query.publisherId)
+    }
+
+    if (query.accessLevel) {
+      filter.accessLevel = query.accessLevel
+    }
+
+    if (query.language) {
+      filter.language = query.language
     }
 
     if (query.search) {
@@ -277,7 +378,8 @@ export const booksService = {
 
   listFeaturedBooks: async (limit = 12) => {
     const books = await BookModel.find({
-      isAvailable: true,
+      status: 'published',
+      availabilityStatus: 'available',
       featured: true,
     })
       .sort({ updatedAt: -1, createdAt: -1 })
@@ -287,12 +389,20 @@ export const booksService = {
   },
 
   getPublicBookById: async (id: string) => {
-    const book = await BookModel.findOne({ _id: id, isAvailable: true })
+    const book = await BookModel.findOne({
+      _id: id,
+      status: 'published',
+      availabilityStatus: 'available',
+    })
     return formatBook(book)
   },
 
   getBookPreview: async (id: string) => {
-    const book = await BookModel.findOne({ _id: id, isAvailable: true })
+    const book = await BookModel.findOne({
+      _id: id,
+      status: 'published',
+      availabilityStatus: 'available',
+    })
 
     if (!book) {
       throw new AppError('Book not found.', 404)
@@ -305,7 +415,7 @@ export const booksService = {
       summary: book.summary,
       coverImage: book.coverImage ?? null,
       featured: book.featured,
-      isAvailable: book.isAvailable,
+      availabilityStatus: book.availabilityStatus,
       authorIds: book.authorIds.map((authorId) => authorId.toString()),
       categoryIds: book.categoryIds.map((categoryId) => categoryId.toString()),
       publicationDate: book.publicationDate?.toISOString(),
@@ -315,7 +425,11 @@ export const booksService = {
   },
 
   getBookReviewSummary: async (id: string) => {
-    const book = await BookModel.findOne({ _id: id, isAvailable: true })
+    const book = await BookModel.findOne({
+      _id: id,
+      status: 'published',
+      availabilityStatus: 'available',
+    })
 
     if (!book) {
       throw new AppError('Book not found.', 404)
@@ -334,24 +448,25 @@ export const booksService = {
     payload: {
       title: string
       slug: string
-      isbn?: string
+      isbn?: string | null
       summary: string
-      description?: string
-      language: string
-      pageCount?: number
-      publicationDate?: Date
-      coverImage?: {
+      description?: string | null
+      language: 'bn' | 'en' | 'hi'
+      pageCount?: number | null
+      publicationDate?: Date | null
+      coverImage: {
+        provider: 'cloudinary'
         publicId: string
         url: string
         width: number
         height: number
       }
-      publisherId?: string
+      publisherId?: string | null
       accessLevel: 'free' | 'basic' | 'premium'
-      isPublished: boolean
-      edition?: string
+      status: BookStatus
+      edition?: string | null
       featured: boolean
-      isAvailable: boolean
+      availabilityStatus: BookAvailabilityStatus
       authorIds: string[]
       categoryIds: string[]
       tags: string[]
@@ -370,29 +485,35 @@ export const booksService = {
       throw new AppError('Book ISBN already exists.', 409)
     }
 
-    await validateAuthorAndCategoryLinks(payload.authorIds, payload.categoryIds)
+    await Promise.all([
+      validateAuthorAndCategoryLinks(payload.authorIds, payload.categoryIds),
+      validatePublisherLink(payload.publisherId),
+    ])
 
     const book = await BookModel.create({
-      title: payload.title,
+      title: sanitizeRequiredText(payload.title, 'Title', 2),
       slug: payload.slug,
-      isbn: payload.isbn,
-      summary: payload.summary,
-      description: payload.description,
+      isbn: payload.isbn ?? null,
+      summary: sanitizeRequiredText(payload.summary, 'Summary', 10),
+      description: sanitizeOptionalText(payload.description) ?? null,
       language: payload.language,
-      pageCount: payload.pageCount,
-      publicationDate: payload.publicationDate,
+      pageCount: payload.pageCount ?? null,
+      publicationDate: payload.publicationDate ?? null,
       coverImage: payload.coverImage,
       publisherId: payload.publisherId
         ? new Types.ObjectId(payload.publisherId)
-        : undefined,
+        : null,
       accessLevel: payload.accessLevel,
-      isPublished: payload.isPublished,
-      edition: payload.edition,
+      status: payload.status,
+      edition:
+        typeof payload.edition === 'string'
+          ? sanitizeRequiredText(payload.edition, 'Edition', 1)
+          : (payload.edition ?? null),
       featured: payload.featured,
-      isAvailable: payload.isAvailable,
+      availabilityStatus: payload.availabilityStatus,
       authorIds: toObjectIdArray(payload.authorIds),
       categoryIds: toObjectIdArray(payload.categoryIds),
-      tags: [...new Set(payload.tags)],
+      tags: sanitizeTags(payload.tags),
       addedBy: new Types.ObjectId(staffId),
     })
 
@@ -404,24 +525,25 @@ export const booksService = {
     payload: Partial<{
       title: string
       slug: string
-      isbn: string
+      isbn: string | null
       summary: string
-      description: string
-      language: string
-      pageCount: number
-      publicationDate: Date
+      description: string | null
+      language: 'bn' | 'en' | 'hi'
+      pageCount: number | null
+      publicationDate: Date | null
       coverImage: {
+        provider: 'cloudinary'
         publicId: string
         url: string
         width: number
         height: number
       }
-      publisherId: string
+      publisherId: string | null
       accessLevel: 'free' | 'basic' | 'premium'
-      isPublished: boolean
-      edition: string
+      status: BookStatus
+      edition: string | null
       featured: boolean
-      isAvailable: boolean
+      availabilityStatus: BookAvailabilityStatus
       authorIds: string[]
       categoryIds: string[]
       tags: string[]
@@ -433,9 +555,12 @@ export const booksService = {
       throw new AppError('Book not found.', 404)
     }
 
-    await validateAuthorAndCategoryLinks(payload.authorIds, payload.categoryIds)
-    await applyBookUpdates(book, payload)
+    await Promise.all([
+      validateAuthorAndCategoryLinks(payload.authorIds, payload.categoryIds),
+      validatePublisherLink(payload.publisherId),
+    ])
 
+    await applyBookUpdates(book, payload)
     await book.save()
 
     return formatBook(book)
@@ -452,27 +577,46 @@ export const booksService = {
   },
 
   setBookFeatured: async (id: string, featured: boolean) => {
-    const book = await BookModel.findById(id)
+    const book = await BookModel.findByIdAndUpdate(
+      id,
+      { $set: { featured } },
+      { new: true },
+    )
 
     if (!book) {
       throw new AppError('Book not found.', 404)
     }
-
-    book.featured = featured
-    await book.save()
 
     return formatBook(book)
   },
 
-  setBookAvailability: async (id: string, isAvailable: boolean) => {
-    const book = await BookModel.findById(id)
+  setBookStatus: async (id: string, status: BookStatus) => {
+    const book = await BookModel.findByIdAndUpdate(
+      id,
+      { $set: { status } },
+      { new: true },
+    )
 
     if (!book) {
       throw new AppError('Book not found.', 404)
     }
 
-    book.isAvailable = isAvailable
-    await book.save()
+    return formatBook(book)
+  },
+
+  setBookAvailability: async (
+    id: string,
+    availabilityStatus: BookAvailabilityStatus,
+  ) => {
+    const book = await BookModel.findByIdAndUpdate(
+      id,
+      { $set: { availabilityStatus } },
+      { new: true },
+    )
+
+    if (!book) {
+      throw new AppError('Book not found.', 404)
+    }
 
     return formatBook(book)
   },
@@ -486,7 +630,7 @@ export const booksService = {
       folder?: string
       publicId?: string
       url?: string
-      format?: 'pdf' | 'epub' | 'mobi'
+      format?: BookFileFormat
       resourceType?: 'raw'
       size?: number
     },
@@ -507,11 +651,15 @@ export const booksService = {
         folder: payload.folder ?? `books/${book._id.toString()}`,
       })
 
+      if (!allowedBookFormats.has(upload.format as BookFileFormat)) {
+        throw new AppError('Uploaded file format is not supported.', 400)
+      }
+
       book.files.push({
         provider: 'cloudinary',
         publicId: upload.publicId,
         url: upload.url,
-        format: upload.format as 'pdf' | 'epub' | 'mobi',
+        format: upload.format as BookFileFormat,
         size: upload.size,
         originalFileName: upload.originalFileName,
         resourceType: 'raw',
@@ -525,6 +673,10 @@ export const booksService = {
         typeof payload.size !== 'number'
       ) {
         throw new AppError('Invalid file metadata payload.', 400)
+      }
+
+      if (!allowedBookFormats.has(payload.format)) {
+        throw new AppError('File format is not supported.', 400)
       }
 
       book.files.push({
@@ -592,24 +744,25 @@ export const booksService = {
       books: Array<{
         title: string
         slug: string
-        isbn?: string
+        isbn?: string | null
         summary: string
-        description?: string
-        language: string
-        pageCount?: number
-        publicationDate?: Date
-        coverImage?: {
+        description?: string | null
+        language: 'bn' | 'en' | 'hi'
+        pageCount?: number | null
+        publicationDate?: Date | null
+        coverImage: {
+          provider: 'cloudinary'
           publicId: string
           url: string
           width: number
           height: number
         }
-        publisherId?: string
+        publisherId?: string | null
         accessLevel: 'free' | 'basic' | 'premium'
-        isPublished: boolean
-        edition?: string
+        status: BookStatus
+        edition?: string | null
         featured: boolean
-        isAvailable: boolean
+        availabilityStatus: BookAvailabilityStatus
         authorIds: string[]
         categoryIds: string[]
         tags: string[]

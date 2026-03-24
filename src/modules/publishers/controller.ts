@@ -17,7 +17,12 @@ const getIdParam = (request: Parameters<RequestHandler>[0]): string => {
 export const publishersController = {
   listPublishers: catchAsync(async (req, res) => {
     const result = await publishersService.listPublishers(
-      req.validated?.query ?? {},
+      req.query as {
+        page?: number
+        limit?: number
+        search?: string
+        isActive?: boolean
+      },
     )
     sendResponse(res, {
       statusCode: 200,
@@ -39,9 +44,7 @@ export const publishersController = {
   }) as RequestHandler,
 
   createPublisher: catchAsync(async (req, res) => {
-    const result = await publishersService.createPublisher(
-      req.validated?.body ?? req.body,
-    )
+    const result = await publishersService.createPublisher(req.body)
     sendResponse(res, {
       statusCode: 201,
       success: true,
@@ -53,7 +56,7 @@ export const publishersController = {
   updatePublisher: catchAsync(async (req, res) => {
     const result = await publishersService.updatePublisher(
       getIdParam(req),
-      req.validated?.body ?? req.body,
+      req.body,
     )
     sendResponse(res, {
       statusCode: 200,

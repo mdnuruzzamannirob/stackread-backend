@@ -21,13 +21,13 @@ const categorySchema = new Schema<ICategory>(
       type: String,
       required: false,
       trim: true,
-      default: undefined,
+      default: null,
     },
     parentId: {
       type: Schema.Types.ObjectId,
       ref: 'Category',
       required: false,
-      default: undefined,
+      default: null,
       index: true,
     },
     sortOrder: {
@@ -49,7 +49,7 @@ const categorySchema = new Schema<ICategory>(
 )
 
 categorySchema.index({ parentId: 1, sortOrder: 1, name: 1 })
-categorySchema.index({ name: 'text', description: 'text' })
+categorySchema.index({ name: 'text', slug: 'text', description: 'text' })
 
 export const CategoryModel: Model<ICategory> = model<ICategory>(
   'Category',

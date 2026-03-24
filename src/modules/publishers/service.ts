@@ -6,6 +6,35 @@ import {
 import type { IPublisher } from './interface'
 import { PublisherModel } from './model'
 
+const stripHtml = (value: string) =>
+  value
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+
+const sanitizeRequiredText = (
+  value: string,
+  fieldName: string,
+  minLength = 1,
+) => {
+  const sanitized = stripHtml(value)
+
+  if (sanitized.length < minLength) {
+    throw new AppError(`${fieldName} is invalid after sanitization.`, 400)
+  }
+
+  return sanitized
+}
+
+const sanitizeOptionalText = (value: string | null | undefined) => {
+  if (typeof value !== 'string') {
+    return value
+  }
+
+  const sanitized = stripHtml(value)
+  return sanitized.length > 0 ? sanitized : null
+}
+
 const formatPublisher = (publisher: IPublisher | null) => {
   if (!publisher) throw new AppError('Publisher not found.', 404)
   return {
@@ -15,7 +44,7 @@ const formatPublisher = (publisher: IPublisher | null) => {
     description: publisher.description,
     website: publisher.website,
     logo: publisher.logo ?? null,
-    country: publisher.country,
+    countryCode: publisher.countryCode,
     foundedYear: publisher.foundedYear,
     isActive: publisher.isActive,
     createdAt: publisher.createdAt.toISOString(),
@@ -33,12 +62,17 @@ export const publishersService = {
     const pagination = getPaginationState(query)
     const filter: Record<string, unknown> = {}
     if (typeof query.isActive === 'boolean') filter.isActive = query.isActive
-    if (query.search)
-      filter.$or = [{ name: { $regex: query.search, $options: 'i' } }]
+    if (query.search) filter.$text = { $search: query.search }
+
+    const projection = query.search ? { score: { $meta: 'textScore' } } : {}
 
     const [publishers, total] = await Promise.all([
-      PublisherModel.find(filter)
-        .sort({ name: 1 })
+      PublisherModel.find(filter, projection)
+        .sort(
+          query.search
+            ? ({ score: { $meta: 'textScore' }, name: 1 } as const)
+            : ({ name: 1 } as const),
+        )
         .skip(pagination.skip)
         .limit(pagination.limit),
       PublisherModel.countDocuments(filter),
@@ -58,11 +92,11 @@ export const publishersService = {
   createPublisher: async (payload: {
     name: string
     slug: string
-    description?: string
-    website?: string
-    logo?: { publicId: string; url: string }
-    country?: string
-    foundedYear?: number
+    description?: string | null
+    website?: string | null
+    logo?: { provider: 'cloudinary'; publicId: string; url: string } | null
+    countryCode?: string | null
+    foundedYear?: number | null
     isActive: boolean
   }) => {
     const [existingName, existingSlug] = await Promise.all([
@@ -73,7 +107,16 @@ export const publishersService = {
       throw new AppError('Publisher with this name already exists.', 409)
     if (existingSlug) throw new AppError('Publisher slug already exists.', 409)
 
-    const publisher = await PublisherModel.create(payload)
+    const publisher = await PublisherModel.create({
+      name: sanitizeRequiredText(payload.name, 'Name', 2),
+      slug: payload.slug,
+      description: sanitizeOptionalText(payload.description) ?? null,
+      website: payload.website ?? null,
+      logo: payload.logo ?? null,
+      countryCode: payload.countryCode ?? null,
+      foundedYear: payload.foundedYear ?? null,
+      isActive: payload.isActive,
+    })
     return formatPublisher(publisher)
   },
 
@@ -82,18 +125,29 @@ export const publishersService = {
     payload: Partial<{
       name: string
       slug: string
-      description: string
-      website: string
-      logo: { publicId: string; url: string }
-      country: string
-      foundedYear: number
+      description: string | null
+      website: string | null
+      logo: { provider: 'cloudinary'; publicId: string; url: string } | null
+      countryCode: string | null
+      foundedYear: number | null
       isActive: boolean
     }>,
   ) => {
     const publisher = await PublisherModel.findById(id)
     if (!publisher) throw new AppError('Publisher not found.', 404)
 
-    if (typeof payload.name === 'string') publisher.name = payload.name
+    if (typeof payload.name === 'string') {
+      const existing = await PublisherModel.findOne({
+        name: payload.name,
+        _id: { $ne: publisher._id },
+      })
+
+      if (existing) {
+        throw new AppError('Publisher with this name already exists.', 409)
+      }
+
+      publisher.name = sanitizeRequiredText(payload.name, 'Name', 2)
+    }
     if (typeof payload.slug === 'string') {
       const existing = await PublisherModel.findOne({
         slug: payload.slug,
@@ -102,12 +156,22 @@ export const publishersService = {
       if (existing) throw new AppError('Publisher slug already exists.', 409)
       publisher.slug = payload.slug
     }
-    if (typeof payload.description === 'string')
-      publisher.description = payload.description
-    if (typeof payload.website === 'string') publisher.website = payload.website
-    if (payload.logo) publisher.logo = payload.logo
-    if (typeof payload.country === 'string') publisher.country = payload.country
-    if (typeof payload.foundedYear === 'number')
+    if (typeof payload.description !== 'undefined') {
+      publisher.description = sanitizeOptionalText(payload.description) ?? null
+    }
+    if (typeof payload.website === 'string' || payload.website === null) {
+      publisher.website = payload.website
+    }
+    if (typeof payload.logo !== 'undefined') {
+      publisher.logo = payload.logo
+    }
+    if (
+      typeof payload.countryCode === 'string' ||
+      payload.countryCode === null
+    ) {
+      publisher.countryCode = payload.countryCode
+    }
+    if (typeof payload.foundedYear === 'number' || payload.foundedYear === null)
       publisher.foundedYear = payload.foundedYear
     if (typeof payload.isActive === 'boolean')
       publisher.isActive = payload.isActive

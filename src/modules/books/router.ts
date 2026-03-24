@@ -16,6 +16,7 @@ import {
   listPublicBooks,
   setBookAvailability,
   setBookFeatured,
+  setBookStatus,
   updateBook,
 } from './controller'
 import { booksValidation } from './validation'
@@ -84,7 +85,17 @@ router.patch(
   setBookFeatured,
 )
 router.patch(
-  '/admin/books/:id/available',
+  '/admin/books/:id/status',
+  authenticateStaff,
+  requirePermission(PERMISSIONS.BOOKS_MANAGE),
+  validateRequest({
+    params: booksValidation.idParam,
+    body: booksValidation.setStatusBody,
+  }),
+  setBookStatus,
+)
+router.patch(
+  '/admin/books/:id/availability',
   authenticateStaff,
   requirePermission(PERMISSIONS.BOOKS_MANAGE),
   validateRequest({

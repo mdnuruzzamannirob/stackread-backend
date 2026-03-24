@@ -40,9 +40,13 @@ export const listPublicBooks: RequestHandler = catchAsync(
       limit?: number
       search?: string
       featured?: boolean
-      isAvailable?: boolean
+      status?: 'draft' | 'published' | 'archived'
+      availabilityStatus?: 'available' | 'unavailable' | 'coming_soon'
       authorId?: string
       categoryId?: string
+      publisherId?: string
+      accessLevel?: 'free' | 'basic' | 'premium'
+      language?: 'bn' | 'en' | 'hi'
     }
 
     const result = await booksService.listPublicBooks(query)
@@ -170,11 +174,27 @@ export const setBookFeatured: RequestHandler = catchAsync(
   },
 )
 
+export const setBookStatus: RequestHandler = catchAsync(
+  async (request, response) => {
+    const data = await booksService.setBookStatus(
+      getIdParam(request),
+      request.body.status,
+    )
+
+    sendResponse(response, {
+      statusCode: 200,
+      success: true,
+      message: 'Book status updated successfully.',
+      data,
+    })
+  },
+)
+
 export const setBookAvailability: RequestHandler = catchAsync(
   async (request, response) => {
     const data = await booksService.setBookAvailability(
       getIdParam(request),
-      request.body.isAvailable,
+      request.body.availabilityStatus,
     )
 
     sendResponse(response, {

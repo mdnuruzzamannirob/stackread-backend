@@ -22,28 +22,43 @@ const publisherSchema = new Schema<IPublisher>(
       type: String,
       required: false,
       trim: true,
-      default: undefined,
+      default: null,
     },
-    website: { type: String, required: false, trim: true, default: undefined },
+    website: { type: String, required: false, trim: true, default: null },
     logo: {
       type: new Schema(
         {
+          provider: {
+            type: String,
+            enum: ['cloudinary'],
+            required: true,
+            default: 'cloudinary',
+          },
           publicId: { type: String, required: true, trim: true },
           url: { type: String, required: true, trim: true },
         },
         { _id: false },
       ),
       required: false,
-      default: undefined,
+      default: null,
     },
-    country: { type: String, required: false, trim: true, default: undefined },
-    foundedYear: { type: Number, required: false, default: undefined },
+    countryCode: {
+      type: String,
+      required: false,
+      trim: true,
+      uppercase: true,
+      minlength: 2,
+      maxlength: 2,
+      default: null,
+      index: true,
+    },
+    foundedYear: { type: Number, required: false, default: null },
     isActive: { type: Boolean, default: true, index: true },
   },
   { timestamps: true, versionKey: false },
 )
 
-publisherSchema.index({ name: 'text' })
+publisherSchema.index({ name: 'text', slug: 'text', description: 'text' })
 publisherSchema.index({ isActive: 1, name: 1 })
 
 export const PublisherModel: Model<IPublisher> = model<IPublisher>(

@@ -11,11 +11,19 @@ const authorSchema = new Schema<IAuthor>(
       unique: true,
       index: true,
     },
+    slug: {
+      type: String,
+      required: true,
+      trim: true,
+      lowercase: true,
+      unique: true,
+      index: true,
+    },
     bio: {
       type: String,
       required: false,
       trim: true,
-      default: undefined,
+      default: null,
     },
     countryCode: {
       type: String,
@@ -24,25 +32,31 @@ const authorSchema = new Schema<IAuthor>(
       uppercase: true,
       minlength: 2,
       maxlength: 3,
-      default: undefined,
+      default: null,
       index: true,
     },
     avatar: {
       type: new Schema(
         {
+          provider: {
+            type: String,
+            enum: ['cloudinary'],
+            required: true,
+            default: 'cloudinary',
+          },
           publicId: { type: String, required: true, trim: true },
           url: { type: String, required: true, trim: true },
         },
         { _id: false },
       ),
       required: false,
-      default: undefined,
+      default: null,
     },
     website: {
       type: String,
       required: false,
       trim: true,
-      default: undefined,
+      default: null,
     },
     isActive: {
       type: Boolean,
@@ -56,7 +70,7 @@ const authorSchema = new Schema<IAuthor>(
   },
 )
 
-authorSchema.index({ name: 'text', bio: 'text' })
+authorSchema.index({ name: 'text', bio: 'text', slug: 'text' })
 authorSchema.index({ isActive: 1, name: 1 })
 
 export const AuthorModel: Model<IAuthor> = model<IAuthor>(

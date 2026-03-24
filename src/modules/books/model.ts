@@ -7,7 +7,11 @@ const bookFileSchema = new Schema<IBookFile>(
     provider: { type: String, enum: ['cloudinary'], required: true },
     publicId: { type: String, required: true, trim: true },
     url: { type: String, required: true, trim: true },
-    format: { type: String, enum: ['pdf', 'epub', 'mobi'], required: true },
+    format: {
+      type: String,
+      enum: ['pdf', 'epub', 'mobi', 'txt', 'azw3'],
+      required: true,
+    },
     size: { type: Number, required: true, min: 1 },
     originalFileName: { type: String, required: true, trim: true },
     resourceType: {
@@ -46,7 +50,7 @@ const bookSchema = new Schema<IBook>(
       trim: true,
       unique: true,
       sparse: true,
-      default: undefined,
+      default: null,
       index: true,
     },
     summary: {
@@ -58,7 +62,7 @@ const bookSchema = new Schema<IBook>(
       type: String,
       required: false,
       trim: true,
-      default: undefined,
+      default: null,
     },
     language: {
       type: String,
@@ -71,16 +75,22 @@ const bookSchema = new Schema<IBook>(
       type: Number,
       required: false,
       min: 1,
-      default: undefined,
+      default: null,
     },
     publicationDate: {
       type: Date,
       required: false,
-      default: undefined,
+      default: null,
     },
     coverImage: {
       type: new Schema(
         {
+          provider: {
+            type: String,
+            enum: ['cloudinary'],
+            required: true,
+            default: 'cloudinary',
+          },
           publicId: { type: String, required: true, trim: true },
           url: { type: String, required: true, trim: true },
           width: { type: Number, required: true },
@@ -88,23 +98,23 @@ const bookSchema = new Schema<IBook>(
         },
         { _id: false },
       ),
-      required: false,
-      default: undefined,
+      required: true,
     },
     edition: {
       type: String,
       required: false,
       trim: true,
-      default: undefined,
+      default: null,
     },
     featured: {
       type: Boolean,
       default: false,
       index: true,
     },
-    isAvailable: {
-      type: Boolean,
-      default: true,
+    availabilityStatus: {
+      type: String,
+      enum: ['available', 'unavailable', 'coming_soon'],
+      default: 'available',
       index: true,
     },
     authorIds: [
@@ -127,7 +137,7 @@ const bookSchema = new Schema<IBook>(
       type: Schema.Types.ObjectId,
       ref: 'Publisher',
       required: false,
-      default: undefined,
+      default: null,
       index: true,
     },
     tags: {
@@ -145,9 +155,10 @@ const bookSchema = new Schema<IBook>(
       default: 'free',
       index: true,
     },
-    isPublished: {
-      type: Boolean,
-      default: false,
+    status: {
+      type: String,
+      enum: ['draft', 'published', 'archived'],
+      default: 'draft',
       index: true,
     },
     ratingAverage: {
@@ -183,7 +194,12 @@ bookSchema.index({
   isbn: 'text',
   tags: 'text',
 })
-bookSchema.index({ isAvailable: 1, featured: 1, createdAt: -1 })
+bookSchema.index({
+  status: 1,
+  availabilityStatus: 1,
+  featured: 1,
+  createdAt: -1,
+})
 bookSchema.index({ authorIds: 1 })
 bookSchema.index({ categoryIds: 1 })
 

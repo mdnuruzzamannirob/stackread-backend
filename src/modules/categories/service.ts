@@ -23,6 +23,35 @@ type FormattedCategory = {
   updatedAt: string
 }
 
+const stripHtml = (value: string) =>
+  value
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+
+const sanitizeRequiredText = (
+  value: string,
+  fieldName: string,
+  minLength = 1,
+) => {
+  const sanitized = stripHtml(value)
+
+  if (sanitized.length < minLength) {
+    throw new AppError(`${fieldName} is invalid after sanitization.`, 400)
+  }
+
+  return sanitized
+}
+
+const sanitizeOptionalText = (value: string | null | undefined) => {
+  if (typeof value !== 'string') {
+    return value
+  }
+
+  const sanitized = stripHtml(value)
+  return sanitized.length > 0 ? sanitized : null
+}
+
 const generateSlug = (name: string) =>
   name
     .trim()
@@ -76,15 +105,27 @@ const ensureParentIsValid = async (
   }
 
   if (selfId) {
-    let currentParentId: string | undefined = parent.parentId?.toString()
+    const ancestors = await CategoryModel.aggregate<{
+      ancestors: Array<{ _id: Types.ObjectId }>
+    }>([
+      { $match: { _id: parent._id } },
+      {
+        $graphLookup: {
+          from: 'categories',
+          startWith: '$parentId',
+          connectFromField: 'parentId',
+          connectToField: '_id',
+          as: 'ancestors',
+        },
+      },
+    ])
 
-    while (currentParentId) {
-      if (currentParentId === selfId) {
-        throw new AppError('Category hierarchy cycle is not allowed.', 400)
-      }
+    const hasCycle = (ancestors[0]?.ancestors ?? []).some(
+      (node) => node._id.toString() === selfId,
+    )
 
-      const currentParent = await CategoryModel.findById(currentParentId)
-      currentParentId = currentParent?.parentId?.toString()
+    if (hasCycle) {
+      throw new AppError('Category hierarchy cycle is not allowed.', 400)
     }
   }
 }
@@ -94,9 +135,11 @@ const buildTree = (
   countsByCategoryId: Map<string, number>,
 ) => {
   const nodeMap = new Map<string, CategoryTreeNode>()
+  const parentMap = new Map<string, string | undefined>()
 
   categories.forEach((category) => {
     const id = category._id.toString()
+    parentMap.set(id, category.parentId?.toString())
     nodeMap.set(id, {
       ...formatCategory(category, countsByCategoryId.get(id) ?? 0),
       children: [],
@@ -106,9 +149,7 @@ const buildTree = (
   const roots: CategoryTreeNode[] = []
 
   nodeMap.forEach((node, id) => {
-    const parentId = categories
-      .find((category) => category._id.toString() === id)
-      ?.parentId?.toString()
+    const parentId = parentMap.get(id)
 
     if (parentId) {
       const parent = nodeMap.get(parentId)
@@ -180,12 +221,10 @@ export const categoriesService = {
     }
 
     if (query.search) {
-      filter.$or = [
-        { name: { $regex: query.search, $options: 'i' } },
-        { slug: { $regex: query.search, $options: 'i' } },
-        { description: { $regex: query.search, $options: 'i' } },
-      ]
+      filter.$text = { $search: query.search }
     }
+
+    const projection = query.search ? { score: { $meta: 'textScore' } } : {}
 
     if (query.tree) {
       const categories = await CategoryModel.find(filter).sort({
@@ -207,8 +246,16 @@ export const categoriesService = {
     }
 
     const [categories, total] = await Promise.all([
-      CategoryModel.find(filter)
-        .sort({ sortOrder: 1, name: 1 })
+      CategoryModel.find(filter, projection)
+        .sort(
+          query.search
+            ? ({
+                score: { $meta: 'textScore' },
+                sortOrder: 1,
+                name: 1,
+              } as const)
+            : ({ sortOrder: 1, name: 1 } as const),
+        )
         .skip(pagination.skip)
         .limit(pagination.limit),
       CategoryModel.countDocuments(filter),
@@ -252,12 +299,10 @@ export const categoriesService = {
     }
 
     const category = await CategoryModel.create({
-      name: payload.name,
+      name: sanitizeRequiredText(payload.name, 'Name', 2),
       slug,
-      description: payload.description,
-      parentId: payload.parentId
-        ? new Types.ObjectId(payload.parentId)
-        : undefined,
+      description: sanitizeOptionalText(payload.description) ?? null,
+      parentId: payload.parentId ? new Types.ObjectId(payload.parentId) : null,
       sortOrder: payload.sortOrder,
       isActive: payload.isActive,
     })
@@ -286,7 +331,7 @@ export const categoriesService = {
       await ensureParentIsValid(id, payload.parentId)
       category.parentId = payload.parentId
         ? new Types.ObjectId(payload.parentId)
-        : undefined
+        : null
     }
 
     if (typeof payload.slug === 'string') {
@@ -303,11 +348,11 @@ export const categoriesService = {
     }
 
     if (typeof payload.name === 'string') {
-      category.name = payload.name
+      category.name = sanitizeRequiredText(payload.name, 'Name', 2)
     }
 
-    if (typeof payload.description === 'string') {
-      category.description = payload.description
+    if (typeof payload.description !== 'undefined') {
+      category.description = sanitizeOptionalText(payload.description) ?? null
     }
 
     if (typeof payload.sortOrder === 'number') {
