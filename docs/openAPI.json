@@ -15939,7 +15939,7 @@
                 ]
               },
               "example": {
-                "name": "Ayesha Rahman",
+                "name": "Md. Nuruzzaman",
                 "description": "Well-structured data for documentation examples.",
                 "permissions": [
                   "Permissions sample"
@@ -18549,7 +18549,7 @@
               },
               "example": {
                 "providers": {
-                  "email": "reader@example.com",
+                  "email": "dev.mdnuruzzaman@gmail.com",
                   "push": {
                     "enabled": true
                   },
@@ -18563,7 +18563,7 @@
                   }
                 },
                 "templates": {
-                  "email": "reader@example.com",
+                  "email": "dev.mdnuruzzaman@gmail.com",
                   "push": {}
                 },
                 "maintenance": {
@@ -24040,10 +24040,10 @@
                 ]
               },
               "example": {
-                "name": "Ayesha Rahman",
-                "email": "reader@example.com",
+                "name": "Md. Nuruzzaman",
+                "email": "dev.mdnuruzzaman@gmail.com",
                 "roleId": "65f19a9a6f8f4a2b3c4d5e6f",
-                "phone": "+8801712345678",
+                "phone": "+8801973875893",
                 "expiresInDays": 1
               }
             }
@@ -28498,7 +28498,7 @@
                 ]
               },
               "example": {
-                "email": "reader@example.com"
+                "email": "dev.mdnuruzzaman@gmail.com"
               }
             }
           }
@@ -30038,8 +30038,8 @@
                 ]
               },
               "example": {
-                "email": "reader@example.com",
-                "password": "P@ssw0rd123!"
+                "email": "dev.mdnuruzzaman@gmail.com",
+                "password": "12345678"
               }
             }
           }
@@ -32995,8 +32995,8 @@
                 ]
               },
               "example": {
-                "currentPassword": "P@ssw0rd123!",
-                "newPassword": "P@ssw0rd123!"
+                "currentPassword": "12345678",
+                "newPassword": "12345678"
               }
             }
           }
@@ -33955,10 +33955,10 @@
                 ]
               },
               "example": {
-                "firstName": "Ayesha Rahman",
-                "lastName": "Ayesha Rahman",
-                "email": "reader@example.com",
-                "password": "P@ssw0rd123!",
+                "firstName": "Md. Nuruzzaman",
+                "lastName": "Md. Nuruzzaman",
+                "email": "dev.mdnuruzzaman@gmail.com",
+                "password": "12345678",
                 "countryCode": "BD"
               }
             }
@@ -34439,7 +34439,7 @@
                 ]
               },
               "example": {
-                "email": "reader@example.com"
+                "email": "dev.mdnuruzzaman@gmail.com"
               }
             }
           }
@@ -34919,7 +34919,7 @@
                 ]
               },
               "example": {
-                "email": "reader@example.com"
+                "email": "dev.mdnuruzzaman@gmail.com"
               }
             }
           }
@@ -35406,7 +35406,7 @@
               },
               "example": {
                 "resetToken": "Reset Token sample",
-                "newPassword": "P@ssw0rd123!"
+                "newPassword": "12345678"
               }
             }
           }
@@ -36370,7 +36370,7 @@
                 ]
               },
               "example": {
-                "email": "reader@example.com",
+                "email": "dev.mdnuruzzaman@gmail.com",
                 "otp": "Otp sample"
               }
             }
@@ -37438,7 +37438,7 @@
                 ]
               },
               "example": {
-                "name": "Ayesha Rahman",
+                "name": "Md. Nuruzzaman",
                 "slug": "Slug sample",
                 "bio": "Bio sample",
                 "countryCode": "BD",
@@ -48295,7 +48295,7 @@
                 ]
               },
               "example": {
-                "name": "Ayesha Rahman",
+                "name": "Md. Nuruzzaman",
                 "slug": "Slug sample",
                 "description": "Well-structured data for documentation examples.",
                 "parentId": "65f19a9a6f8f4a2b3c4d5e6f",
@@ -69916,7 +69916,7 @@
               },
               "example": {
                 "code": "Code sample",
-                "name": "Ayesha Rahman",
+                "name": "Md. Nuruzzaman",
                 "description": "Well-structured data for documentation examples.",
                 "price": 0,
                 "currency": "BDT",
@@ -72493,7 +72493,7 @@
                 ]
               },
               "example": {
-                "name": "Ayesha Rahman",
+                "name": "Md. Nuruzzaman",
                 "slug": "Slug sample",
                 "description": "Well-structured data for documentation examples.",
                 "website": "https://example.com/resource",
@@ -82584,7 +82584,7 @@
               },
               "example": {
                 "token": "Token sample",
-                "password": "P@ssw0rd123!"
+                "password": "12345678"
               }
             }
           }
@@ -83064,7 +83064,7 @@
                 ]
               },
               "example": {
-                "email": "reader@example.com"
+                "email": "dev.mdnuruzzaman@gmail.com"
               }
             }
           }
@@ -83550,8 +83550,8 @@
                 ]
               },
               "example": {
-                "email": "reader@example.com",
-                "password": "P@ssw0rd123!"
+                "email": "dev.mdnuruzzaman@gmail.com",
+                "password": "12345678"
               }
             }
           }
@@ -85038,8 +85038,8 @@
                 ]
               },
               "example": {
-                "currentPassword": "P@ssw0rd123!",
-                "newPassword": "P@ssw0rd123!"
+                "currentPassword": "12345678",
+                "newPassword": "12345678"
               }
             }
           }
@@ -85977,7 +85977,7 @@
                 ]
               },
               "example": {
-                "email": "reader@example.com"
+                "email": "dev.mdnuruzzaman@gmail.com"
               }
             }
           }
@@ -86464,7 +86464,7 @@
               },
               "example": {
                 "resetToken": "Reset Token sample",
-                "newPassword": "P@ssw0rd123!"
+                "newPassword": "12345678"
               }
             }
           }
@@ -86948,7 +86948,7 @@
                 ]
               },
               "example": {
-                "email": "reader@example.com",
+                "email": "dev.mdnuruzzaman@gmail.com",
                 "otp": "Otp sample"
               }
             }

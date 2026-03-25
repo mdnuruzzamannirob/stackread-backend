@@ -749,7 +749,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"reader@example.com\"\n}",
+              "raw": "{\n  \"email\": \"dev.mdnuruzzaman@gmail.com\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -885,7 +885,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"reader@example.com\",\n  \"password\": \"P@ssw0rd123!\"\n}",
+              "raw": "{\n  \"email\": \"dev.mdnuruzzaman@gmail.com\",\n  \"password\": \"12345678\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1215,7 +1215,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"currentPassword\": \"P@ssw0rd123!\",\n  \"newPassword\": \"P@ssw0rd123!\"\n}",
+              "raw": "{\n  \"currentPassword\": \"12345678\",\n  \"newPassword\": \"12345678\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1278,7 +1278,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"firstName\": \"Ayesha Rahman\",\n  \"lastName\": \"Ayesha Rahman\",\n  \"email\": \"reader@example.com\",\n  \"password\": \"P@ssw0rd123!\",\n  \"countryCode\": \"BD\"\n}",
+              "raw": "{\n  \"firstName\": \"Md. Nuruzzaman\",\n  \"lastName\": \"Md. Nuruzzaman\",\n  \"email\": \"dev.mdnuruzzaman@gmail.com\",\n  \"password\": \"12345678\",\n  \"countryCode\": \"BD\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1324,7 +1324,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"reader@example.com\"\n}",
+              "raw": "{\n  \"email\": \"dev.mdnuruzzaman@gmail.com\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1357,7 +1357,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"reader@example.com\"\n}",
+              "raw": "{\n  \"email\": \"dev.mdnuruzzaman@gmail.com\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1390,7 +1390,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"resetToken\": \"Reset Token sample\",\n  \"newPassword\": \"P@ssw0rd123!\"\n}",
+              "raw": "{\n  \"resetToken\": \"Reset Token sample\",\n  \"newPassword\": \"12345678\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1456,7 +1456,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"reader@example.com\",\n  \"otp\": \"Otp sample\"\n}",
+              "raw": "{\n  \"email\": \"dev.mdnuruzzaman@gmail.com\",\n  \"otp\": \"Otp sample\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1559,7 +1559,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Ayesha Rahman\",\n  \"slug\": \"Slug sample\",\n  \"bio\": \"Bio sample\",\n  \"countryCode\": \"BD\",\n  \"avatar\": {\n    \"provider\": \"cloudinary\",\n    \"publicId\": \"65f19a9a6f8f4a2b3c4d5e6f\",\n    \"url\": \"https://example.com/resource\"\n  },\n  \"website\": \"https://example.com/resource\",\n  \"isActive\": true\n}",
+              "raw": "{\n  \"name\": \"Md. Nuruzzaman\",\n  \"slug\": \"Slug sample\",\n  \"bio\": \"Bio sample\",\n  \"countryCode\": \"BD\",\n  \"avatar\": {\n    \"provider\": \"cloudinary\",\n    \"publicId\": \"65f19a9a6f8f4a2b3c4d5e6f\",\n    \"url\": \"https://example.com/resource\"\n  },\n  \"website\": \"https://example.com/resource\",\n  \"isActive\": true\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -2559,7 +2559,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Ayesha Rahman\",\n  \"slug\": \"Slug sample\",\n  \"description\": \"Well-structured data for documentation examples.\",\n  \"parentId\": \"65f19a9a6f8f4a2b3c4d5e6f\",\n  \"sortOrder\": 1,\n  \"isActive\": true\n}",
+              "raw": "{\n  \"name\": \"Md. Nuruzzaman\",\n  \"slug\": \"Slug sample\",\n  \"description\": \"Well-structured data for documentation examples.\",\n  \"parentId\": \"65f19a9a6f8f4a2b3c4d5e6f\",\n  \"sortOrder\": 1,\n  \"isActive\": true\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -4809,7 +4809,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"code\": \"Code sample\",\n  \"name\": \"Ayesha Rahman\",\n  \"description\": \"Well-structured data for documentation examples.\",\n  \"price\": 0,\n  \"currency\": \"BDT\",\n  \"durationDays\": 1,\n  \"maxDevices\": 1,\n  \"downloadEnabled\": true,\n  \"accessLevel\": \"free\",\n  \"features\": [\n    \"Features sample\"\n  ],\n  \"isFree\": true,\n  \"isActive\": true,\n  \"sortOrder\": 1\n}",
+              "raw": "{\n  \"code\": \"Code sample\",\n  \"name\": \"Md. Nuruzzaman\",\n  \"description\": \"Well-structured data for documentation examples.\",\n  \"price\": 0,\n  \"currency\": \"BDT\",\n  \"durationDays\": 1,\n  \"maxDevices\": 1,\n  \"downloadEnabled\": true,\n  \"accessLevel\": \"free\",\n  \"features\": [\n    \"Features sample\"\n  ],\n  \"isFree\": true,\n  \"isActive\": true,\n  \"sortOrder\": 1\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -5748,7 +5748,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Ayesha Rahman\",\n  \"slug\": \"Slug sample\",\n  \"description\": \"Well-structured data for documentation examples.\",\n  \"website\": \"https://example.com/resource\",\n  \"logo\": {\n    \"provider\": \"cloudinary\",\n    \"publicId\": \"65f19a9a6f8f4a2b3c4d5e6f\",\n    \"url\": \"https://example.com/resource\"\n  },\n  \"countryCode\": \"BD\",\n  \"foundedYear\": 1000,\n  \"isActive\": true\n}",
+              "raw": "{\n  \"name\": \"Md. Nuruzzaman\",\n  \"slug\": \"Slug sample\",\n  \"description\": \"Well-structured data for documentation examples.\",\n  \"website\": \"https://example.com/resource\",\n  \"logo\": {\n    \"provider\": \"cloudinary\",\n    \"publicId\": \"65f19a9a6f8f4a2b3c4d5e6f\",\n    \"url\": \"https://example.com/resource\"\n  },\n  \"countryCode\": \"BD\",\n  \"foundedYear\": 1000,\n  \"isActive\": true\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -6044,7 +6044,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Ayesha Rahman\",\n  \"description\": \"Well-structured data for documentation examples.\",\n  \"permissions\": [\n    \"Permissions sample\"\n  ],\n  \"isSystem\": true\n}",
+              "raw": "{\n  \"name\": \"Md. Nuruzzaman\",\n  \"description\": \"Well-structured data for documentation examples.\",\n  \"permissions\": [\n    \"Permissions sample\"\n  ],\n  \"isSystem\": true\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -8187,7 +8187,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"providers\": {\n    \"email\": \"reader@example.com\",\n    \"push\": {\n      \"enabled\": true\n    },\n    \"storage\": {\n      \"enabled\": true,\n      \"basePath\": \"Base Path sample\"\n    },\n    \"payment\": {\n      \"enabled\": true,\n      \"currency\": \"BDT\"\n    }\n  },\n  \"templates\": {\n    \"email\": \"reader@example.com\",\n    \"push\": {}\n  },\n  \"maintenance\": {\n    \"enabled\": true,\n    \"message\": \"Message sample\",\n    \"startsAt\": \"2026-03-18T09:30:00.000Z\",\n    \"endsAt\": \"2026-03-18T09:30:00.000Z\",\n    \"allowedIps\": [\n      \"Allowed Ips sample\"\n    ]\n  },\n  \"trial\": {\n    \"enabled\": true,\n    \"durationDays\": 0,\n    \"accessLevel\": \"free\",\n    \"autoActivate\": true\n  }\n}",
+              "raw": "{\n  \"providers\": {\n    \"email\": \"dev.mdnuruzzaman@gmail.com\",\n    \"push\": {\n      \"enabled\": true\n    },\n    \"storage\": {\n      \"enabled\": true,\n      \"basePath\": \"Base Path sample\"\n    },\n    \"payment\": {\n      \"enabled\": true,\n      \"currency\": \"BDT\"\n    }\n  },\n  \"templates\": {\n    \"email\": \"dev.mdnuruzzaman@gmail.com\",\n    \"push\": {}\n  },\n  \"maintenance\": {\n    \"enabled\": true,\n    \"message\": \"Message sample\",\n    \"startsAt\": \"2026-03-18T09:30:00.000Z\",\n    \"endsAt\": \"2026-03-18T09:30:00.000Z\",\n    \"allowedIps\": [\n      \"Allowed Ips sample\"\n    ]\n  },\n  \"trial\": {\n    \"enabled\": true,\n    \"durationDays\": 0,\n    \"accessLevel\": \"free\",\n    \"autoActivate\": true\n  }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -8585,7 +8585,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Ayesha Rahman\",\n  \"email\": \"reader@example.com\",\n  \"roleId\": \"65f19a9a6f8f4a2b3c4d5e6f\",\n  \"phone\": \"+8801712345678\",\n  \"expiresInDays\": 1\n}",
+              "raw": "{\n  \"name\": \"Md. Nuruzzaman\",\n  \"email\": \"dev.mdnuruzzaman@gmail.com\",\n  \"roleId\": \"65f19a9a6f8f4a2b3c4d5e6f\",\n  \"phone\": \"+8801973875893\",\n  \"expiresInDays\": 1\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -8813,7 +8813,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"token\": \"Token sample\",\n  \"password\": \"P@ssw0rd123!\"\n}",
+              "raw": "{\n  \"token\": \"Token sample\",\n  \"password\": \"12345678\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -8846,7 +8846,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"reader@example.com\"\n}",
+              "raw": "{\n  \"email\": \"dev.mdnuruzzaman@gmail.com\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -8879,7 +8879,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"reader@example.com\",\n  \"password\": \"P@ssw0rd123!\"\n}",
+              "raw": "{\n  \"email\": \"dev.mdnuruzzaman@gmail.com\",\n  \"password\": \"12345678\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -9048,7 +9048,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"currentPassword\": \"P@ssw0rd123!\",\n  \"newPassword\": \"P@ssw0rd123!\"\n}",
+              "raw": "{\n  \"currentPassword\": \"12345678\",\n  \"newPassword\": \"12345678\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -9111,7 +9111,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"reader@example.com\"\n}",
+              "raw": "{\n  \"email\": \"dev.mdnuruzzaman@gmail.com\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -9144,7 +9144,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"resetToken\": \"Reset Token sample\",\n  \"newPassword\": \"P@ssw0rd123!\"\n}",
+              "raw": "{\n  \"resetToken\": \"Reset Token sample\",\n  \"newPassword\": \"12345678\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -9177,7 +9177,7 @@
             },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"reader@example.com\",\n  \"otp\": \"Otp sample\"\n}",
+              "raw": "{\n  \"email\": \"dev.mdnuruzzaman@gmail.com\",\n  \"otp\": \"Otp sample\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
