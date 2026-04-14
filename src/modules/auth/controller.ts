@@ -9,6 +9,7 @@ import {
   setUserRefreshCookie,
   setUserSessionCookie,
 } from '../../common/utils/token'
+import { config } from '../../config'
 import { USER_REFRESH_COOKIE_NAME } from './constants'
 import { authService } from './service'
 import { ensureAuthenticatedUser } from './utils'
@@ -140,12 +141,21 @@ const socialCallback: RequestHandler = catchAsync(async (request, response) => {
 
   const result = await authService.socialLogin(profile, request)
 
-  sendResponse(response, {
-    statusCode: 200,
-    success: true,
-    message: 'Social login successful.',
-    data: result,
-  })
+  // Set session cookies
+  setUserSessionCookie(response, result.tokens.accessToken)
+  setUserRefreshCookie(response, result.tokens.refreshToken)
+
+  // Redirect to frontend OAuth callback with tokens
+  const defaultLocale = config.defaults?.language ?? 'en'
+  const callbackUrl = new URL(
+    `${config.frontendUrl}/${defaultLocale}/auth/oauth-callback`,
+  )
+  callbackUrl.searchParams.set('accessToken', result.tokens.accessToken)
+  callbackUrl.searchParams.set('refreshToken', result.tokens.refreshToken)
+  callbackUrl.searchParams.set('user', JSON.stringify(result.user))
+  callbackUrl.searchParams.set('requiresTwoFactor', 'false')
+
+  response.redirect(callbackUrl.toString())
 })
 
 const logout: RequestHandler = catchAsync(async (_request, response) => {

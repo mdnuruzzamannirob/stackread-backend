@@ -1,8 +1,10 @@
+import type { NextFunction, Request, Response } from 'express'
 import { Router } from 'express'
 import passport from 'passport'
 
 import { authenticateUser } from '../../common/middlewares/auth'
 import { validateRequest } from '../../common/middlewares/validateRequest'
+import { config } from '../../config'
 import { authController } from './controller'
 import { ensureFacebookConfigured, ensureGoogleConfigured } from './utils'
 import { authValidation } from './validation'
@@ -43,7 +45,7 @@ router.get(
 )
 router.get(
   '/google/callback',
-  (_request, _response, next) => {
+  (_request: any, _response: any, next: () => void) => {
     ensureGoogleConfigured()
     next()
   },
@@ -52,6 +54,17 @@ router.get(
     failWithError: true,
   }),
   authController.socialCallback,
+  (err: Error, _req: Request, res: Response, _next: NextFunction) => {
+    const defaultLocale = config.defaults?.language ?? 'en'
+    const loginUrl = new URL(
+      `${config.frontendUrl}/${defaultLocale}/auth/login`,
+    )
+    loginUrl.searchParams.set(
+      'error',
+      err.message || 'Google authentication failed',
+    )
+    res.redirect(loginUrl.toString())
+  },
 )
 
 router.get(
@@ -67,7 +80,7 @@ router.get(
 )
 router.get(
   '/facebook/callback',
-  (_request, _response, next) => {
+  (_request: any, _response: any, next: () => void) => {
     ensureFacebookConfigured()
     next()
   },
@@ -76,6 +89,17 @@ router.get(
     failWithError: true,
   }),
   authController.socialCallback,
+  (err: Error, _req: Request, res: Response, _next: NextFunction) => {
+    const defaultLocale = config.defaults?.language ?? 'en'
+    const loginUrl = new URL(
+      `${config.frontendUrl}/${defaultLocale}/auth/login`,
+    )
+    loginUrl.searchParams.set(
+      'error',
+      err.message || 'Facebook authentication failed',
+    )
+    res.redirect(loginUrl.toString())
+  },
 )
 
 router.post('/logout', authController.logout)
