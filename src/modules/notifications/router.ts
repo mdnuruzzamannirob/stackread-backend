@@ -23,21 +23,21 @@ router.get(
 )
 
 router.patch(
-  '/:id/read',
-  authenticateUser,
-  validateRequest({
-    params: notificationsValidation.idParam,
-  }),
-  notificationsController.markAsRead,
-)
-
-router.patch(
   '/mark-read',
   authenticateUser,
   validateRequest({
     body: notificationsValidation.bulkMarkBody,
   }),
   notificationsController.bulkMarkAsRead,
+)
+
+router.patch(
+  '/:id/read',
+  authenticateUser,
+  validateRequest({
+    params: notificationsValidation.idParam,
+  }),
+  notificationsController.markAsRead,
 )
 
 router.get(
