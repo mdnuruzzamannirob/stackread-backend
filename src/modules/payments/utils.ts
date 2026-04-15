@@ -66,6 +66,7 @@ export class SslCommerzBangladeshAdapter implements PaymentGatewayAdapter {
     customerEmail: string
     customerCountry: string
     metadata: Record<string, string>
+    stripePriceId?: string
   }): Promise<GatewayInitResult> {
     const client = this.getClient()
     const ref = encodeURIComponent(payload.reference)
@@ -182,28 +183,60 @@ export class StripeGatewayAdapter implements PaymentGatewayAdapter {
     customerEmail: string
     customerCountry: string
     metadata: Record<string, string>
+    stripePriceId?: string
   }): Promise<GatewayInitResult> {
     const stripe = this.getClient()
 
-    const paymentIntent = await stripe.paymentIntents.create({
-      // Stripe requires the smallest currency unit (paise / cents / etc.)
-      amount: Math.round(payload.amount * 100),
-      currency: payload.currency.toLowerCase(),
-      receipt_email: payload.customerEmail,
+    const ref = encodeURIComponent(payload.reference)
+    const successUrl = `${config.frontendUrl}/payment/success?ref=${ref}&session_id={CHECKOUT_SESSION_ID}`
+    const cancelUrl = `${config.frontendUrl}/payment/cancel?ref=${ref}`
+
+    const session = await stripe.checkout.sessions.create({
+      mode: 'subscription',
+      payment_method_types: ['card'],
+      customer_email: payload.customerEmail,
+      success_url: successUrl,
+      cancel_url: cancelUrl,
       metadata: {
         reference: payload.reference,
         customerName: payload.customerName,
         ...payload.metadata,
       },
+      subscription_data: {
+        metadata: {
+          reference: payload.reference,
+          ...payload.metadata,
+        },
+      },
+      line_items: payload.stripePriceId
+        ? [
+            {
+              quantity: 1,
+              price: payload.stripePriceId,
+            },
+          ]
+        : [
+            {
+              quantity: 1,
+              price_data: {
+                currency: payload.currency.toLowerCase(),
+                recurring: {
+                  interval: 'month',
+                },
+                unit_amount: Math.round(payload.amount * 100),
+                product_data: {
+                  name: 'Stackread Subscription',
+                },
+              },
+            },
+          ],
     })
 
     return {
       provider: 'stripe',
-      providerPaymentId: paymentIntent.id,
-      status: paymentIntent.status === 'succeeded' ? 'success' : 'pending',
-      ...(paymentIntent.client_secret
-        ? { clientSecret: paymentIntent.client_secret }
-        : {}),
+      providerPaymentId: session.id,
+      status: 'pending',
+      ...(session.url ? { redirectUrl: session.url } : {}),
     }
   }
 
@@ -239,26 +272,106 @@ export class StripeGatewayAdapter implements PaymentGatewayAdapter {
       )
     }
 
-    const pi = event.data.object as Stripe.PaymentIntent
-    const status: 'success' | 'failed' | 'pending' =
-      event.type === 'payment_intent.succeeded'
-        ? 'success'
-        : event.type === 'payment_intent.payment_failed'
-          ? 'failed'
-          : 'pending'
+    if (event.type === 'checkout.session.completed') {
+      const session = event.data.object as Stripe.Checkout.Session
+      const reference =
+        typeof session.metadata?.['reference'] === 'string'
+          ? session.metadata['reference']
+          : undefined
+      const status: 'success' | 'failed' | 'pending' =
+        session.payment_status === 'paid' ? 'success' : 'pending'
 
-    const reference =
-      typeof pi.metadata?.['reference'] === 'string'
-        ? pi.metadata['reference']
-        : undefined
+      return {
+        provider: 'stripe',
+        eventId: event.id,
+        providerPaymentId:
+          typeof session.id === 'string' ? session.id : event.id,
+        ...(reference ? { reference } : {}),
+        status,
+        raw: {
+          eventType: event.type,
+          stripeCustomerId:
+            typeof session.customer === 'string' ? session.customer : undefined,
+          stripeSubscriptionId:
+            typeof session.subscription === 'string'
+              ? session.subscription
+              : undefined,
+        },
+      }
+    }
+
+    if (
+      event.type === 'customer.subscription.updated' ||
+      event.type === 'customer.subscription.deleted'
+    ) {
+      const subscription = event.data.object as Stripe.Subscription
+      const reference =
+        typeof subscription.metadata?.['reference'] === 'string'
+          ? subscription.metadata['reference']
+          : undefined
+
+      const status: 'success' | 'failed' | 'pending' =
+        event.type === 'customer.subscription.deleted'
+          ? 'failed'
+          : subscription.status === 'active' ||
+              subscription.status === 'trialing'
+            ? 'success'
+            : subscription.status === 'canceled' ||
+                subscription.status === 'incomplete_expired' ||
+                subscription.status === 'unpaid'
+              ? 'failed'
+              : 'pending'
+
+      return {
+        provider: 'stripe',
+        eventId: event.id,
+        providerPaymentId: subscription.id,
+        ...(reference ? { reference } : {}),
+        status,
+        raw: {
+          eventType: event.type,
+          stripeCustomerId:
+            typeof subscription.customer === 'string'
+              ? subscription.customer
+              : undefined,
+          stripeSubscriptionId: subscription.id,
+        },
+      }
+    }
+
+    if (
+      event.type === 'payment_intent.succeeded' ||
+      event.type === 'payment_intent.payment_failed'
+    ) {
+      const pi = event.data.object as Stripe.PaymentIntent
+      const status: 'success' | 'failed' =
+        event.type === 'payment_intent.succeeded' ? 'success' : 'failed'
+
+      const reference =
+        typeof pi.metadata?.['reference'] === 'string'
+          ? pi.metadata['reference']
+          : undefined
+
+      return {
+        provider: 'stripe',
+        eventId: event.id,
+        providerPaymentId: pi.id,
+        ...(reference ? { reference } : {}),
+        status,
+        raw: {
+          eventType: event.type,
+        },
+      }
+    }
 
     return {
       provider: 'stripe',
       eventId: event.id,
-      providerPaymentId: pi.id,
-      ...(reference ? { reference } : {}),
-      status,
-      raw: event,
+      providerPaymentId: event.id,
+      status: 'pending',
+      raw: {
+        eventType: event.type,
+      },
     }
   }
 }
@@ -635,6 +748,13 @@ export const applyVerificationTransaction = async (
     verification.providerPaymentId ?? payment.providerPaymentId
   payment.gatewayTransactionId =
     verification.gatewayTransactionId ?? payment.gatewayTransactionId
+
+  if (verification.metadata) {
+    payment.metadata = {
+      ...(payment.metadata ?? {}),
+      ...verification.metadata,
+    }
+  }
 
   if (payment.status === 'success') {
     payment.verifiedAt = new Date()

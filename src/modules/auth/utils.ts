@@ -114,6 +114,7 @@ export const buildUserJwtPayload = (
     sub: user._id.toString(),
     actorType: 'user',
     type: 'user',
+    sessionVersion: user.sessionVersion,
     email: user.email,
     role: 'user',
     permissions: [],

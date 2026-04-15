@@ -19,6 +19,8 @@ export const formatPlan = (plan: IPlan | null) => {
     accessLevel: plan.accessLevel,
     features: plan.features,
     isFree: plan.isFree,
+    stripeProductId: plan.stripeProductId,
+    stripePriceId: plan.stripePriceId,
     isActive: plan.isActive,
     sortOrder: plan.sortOrder,
     createdAt: plan.createdAt.toISOString(),

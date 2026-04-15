@@ -14,6 +14,8 @@ export type UserTwoFactor = {
   verifiedAt: Date | undefined
 }
 
+export type UserTempTokenPurpose = 'password-reset' | 'two-factor-challenge'
+
 export interface IUser {
   _id: Types.ObjectId
   firstName: string
@@ -25,9 +27,13 @@ export interface IUser {
   passwordHash?: string
   provider: UserAuthProvider
   socialProviderId?: string
+  stripeCustomerId?: string
   isEmailVerified: boolean
   isActive: boolean
   isSuspended: boolean
+  failedLoginAttempts: number
+  lockoutUntil: Date | undefined
+  sessionVersion: number
   suspendedAt: Date | undefined
   suspensionReason: string | undefined
   deletedAt: Date | undefined
@@ -78,6 +84,8 @@ export type TempTokenPayload = {
   id: string
   email: string
   actorType: 'user' | 'staff'
+  tokenId?: string
+  purpose?: UserTempTokenPurpose
   pending2FA?: boolean
   mustSetup2FA?: boolean
 }
@@ -112,6 +120,17 @@ export interface UserEmailVerificationToken {
   userId: Types.ObjectId
   tokenHash: string
   expiresAt: Date
+  usedAt?: Date
+}
+
+export interface UserEphemeralToken {
+  userId: Types.ObjectId
+  tokenHash: string
+  purpose: UserTempTokenPurpose
+  expiresAt: Date
+  usedAt?: Date
+  createdAt: Date
+  updatedAt: Date
 }
 
 export interface UserLoginHistory {
@@ -131,6 +150,7 @@ export interface UserTwoFactorChallengePayload {
   tempToken: string
   otp?: string
   emailOtp?: string
+  backupCode?: string
 }
 
 export interface UserLoginHistoryItem {
@@ -185,4 +205,9 @@ export type UserLoginResult =
 export interface UserWithTokensResult {
   user: SanitizedUser
   tokens: AuthTokens
+}
+
+export interface RegisterResult {
+  user: SanitizedUser
+  requiresEmailVerification: true
 }

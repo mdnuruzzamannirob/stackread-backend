@@ -14,6 +14,8 @@ const basePlanBodySchema = z.object({
   accessLevel: z.enum(['free', 'basic', 'premium']).default('free'),
   features: z.array(z.string().trim().min(1).max(200)).default([]),
   isFree: z.boolean().default(false),
+  stripeProductId: z.string().trim().min(3).max(128).optional(),
+  stripePriceId: z.string().trim().min(3).max(128).optional(),
   isActive: z.boolean().default(true),
   sortOrder: z.coerce.number().int().min(0).default(0),
 })

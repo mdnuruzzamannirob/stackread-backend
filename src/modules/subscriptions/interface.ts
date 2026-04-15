@@ -20,6 +20,7 @@ export interface ISubscription {
   cancelledAt: Date | undefined
   cancellationReason: string | undefined
   latestPaymentId: Types.ObjectId | undefined
+  stripeSubscriptionId: string | undefined
   createdAt: Date
   updatedAt: Date
 }

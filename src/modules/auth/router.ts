@@ -149,6 +149,12 @@ router.post(
   validateRequest({ body: authValidation.twoFactorDisableBody }),
   authController.disableTwoFactor,
 )
+router.post(
+  '/2fa/backup-codes/regenerate',
+  authenticateUser,
+  validateRequest({ body: authValidation.regenerateBackupCodesBody }),
+  authController.regenerateBackupCodes,
+)
 router.get(
   '/2fa/backup-codes',
   authenticateUser,

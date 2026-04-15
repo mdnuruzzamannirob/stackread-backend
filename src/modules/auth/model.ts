@@ -4,6 +4,7 @@ import type {
   IUser,
   UserAuthProvider,
   UserEmailVerificationToken,
+  UserEphemeralToken,
   UserLoginHistory,
   UserNotificationPreferences,
   UserTwoFactor,
@@ -64,9 +65,13 @@ const userSchema = new Schema<UserDocument>(
       required: true,
     },
     socialProviderId: { type: String, required: false, index: true },
+    stripeCustomerId: { type: String, required: false, default: undefined },
     isEmailVerified: { type: Boolean, default: false },
     isActive: { type: Boolean, default: true, index: true },
     isSuspended: { type: Boolean, default: false, index: true },
+    failedLoginAttempts: { type: Number, default: 0, min: 0 },
+    lockoutUntil: { type: Date, required: false, default: undefined },
+    sessionVersion: { type: Number, default: 1, min: 1 },
     suspendedAt: { type: Date, required: false, default: undefined },
     suspensionReason: { type: String, required: false, default: undefined },
     deletedAt: { type: Date, required: false, default: undefined },
@@ -96,6 +101,7 @@ const emailVerificationTokenSchema = new Schema<UserEmailVerificationToken>(
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     tokenHash: { type: String, required: true, unique: true, index: true },
     expiresAt: { type: Date, required: true },
+    usedAt: { type: Date, required: false, default: undefined },
   },
   {
     timestamps: true,
@@ -119,6 +125,33 @@ const loginHistorySchema = new Schema<UserLoginHistory>(
 
 loginHistorySchema.index({ userId: 1, createdAt: -1 })
 
+const userEphemeralTokenSchema = new Schema<UserEphemeralToken>(
+  {
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+      index: true,
+    },
+    tokenHash: { type: String, required: true, unique: true, index: true },
+    purpose: {
+      type: String,
+      required: true,
+      enum: ['password-reset', 'two-factor-challenge'],
+      index: true,
+    },
+    expiresAt: { type: Date, required: true, index: true },
+    usedAt: { type: Date, required: false, default: undefined, index: true },
+  },
+  {
+    timestamps: true,
+    versionKey: false,
+  },
+)
+
+userEphemeralTokenSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 })
+userEphemeralTokenSchema.index({ userId: 1, purpose: 1, usedAt: 1 })
+
 export const UserModel: Model<UserDocument> = model<UserDocument>(
   'User',
   userSchema,
@@ -133,4 +166,9 @@ export const UserEmailVerificationTokenModel =
 export const UserLoginHistoryModel = model<UserLoginHistory>(
   'UserLoginHistory',
   loginHistorySchema,
+)
+
+export const UserEphemeralTokenModel = model<UserEphemeralToken>(
+  'UserEphemeralToken',
+  userEphemeralTokenSchema,
 )

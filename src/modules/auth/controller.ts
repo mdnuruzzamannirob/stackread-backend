@@ -17,9 +17,6 @@ import { ensureAuthenticatedUser } from './utils'
 const register: RequestHandler = catchAsync(async (request, response) => {
   const result = await authService.register(request.body)
 
-  setUserSessionCookie(response, result.tokens.accessToken)
-  setUserRefreshCookie(response, result.tokens.refreshToken)
-
   sendResponse(response, {
     statusCode: 201,
     success: true,
@@ -81,7 +78,7 @@ const disableTwoFactor: RequestHandler = catchAsync(
   async (request, response) => {
     const data = await authService.disableTwoFactor(
       ensureAuthenticatedUser(request),
-      request.body.otp,
+      request.body,
     )
 
     sendResponse(response, {
@@ -141,19 +138,19 @@ const socialCallback: RequestHandler = catchAsync(async (request, response) => {
 
   const result = await authService.socialLogin(profile, request)
 
-  // Set session cookies
-  setUserSessionCookie(response, result.tokens.accessToken)
-  setUserRefreshCookie(response, result.tokens.refreshToken)
-
-  // Redirect to frontend OAuth callback with tokens
   const defaultLocale = config.defaults?.language ?? 'en'
   const callbackUrl = new URL(
     `${config.frontendUrl}/${defaultLocale}/auth/oauth-callback`,
   )
-  callbackUrl.searchParams.set('accessToken', result.tokens.accessToken)
-  callbackUrl.searchParams.set('refreshToken', result.tokens.refreshToken)
-  callbackUrl.searchParams.set('user', JSON.stringify(result.user))
-  callbackUrl.searchParams.set('requiresTwoFactor', 'false')
+
+  if (result.requiresTwoFactor) {
+    callbackUrl.searchParams.set('requiresTwoFactor', 'true')
+    callbackUrl.searchParams.set('tempToken', result.tempToken)
+  } else {
+    setUserSessionCookie(response, result.accessToken)
+    setUserRefreshCookie(response, result.refreshToken)
+    callbackUrl.searchParams.set('requiresTwoFactor', 'false')
+  }
 
   response.redirect(callbackUrl.toString())
 })
@@ -352,6 +349,22 @@ const updateMyNotificationPreferences: RequestHandler = catchAsync(
   },
 )
 
+const regenerateBackupCodes: RequestHandler = catchAsync(
+  async (request, response) => {
+    const data = await authService.regenerateBackupCodes(
+      ensureAuthenticatedUser(request),
+      request.body,
+    )
+
+    sendResponse(response, {
+      statusCode: 200,
+      success: true,
+      message: 'Backup codes regenerated successfully.',
+      data,
+    })
+  },
+)
+
 export const authController = {
   register,
   login,
@@ -375,4 +388,5 @@ export const authController = {
   updateMe,
   changeMyPassword,
   updateMyNotificationPreferences,
+  regenerateBackupCodes,
 }

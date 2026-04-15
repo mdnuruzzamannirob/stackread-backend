@@ -10,7 +10,8 @@ export type TempTokenPayload = {
   id: string
   email: string
   actorType: JwtActorType
-  purpose?: 'password-reset'
+  tokenId?: string
+  purpose?: 'password-reset' | 'two-factor-challenge'
   pending2FA?: boolean
   mustSetup2FA?: boolean
 }
@@ -18,6 +19,7 @@ export type TempTokenPayload = {
 export type AccessTokenPayload = {
   id: string
   actorType: JwtActorType
+  sessionVersion?: number
   sub?: string
   type?: JwtActorType
   email?: string
@@ -82,7 +84,9 @@ export const verifyTempToken = (
     id: payload.id,
     email: payload.email,
     actorType: payload.actorType,
-    ...(payload.purpose === 'password-reset'
+    ...(payload.tokenId ? { tokenId: payload.tokenId } : {}),
+    ...(payload.purpose === 'password-reset' ||
+    payload.purpose === 'two-factor-challenge'
       ? { purpose: payload.purpose }
       : {}),
     ...(typeof payload.pending2FA === 'boolean'

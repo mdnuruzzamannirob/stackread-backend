@@ -1,6 +1,7 @@
 import { connectToDatabase, disconnectFromDatabase } from '../config/db'
 import { logger } from '../config/logger'
 import { PlanModel } from '../modules/plans/model'
+import { syncPlanCatalogWithStripe } from './stripe-plan-sync'
 
 const defaultPlans = [
   {
@@ -74,6 +75,17 @@ export const seedPlans = async (): Promise<void> => {
       ),
     ),
   )
+
+  await syncPlanCatalogWithStripe(
+    defaultPlans.map((plan) => ({
+      code: plan.code,
+      name: plan.name,
+      description: plan.description,
+      price: plan.price,
+      currency: plan.currency,
+    })),
+  )
+
   logger.info(`Plans seeded — ${defaultPlans.length} plans upserted`)
 }
 

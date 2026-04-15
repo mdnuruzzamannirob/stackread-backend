@@ -58,6 +58,7 @@ export interface PaymentVerificationInput {
   providerPaymentId?: string
   gatewayTransactionId?: string
   status: 'success' | 'failed' | 'pending'
+  metadata?: Record<string, unknown>
 }
 
 export interface InitiatePaymentPayload {
@@ -76,6 +77,7 @@ export interface GatewayInitiatePayload {
   customerEmail: string
   customerCountry: string
   metadata: Record<string, string>
+  stripePriceId?: string
 }
 
 export interface GatewayInitResult {

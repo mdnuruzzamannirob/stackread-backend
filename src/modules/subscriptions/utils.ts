@@ -15,6 +15,7 @@ export const toSubscriptionSummary = (subscription: ISubscription) => {
     cancelledAt: subscription.cancelledAt?.toISOString(),
     cancellationReason: subscription.cancellationReason,
     latestPaymentId: subscription.latestPaymentId?.toString(),
+    stripeSubscriptionId: subscription.stripeSubscriptionId,
     createdAt: subscription.createdAt.toISOString(),
     updatedAt: subscription.updatedAt.toISOString(),
   }
@@ -39,4 +40,3 @@ export const getSubscriptionById = async (
 ) => {
   return SubscriptionModel.findById(id).session(session ?? null)
 }
-

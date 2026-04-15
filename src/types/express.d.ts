@@ -7,6 +7,7 @@ export interface BaseJwtPayload {
   sub: string
   actorType?: AuthActorType
   type: AuthActorType
+  sessionVersion?: number
   email?: string
   role?: string
   roleId?: string

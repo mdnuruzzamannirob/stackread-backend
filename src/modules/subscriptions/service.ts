@@ -1,6 +1,7 @@
 import mongoose, { ClientSession, Types } from 'mongoose'
 
 import { AppError } from '../../common/errors/AppError'
+import { UserModel } from '../auth/model'
 import { PlanModel } from '../plans/model'
 import type {
   ActivateSubscriptionFromPaymentPayload,
@@ -159,7 +160,34 @@ const activateSubscriptionFromPayment = async (
     target.latestPaymentId = new Types.ObjectId(payload.paymentId)
     target.cancellationReason = undefined
     target.cancelledAt = undefined
+
+    const payment = await mongoose
+      .model('Payment')
+      .findById(payload.paymentId)
+      .session(transactionSession)
+
+    const stripeSubscriptionId =
+      typeof payment?.metadata?.['stripeSubscriptionId'] === 'string'
+        ? payment.metadata['stripeSubscriptionId']
+        : undefined
+    const stripeCustomerId =
+      typeof payment?.metadata?.['stripeCustomerId'] === 'string'
+        ? payment.metadata['stripeCustomerId']
+        : undefined
+
+    if (stripeSubscriptionId) {
+      target.stripeSubscriptionId = stripeSubscriptionId
+    }
+
     await target.save({ session: transactionSession })
+
+    if (stripeCustomerId) {
+      await UserModel.updateOne(
+        { _id: payload.userId },
+        { $set: { stripeCustomerId } },
+        { session: transactionSession },
+      )
+    }
 
     return target
   }

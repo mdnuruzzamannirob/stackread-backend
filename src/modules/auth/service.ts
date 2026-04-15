@@ -6,6 +6,7 @@ import { auditService } from '../../common/services/audit.service'
 import { emailService } from '../../common/services/email.service'
 import {
   compareScryptHash,
+  generateRandomToken,
   hashStringSha256,
   hashWithScrypt,
 } from '../../common/utils/crypto'
@@ -28,6 +29,7 @@ import type {
   ChangePasswordPayload,
   LoginPayload,
   RegisterPayload,
+  RegisterResult,
   ResetTokenResponse,
   SanitizedUser,
   SentResponse,
@@ -38,10 +40,10 @@ import type {
   UserLoginResult,
   UserNotificationPreferences,
   UserTwoFactorChallengePayload,
-  UserWithTokensResult,
 } from './interface'
 import {
   UserEmailVerificationTokenModel,
+  UserEphemeralTokenModel,
   UserLoginHistoryModel,
   UserModel,
 } from './model'
@@ -66,9 +68,72 @@ const assertUserAccountAccessible = (user: AccountAccessibleUserState) => {
   }
 }
 
-const register = async (
-  payload: RegisterPayload,
-): Promise<UserWithTokensResult> => {
+const getLockoutTime = (): Date => {
+  return new Date(Date.now() + authConstants.lockoutMinutes * 60 * 1000)
+}
+
+const getEphemeralTokenExpiry = (ttlMinutes: number): Date => {
+  return new Date(Date.now() + ttlMinutes * 60 * 1000)
+}
+
+const issueSingleUseTempToken = async (
+  userId: string,
+  email: string,
+  purpose: 'password-reset' | 'two-factor-challenge',
+  ttlMinutes: number,
+) => {
+  const rawTokenId = generateRandomToken(16)
+  const tokenIdHash = hashStringSha256(rawTokenId)
+
+  await UserEphemeralTokenModel.create({
+    userId,
+    tokenHash: tokenIdHash,
+    purpose,
+    expiresAt: getEphemeralTokenExpiry(ttlMinutes),
+  })
+
+  const token = signTempToken(
+    {
+      id: userId,
+      email,
+      actorType: 'user',
+      tokenId: rawTokenId,
+      purpose,
+      ...(purpose === 'two-factor-challenge' ? { pending2FA: true } : {}),
+    },
+    config.jwt.userSecret,
+    ttlMinutes <= 5 ? '5m' : '10m',
+  )
+
+  return token
+}
+
+const consumeSingleUseTempToken = async (
+  userId: string,
+  tokenId: string | undefined,
+  purpose: 'password-reset' | 'two-factor-challenge',
+): Promise<void> => {
+  if (!tokenId) {
+    throw new AppError('Invalid temporary token.', 401)
+  }
+
+  const tokenHash = hashStringSha256(tokenId)
+  const tokenDoc = await UserEphemeralTokenModel.findOne({
+    userId,
+    tokenHash,
+    purpose,
+    usedAt: { $exists: false },
+  })
+
+  if (!tokenDoc || tokenDoc.expiresAt.getTime() < Date.now()) {
+    throw new AppError('Temporary token is invalid or expired.', 401)
+  }
+
+  tokenDoc.usedAt = new Date()
+  await tokenDoc.save()
+}
+
+const register = async (payload: RegisterPayload): Promise<RegisterResult> => {
   const existingUser = await UserModel.findOne({ email: payload.email })
 
   if (existingUser) {
@@ -101,7 +166,7 @@ const register = async (
 
   return {
     user: sanitizeUser(user),
-    tokens: issueUserAccessToken(user),
+    requiresEmailVerification: true,
   }
 }
 
@@ -117,14 +182,36 @@ const login = async (
 
   assertUserAccountAccessible(user)
 
+  if (user.lockoutUntil && user.lockoutUntil.getTime() > Date.now()) {
+    throw new AppError(
+      'Account temporarily locked due to too many failed login attempts.',
+      429,
+    )
+  }
+
   const isPasswordValid = await compareScryptHash(
     payload.password,
     user.passwordHash,
   )
 
   if (!isPasswordValid) {
+    user.failedLoginAttempts = (user.failedLoginAttempts ?? 0) + 1
+
+    if (user.failedLoginAttempts >= authConstants.loginMaxAttempts) {
+      user.lockoutUntil = getLockoutTime()
+      user.failedLoginAttempts = 0
+    }
+
+    await user.save()
     throw new AppError('Invalid email or password.', 401)
   }
+
+  if (!user.isEmailVerified) {
+    throw new AppError('Email verification is required before login.', 403)
+  }
+
+  user.failedLoginAttempts = 0
+  user.lockoutUntil = undefined
 
   user.lastLoginAt = new Date()
   await user.save()
@@ -149,18 +236,11 @@ const login = async (
       throw new AppError('2FA is enabled but not configured correctly.', 500)
     }
 
-    const tempTokenExpiry =
-      config.jwt.tempTokenExpiresIn === '5m' ? '5m' : ('5m' as const)
-
-    const tempToken = signTempToken(
-      {
-        id: user._id.toString(),
-        email: user.email,
-        actorType: 'user',
-        pending2FA: true,
-      },
-      config.jwt.userSecret,
-      tempTokenExpiry,
+    const tempToken = await issueSingleUseTempToken(
+      user._id.toString(),
+      user.email,
+      'two-factor-challenge',
+      authConstants.twoFactorChallengeTokenTtlMinutes,
     )
 
     return {
@@ -242,17 +322,28 @@ const verifyTwoFactor = async (userId: string, otp: string) => {
   return { success: true }
 }
 
-const disableTwoFactor = async (userId: string, otp: string) => {
+const disableTwoFactor = async (
+  userId: string,
+  payload: { otp?: string; currentPassword?: string },
+) => {
   const user = await UserModel.findById(userId)
 
   if (!user || !user.twoFactor.enabled || !user.twoFactor.secret) {
     throw new AppError('2FA is not enabled for this user.', 400)
   }
 
-  const isOtpValid = verifyUserTotp(user.twoFactor.secret, otp)
+  const isOtpValid = payload.otp
+    ? verifyUserTotp(user.twoFactor.secret, payload.otp)
+    : false
+  const isPasswordValid = payload.currentPassword
+    ? Boolean(
+        user.passwordHash &&
+        (await compareScryptHash(payload.currentPassword, user.passwordHash)),
+      )
+    : false
 
-  if (!isOtpValid) {
-    throw new AppError('Invalid OTP code.', 401)
+  if (!isOtpValid && !isPasswordValid) {
+    throw new AppError('2FA disable confirmation failed.', 401)
   }
 
   user.twoFactor.enabled = false
@@ -268,7 +359,11 @@ const disableTwoFactor = async (userId: string, otp: string) => {
 const challengeTwoFactor = async (payload: UserTwoFactorChallengePayload) => {
   const decoded = verifyTempToken(payload.tempToken, config.jwt.userSecret)
 
-  if (decoded.actorType !== 'user' || !decoded.pending2FA) {
+  if (
+    decoded.actorType !== 'user' ||
+    !decoded.pending2FA ||
+    decoded.purpose !== 'two-factor-challenge'
+  ) {
     throw new AppError('Invalid user 2FA challenge token.', 401)
   }
 
@@ -283,16 +378,37 @@ const challengeTwoFactor = async (payload: UserTwoFactorChallengePayload) => {
     throw new AppError('User 2FA challenge is invalid.', 401)
   }
 
-  const isOtpValid = payload.emailOtp
-    ? await verifyEmailOtp(
-        user._id.toString(),
-        'user',
-        'login',
-        payload.emailOtp,
-      )
-    : payload.otp
-      ? verifyUserTotp(user.twoFactor.secret, payload.otp)
-      : false
+  await consumeSingleUseTempToken(
+    user._id.toString(),
+    decoded.tokenId,
+    'two-factor-challenge',
+  )
+
+  let backupCodeUsed = false
+  if (payload.backupCode) {
+    const hashedInput = hashStringSha256(payload.backupCode)
+    const codeIndex =
+      user.twoFactor.backupCodes?.findIndex((code) => code === hashedInput) ??
+      -1
+
+    if (codeIndex >= 0) {
+      user.twoFactor.backupCodes?.splice(codeIndex, 1)
+      backupCodeUsed = true
+    }
+  }
+
+  const isOtpValid = backupCodeUsed
+    ? true
+    : payload.emailOtp
+      ? await verifyEmailOtp(
+          user._id.toString(),
+          'user',
+          'login',
+          payload.emailOtp,
+        )
+      : payload.otp
+        ? verifyUserTotp(user.twoFactor.secret, payload.otp)
+        : false
 
   if (!isOtpValid) {
     throw new AppError('Invalid OTP code.', 401)
@@ -318,7 +434,11 @@ const challengeTwoFactor = async (payload: UserTwoFactorChallengePayload) => {
 const sendUserEmailOtp = async (tempToken: string) => {
   const decoded = verifyTempToken(tempToken, config.jwt.userSecret)
 
-  if (decoded.actorType !== 'user' || !decoded.pending2FA) {
+  if (
+    decoded.actorType !== 'user' ||
+    !decoded.pending2FA ||
+    decoded.purpose !== 'two-factor-challenge'
+  ) {
     throw new AppError('Invalid user 2FA challenge token.', 401)
   }
 
@@ -357,10 +477,43 @@ const getBackupCodesCount = async (userId: string, otp: string) => {
   }
 }
 
+const regenerateBackupCodes = async (
+  userId: string,
+  payload: { otp?: string; currentPassword?: string },
+) => {
+  const user = await UserModel.findById(userId)
+
+  if (!user || !user.twoFactor.enabled || !user.twoFactor.secret) {
+    throw new AppError('2FA is not enabled for this user.', 400)
+  }
+
+  const isOtpValid = payload.otp
+    ? verifyUserTotp(user.twoFactor.secret, payload.otp)
+    : false
+  const isPasswordValid = payload.currentPassword
+    ? Boolean(
+        user.passwordHash &&
+        (await compareScryptHash(payload.currentPassword, user.passwordHash)),
+      )
+    : false
+
+  if (!isOtpValid && !isPasswordValid) {
+    throw new AppError('Backup code regeneration confirmation failed.', 401)
+  }
+
+  const backupCodes = generateBackupCodes()
+  user.twoFactor.backupCodes = hashBackupCodes(backupCodes)
+  await user.save()
+
+  return {
+    backupCodes,
+  }
+}
+
 const socialLogin = async (
   profile: SocialProfile,
   request?: Request,
-): Promise<UserWithTokensResult> => {
+): Promise<UserLoginResult> => {
   const nameParts = (profile.name ?? '').trim().split(/\s+/)
   const firstName = nameParts[0] ?? profile.name
   const lastName = nameParts.slice(1).join(' ') || undefined
@@ -382,20 +535,61 @@ const socialLogin = async (
       isEmailVerified: true,
     })
   } else {
+    assertUserAccountAccessible(user)
+
     user.firstName = firstName
     user.lastName = lastName
-    user.provider = profile.provider
-    user.socialProviderId = profile.providerId
+
+    if (
+      user.provider !== profile.provider ||
+      user.socialProviderId !== profile.providerId
+    ) {
+      user.socialProviderId = profile.providerId
+    }
+
     user.isEmailVerified = true
     user.lastLoginAt = new Date()
     await user.save()
   }
 
+  if (user.lockoutUntil && user.lockoutUntil.getTime() > Date.now()) {
+    throw new AppError(
+      'Account temporarily locked due to too many failed login attempts.',
+      429,
+    )
+  }
+
+  user.failedLoginAttempts = 0
+  user.lockoutUntil = undefined
+  await user.save()
+
   await recordUserLogin(user._id.toString(), request)
 
+  if (user.twoFactor.enabled) {
+    if (!user.twoFactor.secret) {
+      throw new AppError('2FA is enabled but not configured correctly.', 500)
+    }
+
+    const tempToken = await issueSingleUseTempToken(
+      user._id.toString(),
+      user.email,
+      'two-factor-challenge',
+      authConstants.twoFactorChallengeTokenTtlMinutes,
+    )
+
+    return {
+      requiresTwoFactor: true,
+      tempToken,
+    }
+  }
+
+  const tokens = issueUserAccessToken(user)
+
   return {
+    requiresTwoFactor: false,
     user: sanitizeUser(user),
-    tokens: issueUserAccessToken(user),
+    accessToken: tokens.accessToken,
+    refreshToken: tokens.refreshToken,
   }
 }
 
@@ -497,6 +691,7 @@ const changePassword = async (
   }
 
   user.passwordHash = await hashWithScrypt(payload.newPassword)
+  user.sessionVersion = (user.sessionVersion ?? 1) + 1
   await user.save()
 }
 
@@ -516,15 +711,26 @@ const verifyEmail = async (token: string): Promise<void> => {
     throw new AppError('User not found.', 404)
   }
 
-  user.isEmailVerified = true
-  await user.save()
-  await UserEmailVerificationTokenModel.deleteMany({ userId: user._id })
+  if (!user.isEmailVerified) {
+    user.isEmailVerified = true
+    await user.save()
+  }
+
+  if (!tokenDoc.usedAt) {
+    tokenDoc.usedAt = new Date()
+    await tokenDoc.save()
+  }
+
+  await UserEmailVerificationTokenModel.deleteMany({
+    userId: user._id,
+    tokenHash: { $ne: tokenHash },
+  })
 }
 
 const resendVerification = async (email: string): Promise<void> => {
   const user = await UserModel.findOne({ email })
 
-  if (!user) {
+  if (!user || user.isEmailVerified) {
     return
   }
 
@@ -621,15 +827,11 @@ const verifyResetOtp = async (
     throw new AppError('Invalid or expired code', 400)
   }
 
-  const resetToken = signTempToken(
-    {
-      id: user._id.toString(),
-      email: user.email,
-      actorType: 'user',
-      purpose: 'password-reset',
-    },
-    config.jwt.userSecret,
-    '10m',
+  const resetToken = await issueSingleUseTempToken(
+    user._id.toString(),
+    user.email,
+    'password-reset',
+    authConstants.resetTokenTtlMinutes,
   )
 
   return { resetToken }
@@ -645,6 +847,8 @@ const resetPassword = async (
     throw new AppError('Invalid password reset token', 400)
   }
 
+  await consumeSingleUseTempToken(decoded.id, decoded.tokenId, 'password-reset')
+
   const user = await UserModel.findById(decoded.id)
 
   if (!user) {
@@ -654,11 +858,17 @@ const resetPassword = async (
   assertUserAccountAccessible(user)
 
   user.passwordHash = await hashWithScrypt(newPassword)
+  user.sessionVersion = (user.sessionVersion ?? 1) + 1
   await user.save()
 
   await EmailOtpModel.deleteMany({
     actorId: user._id,
     actorType: 'user',
+    purpose: 'password-reset',
+  })
+
+  await UserEphemeralTokenModel.deleteMany({
+    userId: user._id,
     purpose: 'password-reset',
   })
 
@@ -680,6 +890,13 @@ const refreshSession = async (refreshToken: string): Promise<AuthTokens> => {
   }
 
   assertUserAccountAccessible(user)
+
+  if (
+    typeof payload.sessionVersion === 'number' &&
+    payload.sessionVersion !== user.sessionVersion
+  ) {
+    throw new AppError('Unauthorized. Session has expired.', 401)
+  }
 
   return issueUserAccessToken(user)
 }
@@ -704,6 +921,7 @@ export const authService = {
   getMyLoginHistory,
   updateMe,
   getBackupCodesCount,
+  regenerateBackupCodes,
   sendUserEmailOtp,
   socialLogin,
   changePassword,

@@ -67,6 +67,12 @@ const subscriptionSchema = new Schema<ISubscription>(
       required: false,
       default: undefined,
     },
+    stripeSubscriptionId: {
+      type: String,
+      required: false,
+      default: undefined,
+      index: true,
+    },
   },
   {
     timestamps: true,

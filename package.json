@@ -20,6 +20,7 @@
     "migrate": "tsx src/scripts/migrate.ts",
     "seed:permissions": "tsx src/seeds/permissions.seed.ts",
     "seed:plans": "tsx src/seeds/plans.seed.ts",
+    "seed:plans:stripe-sync": "tsx src/scripts/sync-stripe-plans.ts",
     "seed:settings": "tsx src/seeds/settings.seed.ts",
     "seed:super-admin": "tsx src/seeds/superAdmin.seed.ts",
     "seed:all": "tsx src/scripts/seed.ts",

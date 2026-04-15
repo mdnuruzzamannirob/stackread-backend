@@ -25,22 +25,36 @@ export const authValidation = {
         .trim()
         .regex(/^\d{6}$/, 'OTP must be 6 digits')
         .optional(),
+      backupCode: z
+        .string()
+        .trim()
+        .regex(/^\d{8,10}$/, 'Backup code must be 8-10 digits')
+        .optional(),
     })
-    .refine((value) => Boolean(value.otp || value.emailOtp), {
-      message: 'Either otp or emailOtp is required',
-    }),
+    .refine(
+      (value) => Boolean(value.otp || value.emailOtp || value.backupCode),
+      {
+        message: 'One of otp, emailOtp, or backupCode is required',
+      },
+    ),
   twoFactorVerifyBody: z.object({
     otp: z
       .string()
       .trim()
       .regex(/^\d{6}$/, 'OTP must be 6 digits'),
   }),
-  twoFactorDisableBody: z.object({
-    otp: z
-      .string()
-      .trim()
-      .regex(/^\d{6}$/, 'OTP must be 6 digits'),
-  }),
+  twoFactorDisableBody: z
+    .object({
+      otp: z
+        .string()
+        .trim()
+        .regex(/^\d{6}$/, 'OTP must be 6 digits')
+        .optional(),
+      currentPassword: z.string().min(8).max(72).optional(),
+    })
+    .refine((value) => Boolean(value.otp || value.currentPassword), {
+      message: 'Either otp or currentPassword is required',
+    }),
   twoFactorBackupCodesQuery: z.object({
     otp: z
       .string()
@@ -73,6 +87,18 @@ export const authValidation = {
   sendEmailOtpBody: z.object({
     tempToken: z.string().trim().min(20),
   }),
+  regenerateBackupCodesBody: z
+    .object({
+      otp: z
+        .string()
+        .trim()
+        .regex(/^\d{6}$/, 'OTP must be 6 digits')
+        .optional(),
+      currentPassword: z.string().min(8).max(72).optional(),
+    })
+    .refine((value) => Boolean(value.otp || value.currentPassword), {
+      message: 'Either otp or currentPassword is required',
+    }),
   updateMeBody: z
     .object({
       firstName: z.string().trim().min(1).max(100).optional(),

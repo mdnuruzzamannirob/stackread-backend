@@ -5,6 +5,7 @@ import { runBirthdayCouponJob } from './birthday-coupons.job'
 import { runReadingSessionCleanupJob } from './reading-session-cleanup.job'
 import { runRenewalReminderJob } from './renewal-reminders.job'
 import { runReportSchedulingJob } from './report-scheduling.job'
+import { runUnverifiedUserCleanupJob } from './unverified-user-cleanup.job'
 
 type JobDefinition = {
   name: string
@@ -27,6 +28,11 @@ const jobDefinitions: JobDefinition[] = [
     name: 'job.reading-session-cleanup',
     schedule: '0 3 * * *',
     handler: runReadingSessionCleanupJob,
+  },
+  {
+    name: 'job.unverified-user-cleanup',
+    schedule: '0 * * * *',
+    handler: runUnverifiedUserCleanupJob,
   },
   {
     name: 'job.report-scheduling',

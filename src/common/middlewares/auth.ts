@@ -55,11 +55,24 @@ export const authenticateUser: RequestHandler = async (
     }
 
     const user = await UserModel.findById(userId)
-      .select('_id email isActive isSuspended deletedAt')
+      .select(
+        '_id email isActive isSuspended isEmailVerified deletedAt sessionVersion',
+      )
       .lean()
 
     if (!user || !user.isActive || user.isSuspended || user.deletedAt) {
       throw new AppError('Unauthorized. Invalid or expired user token.', 401)
+    }
+
+    if (!user.isEmailVerified) {
+      throw new AppError('Email verification is required.', 403)
+    }
+
+    if (
+      typeof payload.sessionVersion === 'number' &&
+      payload.sessionVersion !== user.sessionVersion
+    ) {
+      throw new AppError('Unauthorized. Session has expired.', 401)
     }
 
     request.auth = payload

@@ -13,6 +13,8 @@ export interface IPlan {
   accessLevel: 'free' | 'basic' | 'premium'
   features: string[]
   isFree: boolean
+  stripeProductId?: string
+  stripePriceId?: string
   isActive: boolean
   sortOrder: number
   createdAt: Date
@@ -33,6 +35,8 @@ export interface CreatePlanPayload {
   accessLevel: PlanAccessLevel
   features: string[]
   isFree: boolean
+  stripeProductId?: string
+  stripePriceId?: string
   isActive: boolean
   sortOrder: number
 }

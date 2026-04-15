@@ -89,6 +89,13 @@ const initiatePayment = async (payload: InitiatePaymentPayload) => {
   const reference = `PAY-${Date.now()}-${crypto.randomUUID().slice(0, 8).toUpperCase()}`
   const gatewayAdapter = resolveGatewayAdapter(selectedGatewayConfig.gateway)
 
+  if (payload.gateway === 'stripe' && !plan.stripePriceId) {
+    throw new AppError(
+      'Stripe plan is not synced yet. Please run plan Stripe sync first.',
+      400,
+    )
+  }
+
   const gatewayResult = await gatewayAdapter.initiate({
     amount: payableAmount,
     currency: plan.currency,
@@ -100,8 +107,11 @@ const initiatePayment = async (payload: InitiatePaymentPayload) => {
       subscriptionId: pendingSubscription._id.toString(),
       userId: payload.userId,
       gateway: payload.gateway,
+      planId: plan._id.toString(),
+      planCode: plan.code,
       countryCode: user.countryCode ?? 'UNKNOWN',
     },
+    ...(plan.stripePriceId ? { stripePriceId: plan.stripePriceId } : {}),
   })
 
   const payment = await PaymentModel.create({
@@ -139,7 +149,10 @@ const initiatePayment = async (payload: InitiatePaymentPayload) => {
   return {
     payment: formatPayment(payment),
     ...(gatewayResult.redirectUrl
-      ? { redirectUrl: gatewayResult.redirectUrl }
+      ? {
+          redirectUrl: gatewayResult.redirectUrl,
+          checkout_url: gatewayResult.redirectUrl,
+        }
       : {}),
     ...(gatewayResult.clientSecret
       ? { clientSecret: gatewayResult.clientSecret }
@@ -269,6 +282,28 @@ const processWebhook = async (
       reference: reference ?? `fallback-${verification.eventId}`,
       ...(providerPaymentId ? { providerPaymentId } : {}),
       status: verification.status,
+      ...(verification.raw && typeof verification.raw === 'object'
+        ? {
+            metadata: {
+              ...(typeof (verification.raw as Record<string, unknown>)
+                .stripeCustomerId === 'string'
+                ? {
+                    stripeCustomerId: (
+                      verification.raw as Record<string, unknown>
+                    ).stripeCustomerId,
+                  }
+                : {}),
+              ...(typeof (verification.raw as Record<string, unknown>)
+                .stripeSubscriptionId === 'string'
+                ? {
+                    stripeSubscriptionId: (
+                      verification.raw as Record<string, unknown>
+                    ).stripeSubscriptionId,
+                  }
+                : {}),
+            },
+          }
+        : {}),
     })
 
     webhookLog.processingStatus = 'processed'
