@@ -28,16 +28,21 @@
   },
   "keywords": [
     "stackread",
+    "digital",
     "library",
     "management",
     "system",
+    "digital-library",
+    "digital-library-management",
+    "digital-library-management-system",
+    "library-management",
     "library-management-system",
     "library-management-system-backend",
     "library-management-system-api"
   ],
   "author": "Md. Nuruzzaman",
   "license": "ISC",
-  "packageManager": "pnpm@10.30.2",
+  "packageManager": "pnpm@10.33.0",
   "dependencies": {
     "@paypal/checkout-server-sdk": "^1.0.3",
     "@scalar/express-api-reference": "^0.9.3",
