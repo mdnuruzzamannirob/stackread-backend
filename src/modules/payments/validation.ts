@@ -24,6 +24,10 @@ export const paymentsValidation = {
     gatewayTransactionId: z.string().trim().min(2).max(200).optional(),
     status: z.enum(['success', 'failed', 'pending']),
   }),
+  confirmStripeSessionBody: z.object({
+    sessionId: z.string().trim().min(3).max(200),
+    reference: z.string().trim().min(8).max(120).optional(),
+  }),
   refundBody: z.object({
     reason: z.string().trim().min(3).max(200),
   }),

@@ -60,16 +60,54 @@ const clearStripeRetryState = (subscription: ISubscription) => {
 }
 
 const getMyCurrentSubscription = async (userId: string) => {
-  const subscription = await SubscriptionModel.findOne({
-    userId,
-    status: { $in: ['active', 'pending', 'past_due'] },
-  }).sort({ createdAt: -1 })
+  const now = new Date()
+  const subscriptions = await SubscriptionModel.find({ userId })
+    .sort({ createdAt: -1 })
+    .lean()
 
-  if (!subscription) {
+  if (subscriptions.length === 0) {
     return null
   }
 
-  return toSubscriptionSummary(subscription)
+  const rankedVisible = subscriptions
+    .map((subscription) => {
+      const isCurrentTermStillValid =
+        subscription.endsAt instanceof Date ? subscription.endsAt > now : false
+
+      const priority =
+        subscription.status === 'active'
+          ? 4
+          : subscription.status === 'past_due'
+            ? 3
+            : subscription.status === 'pending'
+              ? 2
+              : isCurrentTermStillValid
+                ? 1
+                : 0
+
+      return {
+        subscription,
+        priority,
+      }
+    })
+    .filter((item) => item.priority > 0)
+    .sort((a, b) => {
+      if (a.priority !== b.priority) {
+        return b.priority - a.priority
+      }
+
+      return (
+        b.subscription.createdAt.getTime() - a.subscription.createdAt.getTime()
+      )
+    })
+
+  const [firstVisible] = rankedVisible
+
+  if (!firstVisible) {
+    return null
+  }
+
+  return toSubscriptionSummary(firstVisible.subscription)
 }
 
 const getMySubscriptionHistory = async (userId: string) => {

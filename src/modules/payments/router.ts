@@ -8,6 +8,7 @@ import {
 import { requirePermission } from '../../common/middlewares/requirePermission'
 import { validateRequest } from '../../common/middlewares/validateRequest'
 import {
+  confirmStripeCheckoutSession,
   getMyPaymentById,
   getPaymentById,
   handleWebhook,
@@ -46,6 +47,12 @@ router.post(
   requirePermission(PERMISSIONS.PAYMENTS_MANAGE),
   validateRequest({ body: paymentsValidation.verifyBody }),
   verifyPayment,
+)
+router.post(
+  '/payments/confirm-stripe-session',
+  authenticateUser,
+  validateRequest({ body: paymentsValidation.confirmStripeSessionBody }),
+  confirmStripeCheckoutSession,
 )
 
 router.get(

@@ -121,6 +121,23 @@ export const verifyPayment: RequestHandler = catchAsync(
   },
 )
 
+export const confirmStripeCheckoutSession: RequestHandler = catchAsync(
+  async (request, response) => {
+    const data = await paymentsService.confirmStripeCheckoutSessionForUser({
+      userId: getUserId(request),
+      sessionId: request.body.sessionId,
+      reference: request.body.reference,
+    })
+
+    sendResponse(response, {
+      statusCode: 200,
+      success: true,
+      message: 'Stripe checkout session confirmed successfully.',
+      data,
+    })
+  },
+)
+
 export const refundPayment: RequestHandler = catchAsync(
   async (request, response) => {
     const data = await paymentsService.refundPayment(
@@ -191,6 +208,7 @@ export const paymentsController = {
   getPaymentById,
   initiatePayment,
   verifyPayment,
+  confirmStripeCheckoutSession,
   refundPayment,
   handleWebhook,
 }

@@ -411,18 +411,6 @@ const confirmStripeCheckoutSessionForUser = async (payload: {
     },
   )
 
-  if (stripeSubscriptionId) {
-    await subscriptionsService.syncSubscriptionFromStripe({
-      stripeSubscriptionId,
-      ...(stripeCustomerId ? { stripeCustomerId } : {}),
-      userId: payload.userId,
-      ...(resolvedPlanId ? { planId: resolvedPlanId } : {}),
-      ...(stripePriceId ? { stripePriceId } : {}),
-      status: subscriptionRecord?.status ?? 'active',
-      ...(currentPeriodEnd ? { currentPeriodEnd } : {}),
-    })
-  }
-
   await safeCompleteOnboarding(payload.userId)
 
   return {
