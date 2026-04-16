@@ -407,7 +407,10 @@ const renewMySubscription = async (userId: string) => {
         throw new AppError('Plan not found or inactive.', 404)
       }
 
-      subscription.endsAt = computeEndAt(subscription.endsAt, plan.durationDays)
+      subscription.endsAt = computeEndAt(
+        subscription.endsAt ?? subscription.startedAt ?? new Date(),
+        plan.durationDays,
+      )
       subscription.status = 'active'
       subscription.autoRenew = true
       await subscription.save({ session })
@@ -693,36 +696,51 @@ const syncSubscriptionFromStripe = async (
   }
 
   if (userObjectId && planObjectId) {
+    const setPayload: Record<string, unknown> = {
+      userId: userObjectId,
+      planId: planObjectId,
+      stripeSubscriptionId: payload.stripeSubscriptionId,
+    }
+
+    if (payload.currentPeriodEnd) {
+      setPayload.currentPeriodEnd = payload.currentPeriodEnd
+      setPayload.endsAt = periodEnd
+    }
+
+    if (typeof payload.cancelAtPeriodEnd === 'boolean') {
+      setPayload.autoRenew = !payload.cancelAtPeriodEnd
+    }
+
+    if (payload.status) {
+      setPayload.status = mapStripeStatusToLocal(payload.status)
+    }
+
+    if (payload.status === 'canceled') {
+      setPayload.cancelledAt = now
+    }
+
+    const setOnInsertPayload: Record<string, unknown> = {
+      startedAt: now,
+    }
+
+    if (!payload.currentPeriodEnd) {
+      setOnInsertPayload.endsAt = periodEnd
+      setOnInsertPayload.currentPeriodEnd = periodEnd
+    }
+
+    if (typeof payload.cancelAtPeriodEnd !== 'boolean') {
+      setOnInsertPayload.autoRenew = true
+    }
+
+    if (!payload.status) {
+      setOnInsertPayload.status = 'active'
+    }
+
     const synced = await SubscriptionModel.findOneAndUpdate(
       { stripeSubscriptionId: payload.stripeSubscriptionId },
       {
-        $set: {
-          userId: userObjectId,
-          planId: planObjectId,
-          stripeSubscriptionId: payload.stripeSubscriptionId,
-          ...(payload.currentPeriodEnd
-            ? { currentPeriodEnd: payload.currentPeriodEnd, endsAt: periodEnd }
-            : {}),
-          ...(typeof payload.cancelAtPeriodEnd === 'boolean'
-            ? { autoRenew: !payload.cancelAtPeriodEnd }
-            : {}),
-          ...(payload.status
-            ? { status: mapStripeStatusToLocal(payload.status) }
-            : {}),
-          ...(payload.status === 'canceled' ? { cancelledAt: now } : {}),
-        },
-        $setOnInsert: {
-          startedAt: now,
-          endsAt: periodEnd,
-          currentPeriodEnd: periodEnd,
-          autoRenew:
-            typeof payload.cancelAtPeriodEnd === 'boolean'
-              ? !payload.cancelAtPeriodEnd
-              : true,
-          status: payload.status
-            ? mapStripeStatusToLocal(payload.status)
-            : 'active',
-        },
+        $set: setPayload,
+        $setOnInsert: setOnInsertPayload,
       },
       { new: true, upsert: true },
     )

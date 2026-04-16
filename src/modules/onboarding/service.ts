@@ -209,14 +209,54 @@ const completeOnboarding = async (userId: string) => {
     }
   }
 
-  await markOnboardingCompleted(userId)
+  const completedOnboarding = await markOnboardingCompleted(userId)
 
   return {
-    id: onboarding._id.toString(),
-    status: onboarding.status,
-    completedAt: onboarding.completedAt.toISOString(),
-    selectedPlanCode: onboarding.selectedPlanCode,
+    id: completedOnboarding._id.toString(),
+    status: completedOnboarding.status,
+    completedAt:
+      completedOnboarding.completedAt?.toISOString() ??
+      new Date().toISOString(),
+    selectedPlanCode: completedOnboarding.selectedPlanCode,
   }
+}
+
+const confirmPayment = async (
+  userId: string,
+  sessionId: string,
+  reference?: string,
+) => {
+  const onboarding = await OnboardingModel.findOne({ userId })
+
+  if (!onboarding || !onboarding.selectedPlanCode) {
+    throw new AppError('No selected onboarding plan found.', 400)
+  }
+
+  const selectedPlan = await PlanModel.findOne({
+    code: onboarding.selectedPlanCode,
+    isActive: true,
+  })
+
+  if (!selectedPlan) {
+    throw new AppError('Selected onboarding plan not found.', 404)
+  }
+
+  if (selectedPlan.isFree) {
+    await markOnboardingCompleted(userId)
+    return {
+      status: 'completed',
+      selectedPlanCode: onboarding.selectedPlanCode,
+      completedAt: new Date().toISOString(),
+    }
+  }
+
+  await paymentsService.confirmStripeCheckoutSessionForUser({
+    userId,
+    sessionId,
+    ...(reference ? { reference } : {}),
+  })
+
+  return getOnboardingStatus(userId)
 }
 
 const getOnboardingStatus = async (userId: string) => {
@@ -239,6 +279,7 @@ export const onboardingService = {
   getPlanOptions,
   selectPlan,
   completeOnboarding,
+  confirmPayment,
   getOnboardingStatus,
   markOnboardingCompleted,
 }

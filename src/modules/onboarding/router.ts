@@ -25,5 +25,11 @@ router.post(
   validateRequest({ body: onboardingValidation.completeBody }),
   onboardingController.completeOnboarding,
 )
+router.post(
+  '/confirm-payment',
+  authenticateUser,
+  validateRequest({ body: onboardingValidation.confirmPaymentBody }),
+  onboardingController.confirmPayment,
+)
 
 export const onboardingRouter = router

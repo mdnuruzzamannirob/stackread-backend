@@ -47,6 +47,21 @@ const completeOnboarding: RequestHandler = catchAsync(
   },
 )
 
+const confirmPayment: RequestHandler = catchAsync(async (request, response) => {
+  const data = await onboardingService.confirmPayment(
+    getAuthenticatedUserId(request),
+    request.body.sessionId,
+    request.body.reference,
+  )
+
+  sendResponse(response, {
+    statusCode: 200,
+    success: true,
+    message: 'Onboarding payment confirmation checked successfully.',
+    data,
+  })
+})
+
 const getMyOnboardingStatus: RequestHandler = catchAsync(
   async (request, response) => {
     const data = await onboardingService.getOnboardingStatus(
@@ -66,5 +81,6 @@ export const onboardingController = {
   getPlanOptions,
   selectPlan,
   completeOnboarding,
+  confirmPayment,
   getMyOnboardingStatus,
 }

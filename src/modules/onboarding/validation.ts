@@ -7,4 +7,8 @@ export const onboardingValidation = {
   completeBody: z.object({
     agreeToTerms: z.literal(true),
   }),
+  confirmPaymentBody: z.object({
+    sessionId: z.string().trim().min(3),
+    reference: z.string().trim().min(3).optional(),
+  }),
 }

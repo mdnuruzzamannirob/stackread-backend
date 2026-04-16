@@ -289,6 +289,149 @@ const verifyPayment = async (
   }
 }
 
+const confirmStripeCheckoutSessionForUser = async (payload: {
+  userId: string
+  sessionId: string
+  reference?: string
+}) => {
+  if (!config.providers.stripeSecretKey) {
+    throw new AppError('STRIPE_SECRET_KEY is not configured.', 500)
+  }
+
+  const stripe = new Stripe(config.providers.stripeSecretKey)
+  const checkoutSession = await stripe.checkout.sessions.retrieve(
+    payload.sessionId,
+  )
+
+  const metadataUserId =
+    typeof checkoutSession.metadata?.['userId'] === 'string'
+      ? checkoutSession.metadata['userId']
+      : undefined
+
+  if (metadataUserId && metadataUserId !== payload.userId) {
+    throw new AppError('Checkout session does not belong to this user.', 403)
+  }
+
+  const resolvedReference =
+    (typeof checkoutSession.metadata?.['reference'] === 'string'
+      ? checkoutSession.metadata['reference']
+      : undefined) ?? payload.reference
+  const resolvedPlanId =
+    typeof checkoutSession.metadata?.['planId'] === 'string'
+      ? checkoutSession.metadata['planId']
+      : undefined
+
+  if (!resolvedReference) {
+    throw new AppError('Unable to resolve payment reference from session.', 400)
+  }
+
+  const payment = await PaymentModel.findOne({
+    $or: [
+      { providerPaymentId: checkoutSession.id },
+      { reference: resolvedReference },
+    ],
+    userId: new Types.ObjectId(payload.userId),
+  })
+
+  if (!payment) {
+    throw new AppError(
+      'Payment not found for the provided Stripe session.',
+      404,
+    )
+  }
+
+  if (checkoutSession.payment_status !== 'paid') {
+    return {
+      payment: formatPayment(payment),
+      onboardingCompleted: false,
+      status: 'pending',
+    }
+  }
+
+  const stripeSubscriptionId =
+    typeof checkoutSession.subscription === 'string'
+      ? checkoutSession.subscription
+      : checkoutSession.subscription &&
+          typeof checkoutSession.subscription === 'object' &&
+          'id' in checkoutSession.subscription &&
+          typeof checkoutSession.subscription.id === 'string'
+        ? checkoutSession.subscription.id
+        : undefined
+
+  let stripeSubscription: Stripe.Subscription | null = null
+  if (stripeSubscriptionId) {
+    stripeSubscription =
+      await stripe.subscriptions.retrieve(stripeSubscriptionId)
+  }
+
+  const subscriptionRecord = stripeSubscription as unknown as {
+    status?: string
+    customer?: string | Stripe.Customer | Stripe.DeletedCustomer
+    items?: {
+      data?: Array<{
+        price?: {
+          id?: string
+        }
+      }>
+    }
+    current_period_end?: number
+  } | null
+
+  const stripeCustomerId =
+    typeof checkoutSession.customer === 'string'
+      ? checkoutSession.customer
+      : subscriptionRecord && typeof subscriptionRecord.customer === 'string'
+        ? subscriptionRecord.customer
+        : undefined
+
+  const stripePriceId = subscriptionRecord?.items?.data?.[0]?.price?.id
+  const currentPeriodEnd =
+    typeof subscriptionRecord?.current_period_end === 'number'
+      ? new Date(subscriptionRecord.current_period_end * 1000)
+      : undefined
+
+  const verified = await verifyPayment(
+    {
+      reference: resolvedReference,
+      providerPaymentId: checkoutSession.id,
+      status: 'success',
+      metadata: {
+        ...(stripeCustomerId ? { stripeCustomerId } : {}),
+        ...(stripeSubscriptionId ? { stripeSubscriptionId } : {}),
+        ...(typeof checkoutSession.payment_intent === 'string'
+          ? { paymentIntentId: checkoutSession.payment_intent }
+          : {}),
+        ...(currentPeriodEnd
+          ? { currentPeriodEnd: currentPeriodEnd.toISOString() }
+          : {}),
+      },
+    },
+    {
+      trustedSource: true,
+    },
+  )
+
+  if (stripeSubscriptionId) {
+    await subscriptionsService.syncSubscriptionFromStripe({
+      stripeSubscriptionId,
+      ...(stripeCustomerId ? { stripeCustomerId } : {}),
+      userId: payload.userId,
+      ...(resolvedPlanId ? { planId: resolvedPlanId } : {}),
+      ...(stripePriceId ? { stripePriceId } : {}),
+      status: subscriptionRecord?.status ?? 'active',
+      ...(currentPeriodEnd ? { currentPeriodEnd } : {}),
+    })
+  }
+
+  await safeCompleteOnboarding(payload.userId)
+
+  return {
+    payment: verified,
+    onboardingCompleted: true,
+    status: 'completed',
+  }
+}
+
 const refundPayment = async (paymentId: string, reason: string) => {
   const session = await mongoose.startSession()
   try {
@@ -847,6 +990,7 @@ export const paymentsService = {
   getPaymentById,
   initiatePayment,
   verifyPayment,
+  confirmStripeCheckoutSessionForUser,
   refundPayment,
   processWebhook,
 }
