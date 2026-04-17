@@ -315,9 +315,7 @@ const getMyLoginHistory: RequestHandler = catchAsync(
 
     const pagination = {
       ...(typeof requestedPage === 'number' ? { page: requestedPage } : {}),
-      ...(typeof requestedLimit === 'number'
-        ? { limit: requestedLimit }
-        : {}),
+      ...(typeof requestedLimit === 'number' ? { limit: requestedLimit } : {}),
     }
 
     const history = await authService.getMyLoginHistory(

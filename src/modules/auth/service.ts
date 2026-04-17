@@ -40,8 +40,8 @@ import type {
   SuccessResponse,
   UpdateMePayload,
   UpdateProfilePicturePayload,
-  UserLoginHistoryPage,
   UserLoginHistoryItem,
+  UserLoginHistoryPage,
   UserLoginResult,
   UserNotificationPreferences,
   UserTwoFactorChallengePayload,
@@ -97,7 +97,9 @@ const assertUserCurrentPassword = async (
 
 const MAX_PROFILE_PICTURE_BYTES = 512 * 1024
 
-const parseBase64Upload = (value: string): {
+const parseBase64Upload = (
+  value: string,
+): {
   buffer: Buffer
   contentType: string
   defaultFileName: string
@@ -695,8 +697,7 @@ const getMyLoginHistory = async (
       ? pagination.page
       : 1
   const requestedLimit =
-    typeof pagination?.limit === 'number' &&
-    Number.isInteger(pagination.limit)
+    typeof pagination?.limit === 'number' && Number.isInteger(pagination.limit)
       ? pagination.limit
       : authConstants.loginHistoryDefaultLimit
   const safePage = Math.max(requestedPage, 1)

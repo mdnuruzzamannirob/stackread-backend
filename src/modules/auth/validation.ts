@@ -99,18 +99,22 @@ export const authValidation = {
   enableTwoFactorBody: z.object({
     currentPassword: z.string().min(8).max(72),
   }),
-  updateMyProfilePictureBody: z.object({
-    profilePicture: z.union([z.string().trim().url(), z.literal('')]).optional(),
-    fileBase64: z.string().trim().min(16).optional(),
-    fileName: z.string().trim().min(1).max(160).optional(),
-  }).refine(
-    (value) =>
-      typeof value.profilePicture !== 'undefined' ||
-      typeof value.fileBase64 === 'string',
-    {
-      message: 'Either profilePicture or fileBase64 is required',
-    },
-  ),
+  updateMyProfilePictureBody: z
+    .object({
+      profilePicture: z
+        .union([z.string().trim().url(), z.literal('')])
+        .optional(),
+      fileBase64: z.string().trim().min(16).optional(),
+      fileName: z.string().trim().min(1).max(160).optional(),
+    })
+    .refine(
+      (value) =>
+        typeof value.profilePicture !== 'undefined' ||
+        typeof value.fileBase64 === 'string',
+      {
+        message: 'Either profilePicture or fileBase64 is required',
+      },
+    ),
   regenerateBackupCodesBody: z.object({
     otp: z
       .string()
