@@ -195,21 +195,42 @@ const normalizeHeaderValue = (
 const resolveLocationFromRequest = (
   request: Request | undefined,
 ): string | undefined => {
-  const country =
+  const city =
+    normalizeHeaderValue(request, 'x-vercel-ip-city') ??
+    normalizeHeaderValue(request, 'cf-ipcity') ??
+    normalizeHeaderValue(request, 'x-city')
+
+  const region =
+    normalizeHeaderValue(request, 'x-vercel-ip-country-region') ??
+    normalizeHeaderValue(request, 'x-vercel-ip-region') ??
+    normalizeHeaderValue(request, 'cf-region') ??
+    normalizeHeaderValue(request, 'x-region')
+
+  const countryName = normalizeHeaderValue(request, 'x-vercel-ip-country-name')
+  const countryCode =
     normalizeHeaderValue(request, 'x-vercel-ip-country') ??
     normalizeHeaderValue(request, 'cf-ipcountry') ??
     normalizeHeaderValue(request, 'x-country-code') ??
     normalizeHeaderValue(request, 'x-appengine-country')
 
-  const city =
-    normalizeHeaderValue(request, 'x-vercel-ip-city') ??
-    normalizeHeaderValue(request, 'cf-ipcity')
+  const country = countryName ?? countryCode
+  const locationParts = [city, region, country].filter(
+    (value): value is string => Boolean(value),
+  )
 
-  if (city && country) {
-    return `${city}, ${country}`
+  if (locationParts.length === 0) {
+    return undefined
   }
 
-  return country
+  const uniqueLocationParts = locationParts.filter((part, index) => {
+    return (
+      locationParts.findIndex(
+        (candidate) => candidate.toLowerCase() === part.toLowerCase(),
+      ) === index
+    )
+  })
+
+  return uniqueLocationParts.join(', ')
 }
 
 const resolveBrowserFromUserAgent = (

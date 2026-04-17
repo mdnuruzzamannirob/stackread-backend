@@ -49,6 +49,7 @@ const enableTwoFactor: RequestHandler = catchAsync(
   async (request, response) => {
     const data = await authService.enableTwoFactor(
       ensureAuthenticatedUser(request),
+      request.body,
     )
 
     sendResponse(response, {
@@ -307,8 +308,12 @@ const getMe: RequestHandler = catchAsync(async (request, response) => {
 
 const getMyLoginHistory: RequestHandler = catchAsync(
   async (request, response) => {
+    const requestedLimit =
+      typeof request.query.limit === 'number' ? request.query.limit : undefined
+
     const history = await authService.getMyLoginHistory(
       ensureAuthenticatedUser(request),
+      requestedLimit,
     )
 
     sendResponse(response, {

@@ -39,6 +39,7 @@ export const authValidation = {
     ),
   twoFactorVerifyBody: z
     .object({
+      currentPassword: z.string().min(8).max(72),
       otp: z
         .string()
         .trim()
@@ -53,18 +54,14 @@ export const authValidation = {
     .refine((value) => Boolean(value.otp || value.emailOtp), {
       message: 'One of otp or emailOtp is required',
     }),
-  twoFactorDisableBody: z
-    .object({
-      otp: z
-        .string()
-        .trim()
-        .regex(/^\d{6}$/, 'OTP must be 6 digits')
-        .optional(),
-      currentPassword: z.string().min(8).max(72).optional(),
-    })
-    .refine((value) => Boolean(value.otp || value.currentPassword), {
-      message: 'Either otp or currentPassword is required',
-    }),
+  twoFactorDisableBody: z.object({
+    otp: z
+      .string()
+      .trim()
+      .regex(/^\d{6}$/, 'OTP must be 6 digits')
+      .optional(),
+    currentPassword: z.string().min(8).max(72),
+  }),
   twoFactorBackupCodesQuery: z.object({
     otp: z
       .string()
@@ -97,23 +94,25 @@ export const authValidation = {
   sendEmailOtpBody: z.object({
     tempToken: z.string().trim().min(20),
   }),
+  enableTwoFactorBody: z.object({
+    currentPassword: z.string().min(8).max(72),
+  }),
   updateMyProfilePictureBody: z.object({
     profilePicture: z
       .union([z.string().trim().url(), z.literal('')])
       .optional(),
   }),
-  regenerateBackupCodesBody: z
-    .object({
-      otp: z
-        .string()
-        .trim()
-        .regex(/^\d{6}$/, 'OTP must be 6 digits')
-        .optional(),
-      currentPassword: z.string().min(8).max(72).optional(),
-    })
-    .refine((value) => Boolean(value.otp || value.currentPassword), {
-      message: 'Either otp or currentPassword is required',
-    }),
+  regenerateBackupCodesBody: z.object({
+    otp: z
+      .string()
+      .trim()
+      .regex(/^\d{6}$/, 'OTP must be 6 digits')
+      .optional(),
+    currentPassword: z.string().min(8).max(72),
+  }),
+  loginHistoryQuery: z.object({
+    limit: z.coerce.number().int().min(1).max(30).optional(),
+  }),
   updateMeBody: z
     .object({
       firstName: z.string().trim().min(1).max(100).optional(),

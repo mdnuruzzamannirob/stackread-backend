@@ -189,6 +189,7 @@ export interface UpdateProfilePicturePayload {
 }
 
 export interface VerifyTwoFactorPayload {
+  currentPassword: string
   otp?: string
   emailOtp?: string
 }

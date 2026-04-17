@@ -141,7 +141,12 @@ router.post(
 )
 
 router.get('/me', authenticateUser, authController.getMe)
-router.post('/2fa/enable', authenticateUser, authController.enableTwoFactor)
+router.post(
+  '/2fa/enable',
+  authenticateUser,
+  validateRequest({ body: authValidation.enableTwoFactorBody }),
+  authController.enableTwoFactor,
+)
 router.post(
   '/2fa/verify',
   authenticateUser,
@@ -169,6 +174,7 @@ router.get(
 router.get(
   '/me/login-history',
   authenticateUser,
+  validateRequest({ query: authValidation.loginHistoryQuery }),
   authController.getMyLoginHistory,
 )
 router.patch(

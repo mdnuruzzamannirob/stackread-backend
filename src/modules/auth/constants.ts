@@ -5,6 +5,8 @@ export const authConstants = {
   twoFactorChallengeTokenTtlMinutes: 10,
   loginMaxAttempts: 5,
   lockoutMinutes: 15,
+  loginHistoryDefaultLimit: 10,
+  loginHistoryMaxLimit: 30,
 } as const
 
 export const USER_REFRESH_COOKIE_NAME = 'stackread_refresh'

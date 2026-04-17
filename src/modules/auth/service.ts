@@ -28,6 +28,7 @@ import type {
   AuthTokens,
   ChangePasswordPayload,
   DeleteMyAccountPayload,
+  IUser,
   LoginPayload,
   RegisterPayload,
   RegisterResult,
@@ -68,6 +69,27 @@ import {
 const assertUserAccountAccessible = (user: AccountAccessibleUserState) => {
   if (!user.isActive || user.isSuspended || user.deletedAt) {
     throw new AppError('Account is inactive or suspended.', 403)
+  }
+}
+
+const assertUserCurrentPassword = async (
+  user: Pick<IUser, 'passwordHash'>,
+  currentPassword: string,
+): Promise<void> => {
+  if (!user.passwordHash) {
+    throw new AppError(
+      'Set a password first before managing 2FA settings.',
+      400,
+    )
+  }
+
+  const isPasswordValid = await compareScryptHash(
+    currentPassword,
+    user.passwordHash,
+  )
+
+  if (!isPasswordValid) {
+    throw new AppError('Current password is incorrect.', 401)
   }
 }
 
@@ -262,12 +284,17 @@ const login = async (
   }
 }
 
-const enableTwoFactor = async (userId: string) => {
+const enableTwoFactor = async (
+  userId: string,
+  payload: { currentPassword: string },
+) => {
   const user = await UserModel.findById(userId)
 
   if (!user) {
     throw new AppError('User not found.', 404)
   }
+
+  await assertUserCurrentPassword(user, payload.currentPassword)
 
   const generatedSecret = speakeasy.generateSecret({
     name: `${config.oauth.twoFactorIssuer}:${user.email}`,
@@ -313,6 +340,8 @@ const verifyTwoFactor = async (
     )
   }
 
+  await assertUserCurrentPassword(user, payload.currentPassword)
+
   const isOtpValid = payload.emailOtp
     ? await verifyEmailOtp(
         user._id.toString(),
@@ -357,7 +386,7 @@ const sendUserSetupEmailOtp = async (userId: string) => {
 
 const disableTwoFactor = async (
   userId: string,
-  payload: { otp?: string; currentPassword?: string },
+  payload: { otp?: string; currentPassword: string },
 ) => {
   const user = await UserModel.findById(userId)
 
@@ -365,18 +394,10 @@ const disableTwoFactor = async (
     throw new AppError('2FA is not enabled for this user.', 400)
   }
 
-  const isOtpValid = payload.otp
-    ? verifyUserTotp(user.twoFactor.secret, payload.otp)
-    : false
-  const isPasswordValid = payload.currentPassword
-    ? Boolean(
-        user.passwordHash &&
-        (await compareScryptHash(payload.currentPassword, user.passwordHash)),
-      )
-    : false
+  await assertUserCurrentPassword(user, payload.currentPassword)
 
-  if (!isOtpValid && !isPasswordValid) {
-    throw new AppError('2FA disable confirmation failed.', 401)
+  if (payload.otp && !verifyUserTotp(user.twoFactor.secret, payload.otp)) {
+    throw new AppError('Invalid OTP code.', 401)
   }
 
   user.twoFactor.enabled = false
@@ -512,7 +533,7 @@ const getBackupCodesCount = async (userId: string, otp: string) => {
 
 const regenerateBackupCodes = async (
   userId: string,
-  payload: { otp?: string; currentPassword?: string },
+  payload: { otp?: string; currentPassword: string },
 ) => {
   const user = await UserModel.findById(userId)
 
@@ -520,18 +541,10 @@ const regenerateBackupCodes = async (
     throw new AppError('2FA is not enabled for this user.', 400)
   }
 
-  const isOtpValid = payload.otp
-    ? verifyUserTotp(user.twoFactor.secret, payload.otp)
-    : false
-  const isPasswordValid = payload.currentPassword
-    ? Boolean(
-        user.passwordHash &&
-        (await compareScryptHash(payload.currentPassword, user.passwordHash)),
-      )
-    : false
+  await assertUserCurrentPassword(user, payload.currentPassword)
 
-  if (!isOtpValid && !isPasswordValid) {
-    throw new AppError('Backup code regeneration confirmation failed.', 401)
+  if (payload.otp && !verifyUserTotp(user.twoFactor.secret, payload.otp)) {
+    throw new AppError('Invalid OTP code.', 401)
   }
 
   const backupCodes = generateBackupCodes()
@@ -638,10 +651,20 @@ const getMe = async (userId: string): Promise<SanitizedUser> => {
 
 const getMyLoginHistory = async (
   userId: string,
+  limit?: number,
 ): Promise<UserLoginHistoryItem[]> => {
+  const requestedLimit =
+    typeof limit === 'number' && Number.isInteger(limit)
+      ? limit
+      : authConstants.loginHistoryDefaultLimit
+  const safeLimit = Math.min(
+    Math.max(requestedLimit, 1),
+    authConstants.loginHistoryMaxLimit,
+  )
+
   const rows = await UserLoginHistoryModel.find({ userId })
     .sort({ createdAt: -1 })
-    .limit(20)
+    .limit(safeLimit)
 
   return rows.map((row, index) => {
     const ipAddress = row.ipAddress
