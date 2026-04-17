@@ -31,6 +31,11 @@ router.post(
   validateRequest({ body: authValidation.sendEmailOtpBody }),
   authController.sendUserEmailOtp,
 )
+router.post(
+  '/2fa/setup/email/send',
+  authenticateUser,
+  authController.sendUserSetupEmailOtp,
+)
 
 router.get(
   '/google',
@@ -171,6 +176,12 @@ router.patch(
   authenticateUser,
   validateRequest({ body: authValidation.updateMeBody }),
   authController.updateMe,
+)
+router.patch(
+  '/me/profile-picture',
+  authenticateUser,
+  validateRequest({ body: authValidation.updateMyProfilePictureBody }),
+  authController.updateMyProfilePicture,
 )
 router.patch(
   '/me/password',

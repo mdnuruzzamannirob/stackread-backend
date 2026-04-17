@@ -1,6 +1,7 @@
 import crypto from 'node:crypto'
 
 import type { Request, RequestHandler } from 'express'
+import QRCode from 'qrcode'
 import speakeasy from 'speakeasy'
 import { AppError } from '../../common/errors/AppError'
 import {
@@ -237,8 +238,16 @@ export const verifyUserTotp = (
   })
 }
 
-export const buildQrCodeUrl = (otpAuthUrl: string): string => {
-  return `https://chart.googleapis.com/chart?chs=256x256&cht=qr&chl=${encodeURIComponent(otpAuthUrl)}`
+export const buildQrCodeUrl = async (otpAuthUrl: string): Promise<string> => {
+  try {
+    return await QRCode.toDataURL(otpAuthUrl, {
+      width: 256,
+      margin: 1,
+      errorCorrectionLevel: 'M',
+    })
+  } catch {
+    return `https://chart.googleapis.com/chart?chs=256x256&cht=qr&chl=${encodeURIComponent(otpAuthUrl)}`
+  }
 }
 
 export const pendingUserBackupCodes = new Map<string, string[]>()

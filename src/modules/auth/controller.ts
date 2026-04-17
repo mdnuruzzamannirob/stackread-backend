@@ -62,7 +62,7 @@ const verifyTwoFactor: RequestHandler = catchAsync(
   async (request, response) => {
     const data = await authService.verifyTwoFactor(
       ensureAuthenticatedUser(request),
-      request.body.otp,
+      request.body,
     )
 
     sendResponse(response, {
@@ -277,6 +277,21 @@ const sendUserEmailOtp: RequestHandler = catchAsync(
   },
 )
 
+const sendUserSetupEmailOtp: RequestHandler = catchAsync(
+  async (request, response) => {
+    const data = await authService.sendUserSetupEmailOtp(
+      ensureAuthenticatedUser(request),
+    )
+
+    sendResponse(response, {
+      statusCode: 200,
+      success: true,
+      message: '2FA setup email OTP sent successfully.',
+      data,
+    })
+  },
+)
+
 const getMe: RequestHandler = catchAsync(async (request, response) => {
   const user = await authService.getMe(ensureAuthenticatedUser(request))
 
@@ -316,6 +331,22 @@ const updateMe: RequestHandler = catchAsync(async (request, response) => {
     data: user,
   })
 })
+
+const updateMyProfilePicture: RequestHandler = catchAsync(
+  async (request, response) => {
+    const user = await authService.updateProfilePicture(
+      ensureAuthenticatedUser(request),
+      request.body,
+    )
+
+    sendResponse(response, {
+      statusCode: 200,
+      success: true,
+      message: 'Profile picture updated successfully.',
+      data: user,
+    })
+  },
+)
 
 const changeMyPassword: RequestHandler = catchAsync(
   async (request, response) => {
@@ -383,9 +414,11 @@ export const authController = {
   resetPassword,
   refreshSession,
   sendUserEmailOtp,
+  sendUserSetupEmailOtp,
   getMe,
   getMyLoginHistory,
   updateMe,
+  updateMyProfilePicture,
   changeMyPassword,
   updateMyNotificationPreferences,
   regenerateBackupCodes,

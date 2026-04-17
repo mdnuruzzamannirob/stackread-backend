@@ -169,6 +169,15 @@ export interface UpdateMePayload {
   notificationPreferences?: Partial<UserNotificationPreferences>
 }
 
+export interface UpdateProfilePicturePayload {
+  profilePicture?: string
+}
+
+export interface VerifyTwoFactorPayload {
+  otp?: string
+  emailOtp?: string
+}
+
 export interface ChangePasswordPayload {
   currentPassword: string
   newPassword: string

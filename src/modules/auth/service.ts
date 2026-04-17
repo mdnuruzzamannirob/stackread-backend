@@ -36,10 +36,12 @@ import type {
   SocialProfile,
   SuccessResponse,
   UpdateMePayload,
+  UpdateProfilePicturePayload,
   UserLoginHistoryItem,
   UserLoginResult,
   UserNotificationPreferences,
   UserTwoFactorChallengePayload,
+  VerifyTwoFactorPayload,
 } from './interface'
 import {
   UserEmailVerificationTokenModel,
@@ -287,12 +289,15 @@ const enableTwoFactor = async (userId: string) => {
 
   return {
     secret: generatedSecret.base32,
-    qrCodeUrl: buildQrCodeUrl(generatedSecret.otpauth_url),
+    qrCodeUrl: await buildQrCodeUrl(generatedSecret.otpauth_url),
     backupCodes,
   }
 }
 
-const verifyTwoFactor = async (userId: string, otp: string) => {
+const verifyTwoFactor = async (
+  userId: string,
+  payload: VerifyTwoFactorPayload,
+) => {
   const user = await UserModel.findById(userId)
   const pendingBackupCodes = pendingUserBackupCodes.get(userId)
 
@@ -307,7 +312,16 @@ const verifyTwoFactor = async (userId: string, otp: string) => {
     )
   }
 
-  const isOtpValid = verifyUserTotp(user.twoFactor.secret, otp)
+  const isOtpValid = payload.emailOtp
+    ? await verifyEmailOtp(
+        user._id.toString(),
+        'user',
+        '2fa-setup',
+        payload.emailOtp,
+      )
+    : payload.otp
+      ? verifyUserTotp(user.twoFactor.secret, payload.otp)
+      : false
 
   if (!isOtpValid) {
     throw new AppError('Invalid OTP code.', 401)
@@ -320,6 +334,24 @@ const verifyTwoFactor = async (userId: string, otp: string) => {
   pendingUserBackupCodes.delete(userId)
 
   return { success: true }
+}
+
+const sendUserSetupEmailOtp = async (userId: string) => {
+  const user = await UserModel.findById(userId)
+
+  if (!user || !user.twoFactor.secret || user.twoFactor.enabled) {
+    throw new AppError('2FA setup not found for this user.', 404)
+  }
+
+  const otp = await createEmailOtp(user._id.toString(), 'user', '2fa-setup')
+
+  await emailService.sendEmail({
+    to: user.email,
+    subject: 'Your Stackread 2FA setup code',
+    text: `Your 2FA setup code is: ${otp}`,
+  })
+
+  return { sent: true }
 }
 
 const disableTwoFactor = async (
@@ -671,6 +703,22 @@ const updateNotificationPreferences = async (
   return authService.updateMe(userId, { notificationPreferences: payload })
 }
 
+const updateProfilePicture = async (
+  userId: string,
+  payload: UpdateProfilePicturePayload,
+): Promise<SanitizedUser> => {
+  const user = await UserModel.findById(userId)
+
+  if (!user) {
+    throw new AppError('User not found.', 404)
+  }
+
+  user.profilePicture = payload.profilePicture || undefined
+  await user.save()
+
+  return sanitizeUser(user)
+}
+
 const changePassword = async (
   userId: string,
   payload: ChangePasswordPayload,
@@ -923,9 +971,11 @@ export const authService = {
   getBackupCodesCount,
   regenerateBackupCodes,
   sendUserEmailOtp,
+  sendUserSetupEmailOtp,
   socialLogin,
   changePassword,
   updateNotificationPreferences,
+  updateProfilePicture,
   enableTwoFactor,
   verifyTwoFactor,
   disableTwoFactor,

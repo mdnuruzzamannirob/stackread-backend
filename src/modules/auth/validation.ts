@@ -37,12 +37,22 @@ export const authValidation = {
         message: 'One of otp, emailOtp, or backupCode is required',
       },
     ),
-  twoFactorVerifyBody: z.object({
-    otp: z
-      .string()
-      .trim()
-      .regex(/^\d{6}$/, 'OTP must be 6 digits'),
-  }),
+  twoFactorVerifyBody: z
+    .object({
+      otp: z
+        .string()
+        .trim()
+        .regex(/^\d{6}$/, 'OTP must be 6 digits')
+        .optional(),
+      emailOtp: z
+        .string()
+        .trim()
+        .regex(/^\d{6}$/, 'OTP must be 6 digits')
+        .optional(),
+    })
+    .refine((value) => Boolean(value.otp || value.emailOtp), {
+      message: 'One of otp or emailOtp is required',
+    }),
   twoFactorDisableBody: z
     .object({
       otp: z
@@ -86,6 +96,11 @@ export const authValidation = {
   }),
   sendEmailOtpBody: z.object({
     tempToken: z.string().trim().min(20),
+  }),
+  updateMyProfilePictureBody: z.object({
+    profilePicture: z
+      .union([z.string().trim().url(), z.literal('')])
+      .optional(),
   }),
   regenerateBackupCodesBody: z
     .object({
