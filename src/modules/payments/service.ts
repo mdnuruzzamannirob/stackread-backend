@@ -349,7 +349,7 @@ const initiatePayment = async (payload: InitiatePaymentPayload) => {
       gateway: payload.gateway,
       planId: plan._id.toString(),
       planCode: plan.code,
-        billingCycle,
+      billingCycle,
       countryCode: user.countryCode ?? 'UNKNOWN',
     },
     billingCycle,
@@ -493,6 +493,8 @@ const confirmStripeCheckoutSessionForUser = async (payload: {
     )
   }
 
+  const shouldSendReceiptEmail = payment.status !== 'success'
+
   if (checkoutSession.payment_status !== 'paid') {
     return {
       payment: formatPayment(payment),
@@ -565,6 +567,17 @@ const confirmStripeCheckoutSessionForUser = async (payload: {
   )
 
   await safeCompleteOnboarding(payload.userId)
+
+  if (shouldSendReceiptEmail) {
+    await safeSendStripePaymentEmail({
+      userId: payload.userId,
+      status: 'success',
+      ...(typeof resolvedPlanId === 'string' ? { planId: resolvedPlanId } : {}),
+      ...(typeof checkoutSession.payment_intent === 'string'
+        ? { paymentIntentId: checkoutSession.payment_intent }
+        : {}),
+    })
+  }
 
   return {
     payment: verified,
