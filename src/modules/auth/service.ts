@@ -261,7 +261,9 @@ const register = async (payload: RegisterPayload): Promise<RegisterResult> => {
 
   const passwordHash = await hashWithScrypt(payload.password)
 
-  assertValidPhoneForCountry(payload.phone, payload.countryCode)
+  if (payload.phone) {
+    assertValidPhoneForCountry(payload.phone, payload.countryCode)
+  }
 
   const user = await UserModel.create({
     firstName: payload.firstName,

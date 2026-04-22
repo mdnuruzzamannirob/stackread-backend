@@ -21,9 +21,9 @@ export interface IUser {
   firstName: string
   lastName: string | undefined
   email: string
-  address: string | undefined
+  address: string | null | undefined
   countryCode?: string
-  phone: string | undefined
+  phone: string | null | undefined
   profilePicture: string | undefined
   passwordHash?: string
   provider: UserAuthProvider
@@ -49,8 +49,8 @@ export type RegisterPayload = {
   firstName: string
   lastName?: string
   email: string
-  phone: string
-  address: string
+  phone: string | null
+  address: string | null
   password: string
   countryCode: string
   agreeToTerms: boolean
