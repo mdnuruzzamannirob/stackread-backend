@@ -14,7 +14,7 @@ import {
 import { config } from '../../config'
 import { USER_REFRESH_COOKIE_NAME } from './constants'
 import { authService } from './service'
-import { ensureAuthenticatedUser } from './utils'
+import { ensureAuthenticatedUser, resolveOAuthLocale } from './utils'
 
 const register: RequestHandler = catchAsync(async (request, response) => {
   const result = await authService.register(request.body)
@@ -159,8 +159,9 @@ const socialCallback: RequestHandler = catchAsync(async (request, response) => {
   const result = await authService.socialLogin(profile, request)
 
   const defaultLocale = config.defaults?.language ?? 'en'
+  const locale = resolveOAuthLocale(request.query.state, defaultLocale)
   const callbackUrl = new URL(
-    `${config.frontendUrl}/${defaultLocale}/auth/oauth-callback`,
+    `${config.frontendUrl}/${locale}/auth/oauth-callback`,
   )
 
   if (result.requiresTwoFactor) {

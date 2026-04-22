@@ -19,6 +19,8 @@ import { EmailOtpModel } from './emailOtp.model'
 import type { AuthTokens, IUser, SanitizedUser } from './interface'
 import { UserLoginHistoryModel } from './model'
 
+const OAUTH_LOCALE_SEGMENT_PATTERN = /^[a-z]{2}(?:-[a-z0-9]+)?$/i
+
 const deriveTwoFactorEncryptionKey = (): Buffer => {
   return crypto
     .createHash('sha256')
@@ -45,6 +47,21 @@ export const ensureFacebookConfigured = (): void => {
   ) {
     throw new AppError('Facebook authentication is not configured.', 503)
   }
+}
+
+export const resolveOAuthLocale = (
+  requestedLocale: unknown,
+  fallbackLocale: string,
+): string => {
+  if (typeof requestedLocale === 'string') {
+    const locale = requestedLocale.trim()
+
+    if (OAUTH_LOCALE_SEGMENT_PATTERN.test(locale)) {
+      return locale
+    }
+  }
+
+  return fallbackLocale
 }
 
 export const ensureAuthenticatedUser = (

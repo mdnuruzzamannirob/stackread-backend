@@ -6,7 +6,11 @@ import { authenticateUser } from '../../common/middlewares/auth'
 import { validateRequest } from '../../common/middlewares/validateRequest'
 import { config } from '../../config'
 import { authController } from './controller'
-import { ensureFacebookConfigured, ensureGoogleConfigured } from './utils'
+import {
+  ensureFacebookConfigured,
+  ensureGoogleConfigured,
+  resolveOAuthLocale,
+} from './utils'
 import { authValidation } from './validation'
 
 const router = Router()
@@ -37,33 +41,32 @@ router.post(
   authController.sendUserSetupEmailOtp,
 )
 
-router.get(
-  '/google',
-  (_request, _response, next) => {
-    ensureGoogleConfigured()
-    next()
-  },
-  passport.authenticate('google', {
+router.get('/google', (request, response, next) => {
+  ensureGoogleConfigured()
+  const defaultLocale = config.defaults?.language ?? 'en'
+  const locale = resolveOAuthLocale(request.query.locale, defaultLocale)
+
+  return passport.authenticate('google', {
     scope: ['profile', 'email'],
     session: false,
-  }),
-)
+    state: locale,
+  })(request, response, next)
+})
 router.get(
   '/google/callback',
-  (_request: any, _response: any, next: () => void) => {
+  (request: any, _response: any, next: () => void) => {
     ensureGoogleConfigured()
-    next()
+
+    return passport.authenticate('google', {
+      session: false,
+      failWithError: true,
+    })(request, _response, next)
   },
-  passport.authenticate('google', {
-    session: false,
-    failWithError: true,
-  }),
   authController.socialCallback,
-  (err: Error, _req: Request, res: Response, _next: NextFunction) => {
+  (err: Error, req: Request, res: Response, _next: NextFunction) => {
     const defaultLocale = config.defaults?.language ?? 'en'
-    const loginUrl = new URL(
-      `${config.frontendUrl}/${defaultLocale}/auth/login`,
-    )
+    const locale = resolveOAuthLocale(req.query.state, defaultLocale)
+    const loginUrl = new URL(`${config.frontendUrl}/${locale}/login`)
     loginUrl.searchParams.set(
       'error',
       err.message || 'Google authentication failed',
@@ -72,33 +75,32 @@ router.get(
   },
 )
 
-router.get(
-  '/facebook',
-  (_request, _response, next) => {
-    ensureFacebookConfigured()
-    next()
-  },
-  passport.authenticate('facebook', {
+router.get('/facebook', (request, response, next) => {
+  ensureFacebookConfigured()
+  const defaultLocale = config.defaults?.language ?? 'en'
+  const locale = resolveOAuthLocale(request.query.locale, defaultLocale)
+
+  return passport.authenticate('facebook', {
     scope: ['email'],
     session: false,
-  }),
-)
+    state: locale,
+  })(request, response, next)
+})
 router.get(
   '/facebook/callback',
-  (_request: any, _response: any, next: () => void) => {
+  (request: any, _response: any, next: () => void) => {
     ensureFacebookConfigured()
-    next()
+
+    return passport.authenticate('facebook', {
+      session: false,
+      failWithError: true,
+    })(request, _response, next)
   },
-  passport.authenticate('facebook', {
-    session: false,
-    failWithError: true,
-  }),
   authController.socialCallback,
-  (err: Error, _req: Request, res: Response, _next: NextFunction) => {
+  (err: Error, req: Request, res: Response, _next: NextFunction) => {
     const defaultLocale = config.defaults?.language ?? 'en'
-    const loginUrl = new URL(
-      `${config.frontendUrl}/${defaultLocale}/auth/login`,
-    )
+    const locale = resolveOAuthLocale(req.query.state, defaultLocale)
+    const loginUrl = new URL(`${config.frontendUrl}/${locale}/login`)
     loginUrl.searchParams.set(
       'error',
       err.message || 'Facebook authentication failed',
