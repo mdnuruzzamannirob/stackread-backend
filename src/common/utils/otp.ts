@@ -22,6 +22,9 @@ export const createEmailOtp = async (
   actorId: string,
   actorType: EmailOtpActorType,
   purpose: EmailOtpPurpose,
+  options?: {
+    ttlMinutes?: number
+  },
 ): Promise<string> => {
   await EmailOtpModel.deleteMany({
     actorId,
@@ -32,7 +35,8 @@ export const createEmailOtp = async (
 
   const otp = generateOtp()
   const otpHash = hashOtp(otp)
-  const expiresAt = new Date(Date.now() + 10 * 60 * 1000)
+  const ttlMinutes = options?.ttlMinutes ?? 10
+  const expiresAt = new Date(Date.now() + ttlMinutes * 60 * 1000)
 
   await EmailOtpModel.create({
     actorId,

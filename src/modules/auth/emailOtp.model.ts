@@ -28,6 +28,7 @@ const emailOtpSchema = new Schema<EmailOtpDocument>(
       type: String,
       required: true,
       enum: [
+        'email-verification',
         'login',
         '2fa-verify',
         '2fa-setup',

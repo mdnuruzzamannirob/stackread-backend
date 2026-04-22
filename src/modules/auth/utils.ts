@@ -332,14 +332,20 @@ export const issueUserAccessToken = (
   rememberMe?: boolean,
 ): AuthTokens => {
   const tokenPayload = buildUserJwtPayload(user)
+  const accessExpiresIn = rememberMe
+    ? config.jwt.refreshExpiresIn
+    : config.jwt.accessExpiresIn
+  const refreshExpiresIn = rememberMe
+    ? config.jwt.refreshExpiresIn
+    : config.jwt.accessExpiresIn
 
   return {
     accessToken: signAccessToken(
       tokenPayload,
       config.jwt.userSecret,
-      rememberMe ? config.jwt.refreshExpiresIn : config.jwt.accessExpiresIn,
+      accessExpiresIn,
     ),
-    refreshToken: generateUserRefreshToken(tokenPayload),
+    refreshToken: generateUserRefreshToken(tokenPayload, refreshExpiresIn),
   }
 }
 

@@ -14,6 +14,7 @@ export type TempTokenPayload = {
   purpose?: 'password-reset' | 'two-factor-challenge'
   pending2FA?: boolean
   mustSetup2FA?: boolean
+  rememberMe?: boolean
 }
 
 export type AccessTokenPayload = {
@@ -94,6 +95,9 @@ export const verifyTempToken = (
       : {}),
     ...(typeof payload.mustSetup2FA === 'boolean'
       ? { mustSetup2FA: payload.mustSetup2FA }
+      : {}),
+    ...(typeof payload.rememberMe === 'boolean'
+      ? { rememberMe: payload.rememberMe }
       : {}),
   }
 }
@@ -178,12 +182,9 @@ const verifyRefreshTokenPayload = (
 
 export const generateUserRefreshToken = (
   payload: AccessTokenPayload,
+  expiresIn = config.jwt.refreshExpiresIn,
 ): string => {
-  return signAccessToken(
-    payload,
-    `${config.jwt.userSecret}_refresh`,
-    config.jwt.refreshExpiresIn,
-  )
+  return signAccessToken(payload, `${config.jwt.userSecret}_refresh`, expiresIn)
 }
 
 export const generateStaffRefreshToken = (

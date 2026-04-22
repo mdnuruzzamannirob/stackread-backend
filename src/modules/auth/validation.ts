@@ -9,8 +9,17 @@ export const authValidation = {
     email: z.string().trim().email(),
     phone: z.string().trim().min(6).max(32),
     address: z.string().trim().min(2).max(240),
-    password: z.string().min(8).max(72),
-    countryCode: z.string().trim().length(2).toUpperCase(),
+    password: z
+      .string()
+      .min(8)
+      .max(72)
+      .regex(/[A-Z]/, 'Password must include at least one uppercase letter')
+      .regex(/[0-9]/, 'Password must include at least one number')
+      .regex(
+        /[^A-Za-z0-9]/,
+        'Password must include at least one special character',
+      ),
+    countryCode: z.string().trim().min(2).max(3).toUpperCase(),
     agreeToTerms: z.boolean().refine((val) => val === true, {
       message: 'You must agree to the terms and conditions',
     }),
@@ -23,28 +32,29 @@ export const authValidation = {
   twoFactorChallengeBody: z
     .object({
       tempToken: z.string().trim().min(20),
-      otp: z
-        .string()
-        .trim()
-        .regex(/^\d{6}$/, 'OTP must be 6 digits')
-        .optional(),
-      emailOtp: z
-        .string()
-        .trim()
-        .regex(/^\d{6}$/, 'OTP must be 6 digits')
-        .optional(),
-      backupCode: z
-        .string()
-        .trim()
-        .regex(/^\d{8,10}$/, 'Backup code must be 8-10 digits')
-        .optional(),
+      method: z.enum(['totp', 'email', 'backup-code']),
+      verificationCode: z.string().trim().min(6).max(32),
     })
-    .refine(
-      (value) => Boolean(value.otp || value.emailOtp || value.backupCode),
-      {
-        message: 'One of otp, emailOtp, or backupCode is required',
-      },
-    ),
+    .superRefine((value, context) => {
+      if (value.method === 'backup-code') {
+        if (!/^\d{8,10}$/.test(value.verificationCode)) {
+          context.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: 'Backup code must be 8-10 digits',
+            path: ['verificationCode'],
+          })
+        }
+        return
+      }
+
+      if (!/^\d{6}$/.test(value.verificationCode)) {
+        context.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: 'Verification code must be 6 digits',
+          path: ['verificationCode'],
+        })
+      }
+    }),
   twoFactorVerifyBody: z
     .object({
       currentPassword: z.string().min(8).max(72),
@@ -77,7 +87,11 @@ export const authValidation = {
       .regex(/^\d{6}$/, 'OTP must be 6 digits'),
   }),
   verifyEmailBody: z.object({
-    token: z.string().trim().min(10),
+    email: z.string().trim().email(),
+    otp: z
+      .string()
+      .trim()
+      .regex(/^\d{6}$/, 'OTP must be 6 digits'),
   }),
   resendVerificationBody: z.object({
     email: z.string().trim().email(),
@@ -96,8 +110,18 @@ export const authValidation = {
       .regex(/^\d{6}$/, 'OTP must be 6 digits'),
   }),
   resetPasswordBody: z.object({
+    email: z.string().trim().email(),
     resetToken: z.string().trim().min(10),
-    newPassword: z.string().min(8).max(72),
+    newPassword: z
+      .string()
+      .min(8)
+      .max(72)
+      .regex(/[A-Z]/, 'Password must include at least one uppercase letter')
+      .regex(/[0-9]/, 'Password must include at least one number')
+      .regex(
+        /[^A-Za-z0-9]/,
+        'Password must include at least one special character',
+      ),
   }),
   sendEmailOtpBody: z.object({
     tempToken: z.string().trim().min(20),

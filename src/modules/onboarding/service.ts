@@ -50,57 +50,28 @@ const markOnboardingCompleted = async (userId: string) => {
 }
 
 const getPlanOptions = async (userId: string) => {
+  void userId
+
   const plans = await PlanModel.find({ isActive: true })
     .sort({ sortOrder: 1, createdAt: 1 })
     .lean()
 
-  const { onboarding, currentSubscription, selectedPlan } =
-    await getCurrentPlanContext(userId)
-
-  const currentPlanId =
-    currentSubscription?.planId?.toString() ?? selectedPlan?._id.toString()
-
-  const currentPlan = currentPlanId
-    ? (plans.find((plan) => plan._id.toString() === currentPlanId) ??
-      (selectedPlan && selectedPlan._id.toString() === currentPlanId
-        ? selectedPlan
-        : null))
-    : null
-
-  const scheduledDowngrade =
-    currentSubscription?.scheduledPlanId &&
-    currentSubscription.scheduledEffectiveDate
-      ? {
-          planId: currentSubscription.scheduledPlanId.toString(),
-          effectiveDate:
-            currentSubscription.scheduledEffectiveDate.toISOString(),
-        }
-      : null
-
   return plans.map((plan) => {
-    const isCurrentPlan = plan._id.toString() === currentPlanId
-    const isPaid = !plan.isFree
-    const isHigherTier =
-      currentPlan != null && !plan.isFree && plan.price > currentPlan.price
-    const isLowerTier =
-      currentPlan != null && !plan.isFree && plan.price < currentPlan.price
-
     return {
+      id: plan._id.toString(),
       code: plan.code,
       name: plan.name,
+      description: plan.description,
       price: plan.price,
       currency: plan.currency,
-      billingCycle: 'monthly',
-      isPaid,
-      isCurrentPlan,
-      canSelect: !isCurrentPlan,
-      canUpgrade: Boolean(currentPlan && isHigherTier),
-      canDowngrade: Boolean(currentPlan && isLowerTier),
-      canCancel: Boolean(currentSubscription && !currentPlan?.isFree),
-      canRenew: Boolean(currentSubscription && !currentPlan?.isFree),
-      scheduledDowngrade:
-        isCurrentPlan && scheduledDowngrade ? scheduledDowngrade : null,
-      onboardingStatus: onboarding?.status ?? 'pending',
+      durationDays: plan.durationDays,
+      maxDevices: plan.maxDevices,
+      downloadEnabled: plan.downloadEnabled,
+      accessLevel: plan.accessLevel,
+      features: plan.features,
+      isFree: plan.isFree,
+      isActive: plan.isActive,
+      sortOrder: plan.sortOrder,
     }
   })
 }
@@ -130,7 +101,7 @@ const selectPlan = async (userId: string, planCode: string) => {
   )
 
   if (selectedPlan.isFree) {
-    await subscriptionsService.createSubscription({
+    const subscription = await subscriptionsService.createSubscription({
       userId,
       planId: selectedPlan._id.toString(),
       autoRenew: false,
@@ -140,39 +111,28 @@ const selectPlan = async (userId: string, planCode: string) => {
 
     return {
       id: onboarding._id.toString(),
-      plan: {
-        code: selectedPlan.code,
-        name: selectedPlan.name,
-        price: selectedPlan.price,
-        currency: selectedPlan.currency,
-        isPaid: false,
-      },
-      status: onboarding.status,
-      nextStep: 'onboarding_completed',
+      success: true,
+      subscriptionCreated: true,
+      subscriptionId: subscription.id,
+      selectedPlanCode: selectedPlan.code,
+      status: 'completed',
     }
   }
 
-  const payment = await paymentsService.initiatePayment({
-    userId,
-    planId: selectedPlan._id.toString(),
-    gateway: 'stripe',
-    autoRenew: true,
-  })
+  const pendingSubscription =
+    await subscriptionsService.createPendingSubscriptionForPlan({
+      userId,
+      planId: selectedPlan._id.toString(),
+      autoRenew: true,
+    })
 
   return {
     id: onboarding._id.toString(),
-    plan: {
-      code: selectedPlan.code,
-      name: selectedPlan.name,
-      price: selectedPlan.price,
-      currency: selectedPlan.currency,
-      isPaid: true,
-    },
+    success: true,
+    subscriptionCreated: false,
+    subscriptionId: pendingSubscription._id.toString(),
+    selectedPlanCode: selectedPlan.code,
     status: onboarding.status,
-    nextStep: 'redirect_to_payment',
-    checkout_url: payment.checkout_url,
-    paymentId: payment.payment.id,
-    sessionId: payment.sessionId,
   }
 }
 

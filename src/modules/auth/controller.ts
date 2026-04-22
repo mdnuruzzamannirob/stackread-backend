@@ -170,7 +170,7 @@ const logout: RequestHandler = catchAsync(async (_request, response) => {
 })
 
 const verifyEmail: RequestHandler = catchAsync(async (request, response) => {
-  await authService.verifyEmail(request.body.token)
+  await authService.verifyEmail(request.body.email, request.body.otp)
 
   sendResponse(response, {
     statusCode: 200,
@@ -231,6 +231,7 @@ const verifyResetOtp: RequestHandler = catchAsync(async (request, response) => {
 
 const resetPassword: RequestHandler = catchAsync(async (request, response) => {
   const data = await authService.resetPassword(
+    request.body.email,
     request.body.resetToken,
     request.body.newPassword,
   )

@@ -106,6 +106,7 @@ export type SocialProfile = {
 export type EmailOtpActorType = 'user' | 'staff'
 
 export type EmailOtpPurpose =
+  | 'email-verification'
   | 'login'
   | '2fa-verify'
   | '2fa-setup'
@@ -157,9 +158,8 @@ export interface AccountAccessibleUserState {
 
 export interface UserTwoFactorChallengePayload {
   tempToken: string
-  otp?: string
-  emailOtp?: string
-  backupCode?: string
+  method: 'totp' | 'email' | 'backup-code'
+  verificationCode: string
 }
 
 export interface UserLoginHistoryItem {
@@ -231,8 +231,13 @@ export interface SuccessResponse {
   success: true
 }
 
+export interface SuccessMessageResponse extends SuccessResponse {
+  message: string
+}
+
 export interface UserLoginSuccessResult {
   requiresTwoFactor: false
+  token: string
   accessToken: string
   refreshToken: string
   user: SanitizedUser
@@ -241,6 +246,7 @@ export interface UserLoginSuccessResult {
 export interface UserLoginTwoFactorRequiredResult {
   requiresTwoFactor: true
   tempToken: string
+  user: SanitizedUser
 }
 
 export type UserLoginResult =
@@ -253,6 +259,6 @@ export interface UserWithTokensResult {
 }
 
 export interface RegisterResult {
-  user: SanitizedUser
-  requiresEmailVerification: true
+  success: true
+  message: string
 }

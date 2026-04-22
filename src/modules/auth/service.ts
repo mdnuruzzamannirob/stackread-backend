@@ -1,4 +1,5 @@
 import type { Request, Response } from 'express'
+import { parsePhoneNumberFromString, type CountryCode } from 'libphonenumber-js'
 
 import speakeasy from 'speakeasy'
 import { AppError } from '../../common/errors/AppError'
@@ -15,8 +16,6 @@ import { createEmailOtp, verifyEmailOtp } from '../../common/utils/otp'
 import {
   clearUserRefreshCookie,
   clearUserSessionCookie,
-  generateUserRefreshToken,
-  signAccessToken,
   signTempToken,
   verifyTempToken,
   verifyUserRefreshToken,
@@ -37,6 +36,7 @@ import type {
   SanitizedUser,
   SentResponse,
   SocialProfile,
+  SuccessMessageResponse,
   SuccessResponse,
   UpdateMePayload,
   UpdateProfilePicturePayload,
@@ -48,7 +48,6 @@ import type {
   VerifyTwoFactorPayload,
 } from './interface'
 import {
-  UserEmailVerificationTokenModel,
   UserEphemeralTokenModel,
   UserLoginHistoryModel,
   UserModel,
@@ -56,8 +55,6 @@ import {
 import {
   assertResendOtpWindow,
   buildQrCodeUrl,
-  buildUserJwtPayload,
-  createAndStoreToken,
   encryptTwoFactorSecret,
   generateBackupCodes,
   hashBackupCodes,
@@ -137,11 +134,63 @@ const getEphemeralTokenExpiry = (ttlMinutes: number): Date => {
   return new Date(Date.now() + ttlMinutes * 60 * 1000)
 }
 
+const assertValidPhoneForCountry = (
+  phone: string,
+  countryCode: string,
+): void => {
+  const normalizedCountryCode = countryCode.trim().toUpperCase()
+  const normalizedPhone = phone.trim()
+
+  if (/^[A-Z]{2}$/.test(normalizedCountryCode)) {
+    const parsedWithRegion = parsePhoneNumberFromString(
+      normalizedPhone,
+      normalizedCountryCode as CountryCode,
+    )
+
+    if (!parsedWithRegion?.isValid()) {
+      throw new AppError(
+        'Phone number format is invalid for country code.',
+        400,
+      )
+    }
+
+    return
+  }
+
+  const parsedInternational = parsePhoneNumberFromString(normalizedPhone)
+  const expectedDialCode = normalizedCountryCode.replace(/^\+/, '')
+
+  if (
+    !parsedInternational?.isValid() ||
+    parsedInternational.countryCallingCode !== expectedDialCode
+  ) {
+    throw new AppError('Phone number format is invalid for country code.', 400)
+  }
+}
+
+const assertTwoFactorEmailOtpRateLimit = async (userId: string) => {
+  const windowStart = new Date(
+    Date.now() - authConstants.twoFactorEmailOtpWindowMinutes * 60 * 1000,
+  )
+
+  const recentCount = await EmailOtpModel.countDocuments({
+    actorId: userId,
+    actorType: 'user',
+    purpose: 'login',
+    createdAt: { $gte: windowStart },
+  })
+
+  if (recentCount >= authConstants.twoFactorEmailOtpMaxSendsPerWindow) {
+    throw new AppError('Too many OTP requests. Please try again later.', 429)
+  }
+}
+
 const issueSingleUseTempToken = async (
   userId: string,
   email: string,
   purpose: 'password-reset' | 'two-factor-challenge',
   ttlMinutes: number,
+  rememberMe?: boolean,
 ) => {
   const rawTokenId = generateRandomToken(16)
   const tokenIdHash = hashStringSha256(rawTokenId)
@@ -161,6 +210,7 @@ const issueSingleUseTempToken = async (
       tokenId: rawTokenId,
       purpose,
       ...(purpose === 'two-factor-challenge' ? { pending2FA: true } : {}),
+      ...(typeof rememberMe === 'boolean' ? { rememberMe } : {}),
     },
     config.jwt.userSecret,
     ttlMinutes <= 5 ? '5m' : '10m',
@@ -203,6 +253,8 @@ const register = async (payload: RegisterPayload): Promise<RegisterResult> => {
 
   const passwordHash = await hashWithScrypt(payload.password)
 
+  assertValidPhoneForCountry(payload.phone, payload.countryCode)
+
   const user = await UserModel.create({
     firstName: payload.firstName,
     ...(payload.lastName ? { lastName: payload.lastName } : {}),
@@ -215,21 +267,22 @@ const register = async (payload: RegisterPayload): Promise<RegisterResult> => {
     isEmailVerified: false,
   })
 
-  const verificationToken = await createAndStoreToken(
+  const emailVerificationOtp = await createEmailOtp(
     user._id.toString(),
-    UserEmailVerificationTokenModel,
-    authConstants.verificationTokenTtlMinutes,
+    'user',
+    'email-verification',
+    { ttlMinutes: authConstants.verificationOtpTtlMinutes },
   )
 
   await emailService.sendEmail({
     to: user.email,
-    subject: 'Verify your LMS account',
-    text: `Use this verification token: ${verificationToken}`,
+    subject: 'Verify your Stackread account',
+    text: `Your verification code is: ${emailVerificationOtp}`,
   })
 
   return {
-    user: sanitizeUser(user),
-    requiresEmailVerification: true,
+    success: true,
+    message: 'Verification OTP sent to email',
   }
 }
 
@@ -304,11 +357,13 @@ const login = async (
       user.email,
       'two-factor-challenge',
       authConstants.twoFactorChallengeTokenTtlMinutes,
+      payload.rememberMe,
     )
 
     return {
       requiresTwoFactor: true,
       tempToken,
+      user: sanitizeUser(user),
     }
   }
 
@@ -316,6 +371,7 @@ const login = async (
 
   return {
     requiresTwoFactor: false,
+    token: tokens.accessToken,
     user: sanitizeUser(user),
     accessToken: tokens.accessToken,
     refreshToken: tokens.refreshToken,
@@ -470,55 +526,79 @@ const challengeTwoFactor = async (payload: UserTwoFactorChallengePayload) => {
     throw new AppError('User 2FA challenge is invalid.', 401)
   }
 
-  await consumeSingleUseTempToken(
-    user._id.toString(),
-    decoded.tokenId,
-    'two-factor-challenge',
-  )
+  if (user.lockoutUntil && user.lockoutUntil.getTime() > Date.now()) {
+    throw new AppError(
+      'Account temporarily locked due to too many failed verification attempts.',
+      429,
+      {
+        lockoutUntil: user.lockoutUntil.toISOString(),
+      },
+    )
+  }
 
-  let backupCodeUsed = false
-  if (payload.backupCode) {
-    const hashedInput = hashStringSha256(payload.backupCode)
+  let isOtpValid = false
+  if (payload.method === 'backup-code') {
+    const hashedInput = hashStringSha256(payload.verificationCode)
     const codeIndex =
       user.twoFactor.backupCodes?.findIndex((code) => code === hashedInput) ??
       -1
 
     if (codeIndex >= 0) {
       user.twoFactor.backupCodes?.splice(codeIndex, 1)
-      backupCodeUsed = true
+      isOtpValid = true
     }
+  } else if (payload.method === 'email') {
+    isOtpValid = await verifyEmailOtp(
+      user._id.toString(),
+      'user',
+      'login',
+      payload.verificationCode,
+    )
+  } else {
+    isOtpValid = verifyUserTotp(user.twoFactor.secret, payload.verificationCode)
   }
-
-  const isOtpValid = backupCodeUsed
-    ? true
-    : payload.emailOtp
-      ? await verifyEmailOtp(
-          user._id.toString(),
-          'user',
-          'login',
-          payload.emailOtp,
-        )
-      : payload.otp
-        ? verifyUserTotp(user.twoFactor.secret, payload.otp)
-        : false
 
   if (!isOtpValid) {
-    throw new AppError('Invalid OTP code.', 401)
+    user.failedLoginAttempts = (user.failedLoginAttempts ?? 0) + 1
+
+    const attemptsRemaining = Math.max(
+      authConstants.loginMaxAttempts - user.failedLoginAttempts,
+      0,
+    )
+
+    if (user.failedLoginAttempts >= authConstants.loginMaxAttempts) {
+      user.lockoutUntil = getLockoutTime()
+      user.failedLoginAttempts = 0
+    }
+
+    await user.save()
+
+    throw new AppError('Invalid verification code.', 401, {
+      attemptsRemaining,
+      ...(user.lockoutUntil
+        ? { lockoutUntil: user.lockoutUntil.toISOString() }
+        : {}),
+    })
   }
+
+  await consumeSingleUseTempToken(
+    user._id.toString(),
+    decoded.tokenId,
+    'two-factor-challenge',
+  )
 
   user.twoFactor.verifiedAt = new Date()
   user.lastLoginAt = new Date()
+  user.failedLoginAttempts = 0
+  user.lockoutUntil = undefined
   await user.save()
 
-  const tokenPayload = buildUserJwtPayload(user)
+  const tokens = issueUserAccessToken(user, decoded.rememberMe)
 
   return {
-    accessToken: signAccessToken(
-      tokenPayload,
-      config.jwt.userSecret,
-      config.jwt.accessExpiresIn,
-    ),
-    refreshToken: generateUserRefreshToken(tokenPayload),
+    token: tokens.accessToken,
+    accessToken: tokens.accessToken,
+    refreshToken: tokens.refreshToken,
     user: sanitizeUser(user),
   }
 }
@@ -540,7 +620,11 @@ const sendUserEmailOtp = async (tempToken: string) => {
     throw new AppError('User 2FA challenge is invalid.', 401)
   }
 
-  const otp = await createEmailOtp(user._id.toString(), 'user', 'login')
+  await assertTwoFactorEmailOtpRateLimit(user._id.toString())
+
+  const otp = await createEmailOtp(user._id.toString(), 'user', 'login', {
+    ttlMinutes: authConstants.twoFactorEmailOtpTtlMinutes,
+  })
 
   await emailService.sendEmail({
     to: user.email,
@@ -664,6 +748,7 @@ const socialLogin = async (
     return {
       requiresTwoFactor: true,
       tempToken,
+      user: sanitizeUser(user),
     }
   }
 
@@ -671,6 +756,7 @@ const socialLogin = async (
 
   return {
     requiresTwoFactor: false,
+    token: tokens.accessToken,
     user: sanitizeUser(user),
     accessToken: tokens.accessToken,
     refreshToken: tokens.refreshToken,
@@ -942,36 +1028,30 @@ const changePassword = async (
   await user.save()
 }
 
-const verifyEmail = async (token: string): Promise<void> => {
-  const tokenHash = hashStringSha256(token)
-  const tokenDoc = await UserEmailVerificationTokenModel.findOne({
-    tokenHash,
-  })
-
-  if (!tokenDoc || tokenDoc.expiresAt.getTime() < Date.now()) {
-    throw new AppError('Email verification token is invalid or expired.', 400)
-  }
-
-  const user = await UserModel.findById(tokenDoc.userId)
+const verifyEmail = async (email: string, otp: string): Promise<void> => {
+  const user = await UserModel.findOne({ email })
 
   if (!user) {
-    throw new AppError('User not found.', 404)
+    throw new AppError('Invalid or expired code', 400)
   }
 
-  if (!user.isEmailVerified) {
-    user.isEmailVerified = true
-    await user.save()
+  if (user.isEmailVerified) {
+    throw new AppError('Email is already verified.', 400)
   }
 
-  if (!tokenDoc.usedAt) {
-    tokenDoc.usedAt = new Date()
-    await tokenDoc.save()
+  const isValidOtp = await verifyEmailOtp(
+    user._id.toString(),
+    'user',
+    'email-verification',
+    otp,
+  )
+
+  if (!isValidOtp) {
+    throw new AppError('Invalid or expired code', 400)
   }
 
-  await UserEmailVerificationTokenModel.deleteMany({
-    userId: user._id,
-    tokenHash: { $ne: tokenHash },
-  })
+  user.isEmailVerified = true
+  await user.save()
 }
 
 const resendVerification = async (email: string): Promise<void> => {
@@ -981,28 +1061,36 @@ const resendVerification = async (email: string): Promise<void> => {
     return
   }
 
-  const verificationToken = await createAndStoreToken(
+  const emailVerificationOtp = await createEmailOtp(
     user._id.toString(),
-    UserEmailVerificationTokenModel,
-    authConstants.verificationTokenTtlMinutes,
+    'user',
+    'email-verification',
+    { ttlMinutes: authConstants.verificationOtpTtlMinutes },
   )
 
   await emailService.sendEmail({
     to: user.email,
-    subject: 'Verify your LMS account',
-    text: `Use this verification token: ${verificationToken}`,
+    subject: 'Verify your Stackread account',
+    text: `Your verification code is: ${emailVerificationOtp}`,
   })
 }
 
-const forgotPassword = async (email: string): Promise<SentResponse> => {
+const forgotPassword = async (
+  email: string,
+): Promise<SuccessMessageResponse> => {
   const user = await UserModel.findOne({ email })
 
+  const response = {
+    success: true as const,
+    message: 'OTP sent to email',
+  }
+
   if (!user) {
-    return { sent: true }
+    return response
   }
 
   if (!user.isActive || user.isSuspended || user.deletedAt) {
-    return { sent: true }
+    return response
   }
 
   await assertResendOtpWindow(user._id.toString(), 'user')
@@ -1011,6 +1099,7 @@ const forgotPassword = async (email: string): Promise<SentResponse> => {
     user._id.toString(),
     'user',
     'password-reset',
+    { ttlMinutes: authConstants.passwordResetOtpTtlMinutes },
   )
 
   await emailService.sendEmail({
@@ -1019,7 +1108,7 @@ const forgotPassword = async (email: string): Promise<SentResponse> => {
     text: `Your password reset code is: ${otp}`,
   })
 
-  return { sent: true }
+  return response
 }
 
 const resendResetOtp = async (email: string): Promise<SentResponse> => {
@@ -1042,6 +1131,7 @@ const resendResetOtp = async (email: string): Promise<SentResponse> => {
     user._id.toString(),
     'user',
     'password-reset',
+    { ttlMinutes: authConstants.passwordResetOtpTtlMinutes },
   )
 
   await emailService.sendEmail({
@@ -1085,6 +1175,7 @@ const verifyResetOtp = async (
 }
 
 const resetPassword = async (
+  email: string,
   resetToken: string,
   newPassword: string,
 ): Promise<SuccessResponse> => {
@@ -1102,6 +1193,10 @@ const resetPassword = async (
     throw new AppError('User not found.', 404)
   }
 
+  if (user.email !== email) {
+    throw new AppError('Invalid password reset token', 400)
+  }
+
   assertUserAccountAccessible(user)
 
   user.passwordHash = await hashWithScrypt(newPassword)
@@ -1117,6 +1212,11 @@ const resetPassword = async (
   await UserEphemeralTokenModel.deleteMany({
     userId: user._id,
     purpose: 'password-reset',
+  })
+
+  await UserEphemeralTokenModel.deleteMany({
+    userId: user._id,
+    purpose: 'two-factor-challenge',
   })
 
   return { success: true }
