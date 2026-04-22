@@ -21,3 +21,14 @@ export const planCatalog = [
     isPaid: true,
   },
 ] as const
+
+export const onboardingInterestCatalog = [
+  { code: 'fiction', label: 'Fiction' },
+  { code: 'non-fiction', label: 'Non-Fiction' },
+  { code: 'poetry', label: 'Poetry' },
+  { code: 'history', label: 'History' },
+  { code: 'science', label: 'Science' },
+  { code: 'philosophy', label: 'Philosophy' },
+  { code: 'art-design', label: 'Art & Design' },
+  { code: 'technology', label: 'Technology' },
+] as const

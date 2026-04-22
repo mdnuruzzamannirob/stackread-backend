@@ -45,6 +45,7 @@ import type {
   UserLoginResult,
   UserNotificationPreferences,
   UserTwoFactorChallengePayload,
+  VerifyEmailResult,
   VerifyTwoFactorPayload,
 } from './interface'
 import {
@@ -1035,7 +1036,10 @@ const changePassword = async (
   await user.save()
 }
 
-const verifyEmail = async (email: string, otp: string): Promise<void> => {
+const verifyEmail = async (
+  email: string,
+  otp: string,
+): Promise<VerifyEmailResult> => {
   const user = await UserModel.findOne({ email })
 
   if (!user) {
@@ -1058,7 +1062,17 @@ const verifyEmail = async (email: string, otp: string): Promise<void> => {
   }
 
   user.isEmailVerified = true
+  user.lastLoginAt = new Date()
   await user.save()
+
+  const tokens = issueUserAccessToken(user)
+
+  return {
+    token: tokens.accessToken,
+    accessToken: tokens.accessToken,
+    refreshToken: tokens.refreshToken,
+    user: sanitizeUser(user),
+  }
 }
 
 const resendVerification = async (email: string): Promise<void> => {

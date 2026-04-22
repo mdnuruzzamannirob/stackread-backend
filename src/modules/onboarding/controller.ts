@@ -18,10 +18,24 @@ const getPlanOptions: RequestHandler = catchAsync(async (request, response) => {
   })
 })
 
+const getInterestOptions: RequestHandler = catchAsync(
+  async (_request, response) => {
+    const data = await onboardingService.getInterestOptions()
+
+    sendResponse(response, {
+      statusCode: 200,
+      success: true,
+      message: 'Onboarding interests retrieved successfully.',
+      data,
+    })
+  },
+)
+
 const selectPlan: RequestHandler = catchAsync(async (request, response) => {
   const data = await onboardingService.selectPlan(
     getAuthenticatedUserId(request),
     request.body.planCode,
+    request.body.locale,
   )
 
   sendResponse(response, {
@@ -107,6 +121,7 @@ const storeLanguage: RequestHandler = catchAsync(async (request, response) => {
 
 export const onboardingController = {
   getPlanOptions,
+  getInterestOptions,
   selectPlan,
   completeOnboarding,
   confirmPayment,

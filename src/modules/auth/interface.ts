@@ -243,6 +243,13 @@ export interface UserLoginSuccessResult {
   user: SanitizedUser
 }
 
+export interface VerifyEmailResult {
+  token: string
+  accessToken: string
+  refreshToken: string
+  user: SanitizedUser
+}
+
 export interface UserLoginTwoFactorRequiredResult {
   requiresTwoFactor: true
   tempToken: string

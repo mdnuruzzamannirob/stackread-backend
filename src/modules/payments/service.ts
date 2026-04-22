@@ -355,6 +355,8 @@ const initiatePayment = async (payload: InitiatePaymentPayload) => {
       countryCode: user.countryCode ?? 'UNKNOWN',
     },
     ...(plan.stripePriceId ? { stripePriceId: plan.stripePriceId } : {}),
+    ...(payload.successUrl ? { successUrl: payload.successUrl } : {}),
+    ...(payload.cancelUrl ? { cancelUrl: payload.cancelUrl } : {}),
   })
 
   const payment = await PaymentModel.create({

@@ -187,12 +187,17 @@ export class StripeGatewayAdapter implements PaymentGatewayAdapter {
     customerCountry: string
     metadata: Record<string, string>
     stripePriceId?: string
+    successUrl?: string
+    cancelUrl?: string
   }): Promise<GatewayInitResult> {
     const stripe = this.getClient()
 
     const ref = encodeURIComponent(payload.reference)
-    const successUrl = `${config.frontendUrl}/payment/success?ref=${ref}&session_id={CHECKOUT_SESSION_ID}`
-    const cancelUrl = `${config.frontendUrl}/payment/cancel?ref=${ref}`
+    const successUrl =
+      payload.successUrl ??
+      `${config.frontendUrl}/payment/success?ref=${ref}&session_id={CHECKOUT_SESSION_ID}`
+    const cancelUrl =
+      payload.cancelUrl ?? `${config.frontendUrl}/payment/cancel?ref=${ref}`
 
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',

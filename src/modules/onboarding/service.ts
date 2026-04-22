@@ -1,8 +1,10 @@
 import { AppError } from '../../common/errors/AppError'
+import { config } from '../../config'
 import { paymentsService } from '../payments/service'
 import { PlanModel } from '../plans/model'
 import { SubscriptionModel } from '../subscriptions/model'
 import { subscriptionsService } from '../subscriptions/service'
+import { onboardingInterestCatalog } from './constants'
 import { OnboardingModel } from './model'
 
 const getCurrentPlanContext = async (userId: string) => {
@@ -76,7 +78,18 @@ const getPlanOptions = async (userId: string) => {
   })
 }
 
-const selectPlan = async (userId: string, planCode: string) => {
+const getInterestOptions = async () => {
+  return onboardingInterestCatalog.map((item) => ({
+    code: item.code,
+    label: item.label,
+  }))
+}
+
+const selectPlan = async (
+  userId: string,
+  planCode: string,
+  locale?: 'en' | 'bn',
+) => {
   const selectedPlan = await PlanModel.findOne({
     code: planCode.toUpperCase(),
     isActive: true,
@@ -115,24 +128,52 @@ const selectPlan = async (userId: string, planCode: string) => {
       subscriptionCreated: true,
       subscriptionId: subscription.id,
       selectedPlanCode: selectedPlan.code,
+      plan: {
+        code: selectedPlan.code,
+        name: selectedPlan.name,
+        price: selectedPlan.price,
+      },
       status: 'completed',
+      nextStep: 'onboarding_completed' as const,
     }
   }
 
-  const pendingSubscription =
-    await subscriptionsService.createPendingSubscriptionForPlan({
-      userId,
-      planId: selectedPlan._id.toString(),
-      autoRenew: true,
-    })
+  const resolvedLocale = locale === 'bn' ? 'bn' : 'en'
+  const planQuery = new URLSearchParams({
+    plan_id: selectedPlan.code,
+    plan_name: selectedPlan.name,
+    price: selectedPlan.price.toFixed(2),
+    currency: selectedPlan.currency,
+  })
+  const successUrl = `${config.frontendUrl}/${resolvedLocale}/onboarding/payment/success?${planQuery.toString()}&session_id={CHECKOUT_SESSION_ID}`
+  const cancelUrl = `${config.frontendUrl}/${resolvedLocale}/onboarding/payment/failed?${planQuery.toString()}`
+
+  const initiatedPayment = await paymentsService.initiatePayment({
+    userId,
+    planId: selectedPlan._id.toString(),
+    gateway: 'stripe',
+    autoRenew: true,
+    successUrl,
+    cancelUrl,
+  })
 
   return {
     id: onboarding._id.toString(),
     success: true,
     subscriptionCreated: false,
-    subscriptionId: pendingSubscription._id.toString(),
+    subscriptionId: initiatedPayment.payment.subscriptionId,
     selectedPlanCode: selectedPlan.code,
+    plan: {
+      code: selectedPlan.code,
+      name: selectedPlan.name,
+      price: selectedPlan.price,
+    },
     status: onboarding.status,
+    nextStep: 'redirect_to_payment' as const,
+    paymentId: initiatedPayment.payment.id,
+    sessionId: initiatedPayment.sessionId,
+    url: initiatedPayment.url,
+    checkout_url: initiatedPayment.checkout_url,
   }
 }
 
@@ -225,12 +266,19 @@ const getOnboardingStatus = async (userId: string) => {
   if (!onboarding) {
     return {
       status: 'pending',
+      interests: [],
+      selectedLanguage: undefined,
     }
   }
 
   return {
     status: onboarding.status,
     selectedPlanCode: onboarding.selectedPlanCode,
+    selectedPlanName: onboarding.selectedPlanName,
+    selectedPlanPrice: onboarding.selectedPlanPrice,
+    selectedAt: onboarding.selectedAt?.toISOString(),
+    interests: onboarding.interests ?? [],
+    selectedLanguage: onboarding.selectedLanguage,
     completedAt: onboarding.completedAt?.toISOString(),
   }
 }
@@ -277,6 +325,7 @@ const storeLanguage = async (
 
 export const onboardingService = {
   getPlanOptions,
+  getInterestOptions,
   selectPlan,
   completeOnboarding,
   confirmPayment,

@@ -187,13 +187,22 @@ const logout: RequestHandler = catchAsync(async (_request, response) => {
 })
 
 const verifyEmail: RequestHandler = catchAsync(async (request, response) => {
-  await authService.verifyEmail(request.body.email, request.body.otp)
+  const data = await authService.verifyEmail(
+    request.body.email,
+    request.body.otp,
+  )
+
+  setUserSessionCookie(response, data.accessToken)
+  setUserRefreshCookie(response, data.refreshToken)
 
   sendResponse(response, {
     statusCode: 200,
     success: true,
     message: 'Email verified.',
-    data: null,
+    data: {
+      token: data.token,
+      user: data.user,
+    },
   })
 })
 

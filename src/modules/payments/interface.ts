@@ -67,6 +67,8 @@ export interface InitiatePaymentPayload {
   gateway: PaymentGateway
   couponCode?: string
   autoRenew?: boolean
+  successUrl?: string
+  cancelUrl?: string
 }
 
 export interface GatewayInitiatePayload {
@@ -78,6 +80,8 @@ export interface GatewayInitiatePayload {
   customerCountry: string
   metadata: Record<string, string>
   stripePriceId?: string
+  successUrl?: string
+  cancelUrl?: string
 }
 
 export interface GatewayInitResult {

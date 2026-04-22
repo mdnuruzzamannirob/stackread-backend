@@ -9,6 +9,11 @@ const router = Router()
 
 router.get('/plans', authenticateUser, onboardingController.getPlanOptions)
 router.get(
+  '/interests',
+  authenticateUser,
+  onboardingController.getInterestOptions,
+)
+router.get(
   '/status',
   authenticateUser,
   onboardingController.getMyOnboardingStatus,

@@ -238,7 +238,7 @@
                     "actorType": "staff",
                     "actorId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "actorEmail": "user@example.com",
-                    "action": "2026-04-21T12:34:12.665Z",
+                    "action": "2026-04-22T07:01:44.301Z",
                     "module": "Module",
                     "description": "Brief description here.",
                     "targetId": "65f19a9a6f8f4a2b3c4d5e6f",
@@ -246,8 +246,8 @@
                     "requestId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "ipAddress": "123 Main Street",
                     "userAgent": "User Agent",
-                    "expiresAt": "2026-04-21T12:34:12.665Z",
-                    "createdAt": "2026-04-21T12:34:12.665Z"
+                    "expiresAt": "2026-04-22T07:01:44.301Z",
+                    "createdAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -607,7 +607,7 @@
               },
               "example": {
                 "actorType": "staff",
-                "action": "2026-04-21T12:34:12.665Z",
+                "action": "2026-04-22T07:01:44.301Z",
                 "module": "aa",
                 "description": "Brief description here.",
                 "targetId": "65f19a9a6f8f4a2b3c4d5e6f",
@@ -687,7 +687,7 @@
               "maxLength": 120
             },
             "description": "Filter by Action.",
-            "example": "2026-04-21T12:34:12.665Z"
+            "example": "2026-04-22T07:01:44.301Z"
           },
           {
             "name": "from",
@@ -698,7 +698,7 @@
               "format": "date-time"
             },
             "description": "Start of date range (ISO 8601).",
-            "example": "2026-04-21T12:34:12.665Z"
+            "example": "2026-04-22T07:01:44.301Z"
           },
           {
             "name": "to",
@@ -709,7 +709,7 @@
               "format": "date-time"
             },
             "description": "End of date range (ISO 8601).",
-            "example": "2026-04-21T12:34:12.665Z"
+            "example": "2026-04-22T07:01:44.301Z"
           }
         ],
         "responses": {
@@ -819,7 +819,7 @@
                       "actorType": "staff",
                       "actorId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "actorEmail": "user@example.com",
-                      "action": "2026-04-21T12:34:12.665Z",
+                      "action": "2026-04-22T07:01:44.301Z",
                       "module": "Module",
                       "description": "Brief description here.",
                       "targetId": "65f19a9a6f8f4a2b3c4d5e6f",
@@ -827,8 +827,8 @@
                       "requestId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "ipAddress": "123 Main Street",
                       "userAgent": "User Agent",
-                      "expiresAt": "2026-04-21T12:34:12.665Z",
-                      "createdAt": "2026-04-21T12:34:12.665Z"
+                      "expiresAt": "2026-04-22T07:01:44.301Z",
+                      "createdAt": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -1183,7 +1183,7 @@
               "maxLength": 120
             },
             "description": "Filter by Action.",
-            "example": "2026-04-21T12:34:12.665Z"
+            "example": "2026-04-22T07:01:44.301Z"
           },
           {
             "name": "from",
@@ -1194,7 +1194,7 @@
               "format": "date-time"
             },
             "description": "Start of date range (ISO 8601).",
-            "example": "2026-04-21T12:34:12.665Z"
+            "example": "2026-04-22T07:01:44.301Z"
           },
           {
             "name": "to",
@@ -1205,7 +1205,7 @@
               "format": "date-time"
             },
             "description": "End of date range (ISO 8601).",
-            "example": "2026-04-21T12:34:12.665Z"
+            "example": "2026-04-22T07:01:44.301Z"
           },
           {
             "name": "format",
@@ -1902,9 +1902,9 @@
                     "description": "Brief description here.",
                     "language": "bn",
                     "pageCount": 1,
-                    "publicationDate": "2026-04-21T12:34:12.665Z",
+                    "publicationDate": "2026-04-22T07:01:44.301Z",
                     "coverImage": "https://example.com/images/sample.jpg",
-                    "edition": "2026-04-21T12:34:12.665Z",
+                    "edition": "2026-04-22T07:01:44.301Z",
                     "featured": true,
                     "availabilityStatus": "available",
                     "accessLevel": "free",
@@ -1929,14 +1929,14 @@
                         "resourceType": "raw",
                         "size": 1,
                         "originalFileName": "John Doe",
-                        "uploadedAt": "2026-04-21T12:34:12.665Z"
+                        "uploadedAt": "2026-04-22T07:01:44.301Z"
                       }
                     ],
                     "ratingAverage": 5,
                     "ratingCount": 5,
                     "addedBy": "Added By",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -2409,8 +2409,8 @@
                 "description": "Brief description here.",
                 "language": "bn",
                 "pageCount": 1,
-                "publicationDate": "2026-04-21T12:34:12.665Z",
-                "edition": "2026-04-21T12:34:12.665Z",
+                "publicationDate": "2026-04-22T07:01:44.301Z",
+                "edition": "2026-04-22T07:01:44.301Z",
                 "coverImage": "https://example.com/images/sample.jpg",
                 "publisherId": "65f19a9a6f8f4a2b3c4d5e6f",
                 "accessLevel": "free",
@@ -3076,9 +3076,9 @@
                     "description": "Brief description here.",
                     "language": "bn",
                     "pageCount": 1,
-                    "publicationDate": "2026-04-21T12:34:12.665Z",
+                    "publicationDate": "2026-04-22T07:01:44.301Z",
                     "coverImage": "https://example.com/images/sample.jpg",
-                    "edition": "2026-04-21T12:34:12.665Z",
+                    "edition": "2026-04-22T07:01:44.301Z",
                     "featured": true,
                     "availabilityStatus": "available",
                     "accessLevel": "free",
@@ -3103,14 +3103,14 @@
                         "resourceType": "raw",
                         "size": 1,
                         "originalFileName": "John Doe",
-                        "uploadedAt": "2026-04-21T12:34:12.665Z"
+                        "uploadedAt": "2026-04-22T07:01:44.301Z"
                       }
                     ],
                     "ratingAverage": 5,
                     "ratingCount": 5,
                     "addedBy": "Added By",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -3712,9 +3712,9 @@
                     "description": "Brief description here.",
                     "language": "bn",
                     "pageCount": 1,
-                    "publicationDate": "2026-04-21T12:34:12.665Z",
+                    "publicationDate": "2026-04-22T07:01:44.301Z",
                     "coverImage": "https://example.com/images/sample.jpg",
-                    "edition": "2026-04-21T12:34:12.665Z",
+                    "edition": "2026-04-22T07:01:44.301Z",
                     "featured": true,
                     "availabilityStatus": "available",
                     "accessLevel": "free",
@@ -3739,14 +3739,14 @@
                         "resourceType": "raw",
                         "size": 1,
                         "originalFileName": "John Doe",
-                        "uploadedAt": "2026-04-21T12:34:12.665Z"
+                        "uploadedAt": "2026-04-22T07:01:44.301Z"
                       }
                     ],
                     "ratingAverage": 5,
                     "ratingCount": 5,
                     "addedBy": "Added By",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -4366,9 +4366,9 @@
                     "description": "Brief description here.",
                     "language": "bn",
                     "pageCount": 1,
-                    "publicationDate": "2026-04-21T12:34:12.665Z",
+                    "publicationDate": "2026-04-22T07:01:44.301Z",
                     "coverImage": "https://example.com/images/sample.jpg",
-                    "edition": "2026-04-21T12:34:12.665Z",
+                    "edition": "2026-04-22T07:01:44.301Z",
                     "featured": true,
                     "availabilityStatus": "available",
                     "accessLevel": "free",
@@ -4393,14 +4393,14 @@
                         "resourceType": "raw",
                         "size": 1,
                         "originalFileName": "John Doe",
-                        "uploadedAt": "2026-04-21T12:34:12.665Z"
+                        "uploadedAt": "2026-04-22T07:01:44.301Z"
                       }
                     ],
                     "ratingAverage": 5,
                     "ratingCount": 5,
                     "addedBy": "Added By",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -4845,7 +4845,7 @@
                     "resourceType": "raw",
                     "size": 1,
                     "originalFileName": "John Doe",
-                    "uploadedAt": "2026-04-21T12:34:12.665Z"
+                    "uploadedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -5842,9 +5842,9 @@
                     "description": "Brief description here.",
                     "language": "bn",
                     "pageCount": 1,
-                    "publicationDate": "2026-04-21T12:34:12.665Z",
+                    "publicationDate": "2026-04-22T07:01:44.301Z",
                     "coverImage": "https://example.com/images/sample.jpg",
-                    "edition": "2026-04-21T12:34:12.665Z",
+                    "edition": "2026-04-22T07:01:44.301Z",
                     "featured": true,
                     "availabilityStatus": "available",
                     "accessLevel": "free",
@@ -5869,14 +5869,14 @@
                         "resourceType": "raw",
                         "size": 1,
                         "originalFileName": "John Doe",
-                        "uploadedAt": "2026-04-21T12:34:12.665Z"
+                        "uploadedAt": "2026-04-22T07:01:44.301Z"
                       }
                     ],
                     "ratingAverage": 5,
                     "ratingCount": 5,
                     "addedBy": "Added By",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -6554,9 +6554,9 @@
                           "description": "Brief description here.",
                           "language": "bn",
                           "pageCount": 1,
-                          "publicationDate": "2026-04-21T12:34:12.665Z",
+                          "publicationDate": "2026-04-22T07:01:44.301Z",
                           "coverImage": "https://example.com/images/sample.jpg",
-                          "edition": "2026-04-21T12:34:12.665Z",
+                          "edition": "2026-04-22T07:01:44.301Z",
                           "featured": true,
                           "availabilityStatus": "available",
                           "accessLevel": "free",
@@ -6581,14 +6581,14 @@
                               "resourceType": "raw",
                               "size": 1,
                               "originalFileName": "John Doe",
-                              "uploadedAt": "2026-04-21T12:34:12.665Z"
+                              "uploadedAt": "2026-04-22T07:01:44.301Z"
                             }
                           ],
                           "ratingAverage": 5,
                           "ratingCount": 5,
                           "addedBy": "Added By",
-                          "createdAt": "2026-04-21T12:34:12.665Z",
-                          "updatedAt": "2026-04-21T12:34:12.665Z"
+                          "createdAt": "2026-04-22T07:01:44.301Z",
+                          "updatedAt": "2026-04-22T07:01:44.301Z"
                         }
                       }
                     ]
@@ -7079,8 +7079,8 @@
                     "description": "Brief description here.",
                     "language": "bn",
                     "pageCount": 1,
-                    "publicationDate": "2026-04-21T12:34:12.665Z",
-                    "edition": "2026-04-21T12:34:12.665Z",
+                    "publicationDate": "2026-04-22T07:01:44.301Z",
+                    "edition": "2026-04-22T07:01:44.301Z",
                     "coverImage": "https://example.com/images/sample.jpg",
                     "publisherId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "accessLevel": "free",
@@ -8026,8 +8026,8 @@
                         "bookId": "65f19a9a6f8f4a2b3c4d5e6f",
                         "title": "Sample Title",
                         "status": "active",
-                        "startedAt": "2026-04-21T12:34:12.665Z",
-                        "completedAt": "2026-04-21T12:34:12.665Z"
+                        "startedAt": "2026-04-22T07:01:44.301Z",
+                        "completedAt": "2026-04-22T07:01:44.301Z"
                       }
                     ],
                     "paymentHistory": [
@@ -8036,10 +8036,10 @@
                         "amount": 99.99,
                         "status": "active",
                         "transactionId": "65f19a9a6f8f4a2b3c4d5e6f",
-                        "createdAt": "2026-04-21T12:34:12.665Z"
+                        "createdAt": "2026-04-22T07:01:44.301Z"
                       }
                     ],
-                    "activeSubscription": "2026-04-21T12:34:12.665Z"
+                    "activeSubscription": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -8450,7 +8450,7 @@
                       "status": "active",
                       "transactionId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "currency": "BDT",
-                      "createdAt": "2026-04-21T12:34:12.665Z"
+                      "createdAt": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -8872,8 +8872,8 @@
                     {
                       "bookId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "status": "active",
-                      "startedAt": "2026-04-21T12:34:12.665Z",
-                      "completedAt": "2026-04-21T12:34:12.665Z",
+                      "startedAt": "2026-04-22T07:01:44.301Z",
+                      "completedAt": "2026-04-22T07:01:44.301Z",
                       "userRating": 5
                     }
                   ],
@@ -9583,7 +9583,7 @@
                 ]
               },
               "example": {
-                "reason": "2026-04-21T12:34:12.665Z"
+                "reason": "2026-04-22T07:01:44.301Z"
               }
             }
           }
@@ -12681,8 +12681,8 @@
                       "title": "Sample Title",
                       "comment": "Comment",
                       "isVisible": true,
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -13125,8 +13125,8 @@
                       "title": "Sample Title",
                       "comment": "Comment",
                       "isVisible": true,
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     },
                     "metrics": {
                       "ratingAverage": 5,
@@ -13611,11 +13611,11 @@
                       "name": "John Doe",
                       "description": "Brief description here.",
                       "permissions": [
-                        "2026-04-21T12:34:12.665Z"
+                        "2026-04-22T07:01:44.301Z"
                       ],
                       "isSystem": true,
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -13908,11 +13908,11 @@
                     "name": "John Doe",
                     "description": "Brief description here.",
                     "permissions": [
-                      "2026-04-21T12:34:12.665Z"
+                      "2026-04-22T07:01:44.301Z"
                     ],
                     "isSystem": true,
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -14155,7 +14155,7 @@
                 "name": "John Doe",
                 "description": "Brief description here.",
                 "permissions": [
-                  "2026-04-21T12:34:12.665Z"
+                  "2026-04-22T07:01:44.301Z"
                 ],
                 "isSystem": true
               }
@@ -14520,11 +14520,11 @@
                     "name": "John Doe",
                     "description": "Brief description here.",
                     "permissions": [
-                      "2026-04-21T12:34:12.665Z"
+                      "2026-04-22T07:01:44.301Z"
                     ],
                     "isSystem": true,
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -14828,11 +14828,11 @@
                     "name": "John Doe",
                     "description": "Brief description here.",
                     "permissions": [
-                      "2026-04-21T12:34:12.665Z"
+                      "2026-04-22T07:01:44.301Z"
                     ],
                     "isSystem": true,
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -15890,8 +15890,8 @@
                 "maintenance": {
                   "enabled": true,
                   "message": "aa",
-                  "startsAt": "2026-04-21T12:34:12.665Z",
-                  "endsAt": "2026-04-21T12:34:12.665Z",
+                  "startsAt": "2026-04-22T07:01:44.301Z",
+                  "endsAt": "2026-04-22T07:01:44.301Z",
                   "allowedIps": [
                     "aaa"
                   ]
@@ -16256,8 +16256,8 @@
                     {
                       "isActive": true,
                       "twoFactorEnabled": true,
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z",
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z",
                       "roleId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "id": "65f19a9a6f8f4a2b3c4d5e6f",
                       "name": "John Doe",
@@ -16834,8 +16834,8 @@
                   "data": {
                     "isActive": true,
                     "twoFactorEnabled": true,
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z",
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z",
                     "roleId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "id": "65f19a9a6f8f4a2b3c4d5e6f",
                     "name": "John Doe",
@@ -17155,8 +17155,8 @@
                   "data": {
                     "isActive": true,
                     "twoFactorEnabled": true,
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z",
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z",
                     "roleId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "id": "65f19a9a6f8f4a2b3c4d5e6f",
                     "name": "John Doe",
@@ -17450,10 +17450,10 @@
                   "data": [
                     {
                       "id": "65f19a9a6f8f4a2b3c4d5e6f",
-                      "action": "2026-04-21T12:34:12.665Z",
+                      "action": "2026-04-22T07:01:44.301Z",
                       "ipAddress": "123 Main Street",
                       "userAgent": "User Agent",
-                      "createdAt": "2026-04-21T12:34:12.665Z"
+                      "createdAt": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -17732,7 +17732,7 @@
                   "data": {
                     "staffId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "email": "user@example.com",
-                    "expiresAt": "2026-04-21T12:34:12.665Z"
+                    "expiresAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -18047,8 +18047,8 @@
                   "data": {
                     "isActive": true,
                     "twoFactorEnabled": true,
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z",
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z",
                     "roleId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "id": "65f19a9a6f8f4a2b3c4d5e6f",
                     "name": "John Doe",
@@ -18390,8 +18390,8 @@
                   "data": {
                     "isActive": true,
                     "twoFactorEnabled": true,
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z",
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z",
                     "roleId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "id": "65f19a9a6f8f4a2b3c4d5e6f",
                     "name": "John Doe",
@@ -18711,8 +18711,8 @@
                   "data": {
                     "isActive": true,
                     "twoFactorEnabled": true,
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z",
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z",
                     "roleId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "id": "65f19a9a6f8f4a2b3c4d5e6f",
                     "name": "John Doe",
@@ -18983,7 +18983,7 @@
                   "data": {
                     "email": "user@example.com",
                     "roleId": "65f19a9a6f8f4a2b3c4d5e6f",
-                    "expiresAt": "2026-04-21T12:34:12.665Z"
+                    "expiresAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -20026,10 +20026,7 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "accessToken": {
-                          "type": "string"
-                        },
-                        "refreshToken": {
+                        "token": {
                           "type": "string"
                         },
                         "user": {
@@ -20151,8 +20148,7 @@
                         }
                       },
                       "required": [
-                        "accessToken",
-                        "refreshToken",
+                        "token",
                         "user"
                       ]
                     },
@@ -20171,8 +20167,7 @@
                   "success": true,
                   "message": "Created successfully.",
                   "data": {
-                    "accessToken": "eyJhbGciOiJIUzI1NiJ9...",
-                    "refreshToken": "eyJhbGciOiJIUzI1NiJ9...",
+                    "token": "eyJhbGciOiJIUzI1NiJ9...",
                     "user": {
                       "id": "65f19a9a6f8f4a2b3c4d5e6f",
                       "firstName": "John",
@@ -20190,9 +20185,9 @@
                         "email": "user@example.com",
                         "push": true
                       },
-                      "lastLoginAt": "2026-04-21T12:34:12.665Z",
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "lastLoginAt": "2026-04-22T07:01:44.301Z",
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     }
                   },
                   "meta": {}
@@ -22744,12 +22739,16 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "sent": {
+                        "message": {
+                          "type": "string"
+                        },
+                        "success": {
                           "type": "boolean"
                         }
                       },
                       "required": [
-                        "sent"
+                        "message",
+                        "success"
                       ]
                     },
                     "meta": {
@@ -22767,7 +22766,8 @@
                   "success": true,
                   "message": "Created successfully.",
                   "data": {
-                    "sent": true
+                    "message": "Message",
+                    "success": true
                   },
                   "meta": {}
                 }
@@ -23521,10 +23521,7 @@
                             "requiresTwoFactor": {
                               "type": "boolean"
                             },
-                            "accessToken": {
-                              "type": "string"
-                            },
-                            "refreshToken": {
+                            "tempToken": {
                               "type": "string"
                             },
                             "user": {
@@ -23643,12 +23640,12 @@
                                 "createdAt",
                                 "updatedAt"
                               ]
-                            }
+                            },
+                            "token": {}
                           },
                           "required": [
                             "requiresTwoFactor",
-                            "accessToken",
-                            "refreshToken",
+                            "tempToken",
                             "user"
                           ]
                         },
@@ -23658,13 +23655,132 @@
                             "requiresTwoFactor": {
                               "type": "boolean"
                             },
-                            "tempToken": {
+                            "token": {
                               "type": "string"
-                            }
+                            },
+                            "user": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "firstName": {
+                                  "type": "string"
+                                },
+                                "lastName": {
+                                  "type": "string"
+                                },
+                                "email": {
+                                  "type": "string"
+                                },
+                                "address": {
+                                  "type": "string"
+                                },
+                                "countryCode": {
+                                  "type": "string"
+                                },
+                                "phone": {
+                                  "type": "string"
+                                },
+                                "profilePicture": {
+                                  "type": "string"
+                                },
+                                "provider": {
+                                  "type": "string",
+                                  "enum": [
+                                    "local",
+                                    "google",
+                                    "facebook"
+                                  ]
+                                },
+                                "isEmailVerified": {
+                                  "oneOf": [
+                                    {
+                                      "type": "boolean"
+                                    },
+                                    {
+                                      "type": "boolean"
+                                    }
+                                  ]
+                                },
+                                "isSuspended": {
+                                  "oneOf": [
+                                    {
+                                      "type": "boolean"
+                                    },
+                                    {
+                                      "type": "boolean"
+                                    }
+                                  ]
+                                },
+                                "twoFactorEnabled": {
+                                  "oneOf": [
+                                    {
+                                      "type": "boolean"
+                                    },
+                                    {
+                                      "type": "boolean"
+                                    }
+                                  ]
+                                },
+                                "notificationPreferences": {
+                                  "type": "object",
+                                  "properties": {
+                                    "email": {
+                                      "oneOf": [
+                                        {
+                                          "type": "boolean"
+                                        },
+                                        {
+                                          "type": "boolean"
+                                        }
+                                      ]
+                                    },
+                                    "push": {
+                                      "oneOf": [
+                                        {
+                                          "type": "boolean"
+                                        },
+                                        {
+                                          "type": "boolean"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "required": [
+                                    "email",
+                                    "push"
+                                  ]
+                                },
+                                "lastLoginAt": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "updatedAt": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "firstName",
+                                "email",
+                                "provider",
+                                "isEmailVerified",
+                                "isSuspended",
+                                "twoFactorEnabled",
+                                "notificationPreferences",
+                                "createdAt",
+                                "updatedAt"
+                              ]
+                            },
+                            "tempToken": {}
                           },
                           "required": [
                             "requiresTwoFactor",
-                            "tempToken"
+                            "token",
+                            "user"
                           ]
                         }
                       ]
@@ -23685,8 +23801,7 @@
                   "message": "Created successfully.",
                   "data": {
                     "requiresTwoFactor": true,
-                    "accessToken": "eyJhbGciOiJIUzI1NiJ9...",
-                    "refreshToken": "eyJhbGciOiJIUzI1NiJ9...",
+                    "tempToken": "eyJhbGciOiJIUzI1NiJ9...",
                     "user": {
                       "id": "65f19a9a6f8f4a2b3c4d5e6f",
                       "firstName": "John",
@@ -23704,10 +23819,11 @@
                         "email": "user@example.com",
                         "push": true
                       },
-                      "lastLoginAt": "2026-04-21T12:34:12.665Z",
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
-                    }
+                      "lastLoginAt": "2026-04-22T07:01:44.301Z",
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
+                    },
+                    "token": "eyJhbGciOiJIUzI1NiJ9..."
                   },
                   "meta": {}
                 }
@@ -24751,9 +24867,9 @@
                       "email": "user@example.com",
                       "push": true
                     },
-                    "lastLoginAt": "2026-04-21T12:34:12.665Z",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "lastLoginAt": "2026-04-22T07:01:44.301Z",
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -25232,9 +25348,9 @@
                       "email": "user@example.com",
                       "push": true
                     },
-                    "lastLoginAt": "2026-04-21T12:34:12.665Z",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "lastLoginAt": "2026-04-22T07:01:44.301Z",
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -25716,12 +25832,12 @@
                         "userAgent": "User Agent",
                         "browser": "Browser",
                         "device": "Device",
-                        "location": "2026-04-21T12:34:12.665Z",
+                        "location": "2026-04-22T07:01:44.301Z",
                         "status": "current",
-                        "createdAt": "2026-04-21T12:34:12.665Z"
+                        "createdAt": "2026-04-22T07:01:44.301Z"
                       }
                     ],
-                    "pagination": "2026-04-21T12:34:12.665Z"
+                    "pagination": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -26202,9 +26318,9 @@
                       "email": "user@example.com",
                       "push": true
                     },
-                    "lastLoginAt": "2026-04-21T12:34:12.665Z",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "lastLoginAt": "2026-04-22T07:01:44.301Z",
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -27072,9 +27188,9 @@
                       "email": "user@example.com",
                       "push": true
                     },
-                    "lastLoginAt": "2026-04-21T12:34:12.665Z",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "lastLoginAt": "2026-04-22T07:01:44.301Z",
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -27674,130 +27790,16 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "user": {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "string"
-                            },
-                            "firstName": {
-                              "type": "string"
-                            },
-                            "lastName": {
-                              "type": "string"
-                            },
-                            "email": {
-                              "type": "string"
-                            },
-                            "address": {
-                              "type": "string"
-                            },
-                            "countryCode": {
-                              "type": "string"
-                            },
-                            "phone": {
-                              "type": "string"
-                            },
-                            "profilePicture": {
-                              "type": "string"
-                            },
-                            "provider": {
-                              "type": "string",
-                              "enum": [
-                                "local",
-                                "google",
-                                "facebook"
-                              ]
-                            },
-                            "isEmailVerified": {
-                              "oneOf": [
-                                {
-                                  "type": "boolean"
-                                },
-                                {
-                                  "type": "boolean"
-                                }
-                              ]
-                            },
-                            "isSuspended": {
-                              "oneOf": [
-                                {
-                                  "type": "boolean"
-                                },
-                                {
-                                  "type": "boolean"
-                                }
-                              ]
-                            },
-                            "twoFactorEnabled": {
-                              "oneOf": [
-                                {
-                                  "type": "boolean"
-                                },
-                                {
-                                  "type": "boolean"
-                                }
-                              ]
-                            },
-                            "notificationPreferences": {
-                              "type": "object",
-                              "properties": {
-                                "email": {
-                                  "oneOf": [
-                                    {
-                                      "type": "boolean"
-                                    },
-                                    {
-                                      "type": "boolean"
-                                    }
-                                  ]
-                                },
-                                "push": {
-                                  "oneOf": [
-                                    {
-                                      "type": "boolean"
-                                    },
-                                    {
-                                      "type": "boolean"
-                                    }
-                                  ]
-                                }
-                              },
-                              "required": [
-                                "email",
-                                "push"
-                              ]
-                            },
-                            "lastLoginAt": {
-                              "type": "string"
-                            },
-                            "createdAt": {
-                              "type": "string"
-                            },
-                            "updatedAt": {
-                              "type": "string"
-                            }
-                          },
-                          "required": [
-                            "id",
-                            "firstName",
-                            "email",
-                            "provider",
-                            "isEmailVerified",
-                            "isSuspended",
-                            "twoFactorEnabled",
-                            "notificationPreferences",
-                            "createdAt",
-                            "updatedAt"
-                          ]
-                        },
-                        "requiresEmailVerification": {
+                        "success": {
                           "type": "boolean"
+                        },
+                        "message": {
+                          "type": "string"
                         }
                       },
                       "required": [
-                        "user",
-                        "requiresEmailVerification"
+                        "success",
+                        "message"
                       ]
                     },
                     "meta": {
@@ -27815,28 +27817,8 @@
                   "success": true,
                   "message": "Created successfully.",
                   "data": {
-                    "user": {
-                      "id": "65f19a9a6f8f4a2b3c4d5e6f",
-                      "firstName": "John",
-                      "lastName": "Doe",
-                      "email": "user@example.com",
-                      "address": "123 Main Street",
-                      "countryCode": "Country Code",
-                      "phone": "+8801712345678",
-                      "profilePicture": "Profile Picture",
-                      "provider": "local",
-                      "isEmailVerified": true,
-                      "isSuspended": true,
-                      "twoFactorEnabled": true,
-                      "notificationPreferences": {
-                        "email": "user@example.com",
-                        "push": true
-                      },
-                      "lastLoginAt": "2026-04-21T12:34:12.665Z",
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
-                    },
-                    "requiresEmailVerification": "2026-04-21T12:34:12.665Z"
+                    "success": true,
+                    "message": "Message"
                   },
                   "meta": {}
                 }
@@ -28074,10 +28056,13 @@
                   "password": {
                     "type": "string",
                     "minLength": 8,
-                    "maxLength": 72
+                    "maxLength": 72,
+                    "pattern": "[^A-Za-z0-9]"
                   },
                   "countryCode": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 2,
+                    "maxLength": 3
                   },
                   "agreeToTerms": {}
                 },
@@ -28098,7 +28083,7 @@
                 "phone": "+8801712345678",
                 "address": "123 Main Street",
                 "password": "SecurePass123!",
-                "countryCode": "Country Code"
+                "countryCode": "aa"
               }
             }
           }
@@ -28912,6 +28897,10 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
                   "resetToken": {
                     "type": "string",
                     "minLength": 10
@@ -28919,15 +28908,18 @@
                   "newPassword": {
                     "type": "string",
                     "minLength": 8,
-                    "maxLength": 72
+                    "maxLength": 72,
+                    "pattern": "[^A-Za-z0-9]"
                   }
                 },
                 "required": [
+                  "email",
                   "resetToken",
                   "newPassword"
                 ]
               },
               "example": {
+                "email": "user@example.com",
                 "resetToken": "eyJhbGciOiJIUzI1NiJ9...",
                 "newPassword": "SecurePass123!"
               }
@@ -28961,7 +28953,133 @@
                       "type": "string"
                     },
                     "data": {
-                      "nullable": true
+                      "type": "object",
+                      "properties": {
+                        "token": {
+                          "type": "string"
+                        },
+                        "user": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "firstName": {
+                              "type": "string"
+                            },
+                            "lastName": {
+                              "type": "string"
+                            },
+                            "email": {
+                              "type": "string"
+                            },
+                            "address": {
+                              "type": "string"
+                            },
+                            "countryCode": {
+                              "type": "string"
+                            },
+                            "phone": {
+                              "type": "string"
+                            },
+                            "profilePicture": {
+                              "type": "string"
+                            },
+                            "provider": {
+                              "type": "string",
+                              "enum": [
+                                "local",
+                                "google",
+                                "facebook"
+                              ]
+                            },
+                            "isEmailVerified": {
+                              "oneOf": [
+                                {
+                                  "type": "boolean"
+                                },
+                                {
+                                  "type": "boolean"
+                                }
+                              ]
+                            },
+                            "isSuspended": {
+                              "oneOf": [
+                                {
+                                  "type": "boolean"
+                                },
+                                {
+                                  "type": "boolean"
+                                }
+                              ]
+                            },
+                            "twoFactorEnabled": {
+                              "oneOf": [
+                                {
+                                  "type": "boolean"
+                                },
+                                {
+                                  "type": "boolean"
+                                }
+                              ]
+                            },
+                            "notificationPreferences": {
+                              "type": "object",
+                              "properties": {
+                                "email": {
+                                  "oneOf": [
+                                    {
+                                      "type": "boolean"
+                                    },
+                                    {
+                                      "type": "boolean"
+                                    }
+                                  ]
+                                },
+                                "push": {
+                                  "oneOf": [
+                                    {
+                                      "type": "boolean"
+                                    },
+                                    {
+                                      "type": "boolean"
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "email",
+                                "push"
+                              ]
+                            },
+                            "lastLoginAt": {
+                              "type": "string"
+                            },
+                            "createdAt": {
+                              "type": "string"
+                            },
+                            "updatedAt": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "firstName",
+                            "email",
+                            "provider",
+                            "isEmailVerified",
+                            "isSuspended",
+                            "twoFactorEnabled",
+                            "notificationPreferences",
+                            "createdAt",
+                            "updatedAt"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "token",
+                        "user"
+                      ]
                     },
                     "meta": {
                       "type": "object",
@@ -28977,7 +29095,30 @@
                 "example": {
                   "success": true,
                   "message": "Created successfully.",
-                  "data": null,
+                  "data": {
+                    "token": "eyJhbGciOiJIUzI1NiJ9...",
+                    "user": {
+                      "id": "65f19a9a6f8f4a2b3c4d5e6f",
+                      "firstName": "John",
+                      "lastName": "Doe",
+                      "email": "user@example.com",
+                      "address": "123 Main Street",
+                      "countryCode": "Country Code",
+                      "phone": "+8801712345678",
+                      "profilePicture": "Profile Picture",
+                      "provider": "local",
+                      "isEmailVerified": true,
+                      "isSuspended": true,
+                      "twoFactorEnabled": true,
+                      "notificationPreferences": {
+                        "email": "user@example.com",
+                        "push": true
+                      },
+                      "lastLoginAt": "2026-04-22T07:01:44.301Z",
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
+                    }
+                  },
                   "meta": {}
                 }
               }
@@ -29187,17 +29328,23 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "token": {
+                  "email": {
                     "type": "string",
-                    "minLength": 10
+                    "format": "email"
+                  },
+                  "otp": {
+                    "type": "string",
+                    "pattern": "^\\d{6}$"
                   }
                 },
                 "required": [
-                  "token"
+                  "email",
+                  "otp"
                 ]
               },
               "example": {
-                "token": "eyJhbGciOiJIUzI1NiJ9..."
+                "email": "user@example.com",
+                "otp": "123456"
               }
             }
           }
@@ -29658,8 +29805,8 @@
                       "avatar": "https://example.com/images/sample.jpg",
                       "website": "https://example.com",
                       "isActive": true,
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -29984,8 +30131,8 @@
                     "avatar": "https://example.com/images/sample.jpg",
                     "website": "https://example.com",
                     "isActive": true,
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -30862,8 +31009,8 @@
                     "avatar": "https://example.com/images/sample.jpg",
                     "website": "https://example.com",
                     "isActive": true,
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -31199,8 +31346,8 @@
                     "avatar": "https://example.com/images/sample.jpg",
                     "website": "https://example.com",
                     "isActive": true,
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -31933,9 +32080,9 @@
                       "description": "Brief description here.",
                       "language": "bn",
                       "pageCount": 1,
-                      "publicationDate": "2026-04-21T12:34:12.665Z",
+                      "publicationDate": "2026-04-22T07:01:44.301Z",
                       "coverImage": "https://example.com/images/sample.jpg",
-                      "edition": "2026-04-21T12:34:12.665Z",
+                      "edition": "2026-04-22T07:01:44.301Z",
                       "featured": true,
                       "availabilityStatus": "available",
                       "accessLevel": "free",
@@ -31960,14 +32107,14 @@
                           "resourceType": "raw",
                           "size": 1,
                           "originalFileName": "John Doe",
-                          "uploadedAt": "2026-04-21T12:34:12.665Z"
+                          "uploadedAt": "2026-04-22T07:01:44.301Z"
                         }
                       ],
                       "ratingAverage": 5,
                       "ratingCount": 5,
                       "addedBy": "Added By",
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -32333,11 +32480,11 @@
                       "userId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "bookId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "fileId": "65f19a9a6f8f4a2b3c4d5e6f",
-                      "location": "2026-04-21T12:34:12.665Z",
+                      "location": "2026-04-22T07:01:44.301Z",
                       "page": 1,
                       "note": "Note",
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -32743,11 +32890,11 @@
                     "userId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "bookId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "fileId": "65f19a9a6f8f4a2b3c4d5e6f",
-                    "location": "2026-04-21T12:34:12.665Z",
+                    "location": "2026-04-22T07:01:44.301Z",
                     "page": 1,
                     "note": "Note",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -33086,7 +33233,7 @@
               },
               "example": {
                 "fileId": "65f19a9a6f8f4a2b3c4d5e6f",
-                "location": "2026-04-21T12:34:12.665Z",
+                "location": "2026-04-22T07:01:44.301Z",
                 "page": 1,
                 "note": "a"
               }
@@ -33574,11 +33721,11 @@
                     "userId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "bookId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "fileId": "65f19a9a6f8f4a2b3c4d5e6f",
-                    "location": "2026-04-21T12:34:12.665Z",
+                    "location": "2026-04-22T07:01:44.301Z",
                     "page": 1,
                     "note": "Note",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -34067,8 +34214,8 @@
                       "selectedText": "Selected Text",
                       "color": "Color",
                       "note": "Note",
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -34487,8 +34634,8 @@
                     "selectedText": "Selected Text",
                     "color": "Color",
                     "note": "Note",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -35297,8 +35444,8 @@
                     "selectedText": "Selected Text",
                     "color": "Color",
                     "note": "Note",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -35782,8 +35929,8 @@
                       "title": "Sample Title",
                       "comment": "Comment",
                       "isVisible": true,
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -36121,8 +36268,8 @@
                       "title": "Sample Title",
                       "comment": "Comment",
                       "isVisible": true,
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     },
                     "metrics": {
                       "ratingAverage": 5,
@@ -37011,8 +37158,8 @@
                       "title": "Sample Title",
                       "comment": "Comment",
                       "isVisible": true,
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     },
                     "metrics": {
                       "ratingAverage": 5,
@@ -37619,9 +37766,9 @@
                     "description": "Brief description here.",
                     "language": "bn",
                     "pageCount": 1,
-                    "publicationDate": "2026-04-21T12:34:12.665Z",
+                    "publicationDate": "2026-04-22T07:01:44.301Z",
                     "coverImage": "https://example.com/images/sample.jpg",
-                    "edition": "2026-04-21T12:34:12.665Z",
+                    "edition": "2026-04-22T07:01:44.301Z",
                     "featured": true,
                     "availabilityStatus": "available",
                     "accessLevel": "free",
@@ -37646,14 +37793,14 @@
                         "resourceType": "raw",
                         "size": 1,
                         "originalFileName": "John Doe",
-                        "uploadedAt": "2026-04-21T12:34:12.665Z"
+                        "uploadedAt": "2026-04-22T07:01:44.301Z"
                       }
                     ],
                     "ratingAverage": 5,
                     "ratingCount": 5,
                     "addedBy": "Added By",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -38023,9 +38170,9 @@
                     "categoryIds": [
                       "65f19a9a6f8f4a2b3c4d5e6f"
                     ],
-                    "publicationDate": "2026-04-21T12:34:12.665Z",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "publicationDate": "2026-04-22T07:01:44.301Z",
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -38566,9 +38713,9 @@
                       "description": "Brief description here.",
                       "language": "bn",
                       "pageCount": 1,
-                      "publicationDate": "2026-04-21T12:34:12.665Z",
+                      "publicationDate": "2026-04-22T07:01:44.301Z",
                       "coverImage": "https://example.com/images/sample.jpg",
-                      "edition": "2026-04-21T12:34:12.665Z",
+                      "edition": "2026-04-22T07:01:44.301Z",
                       "featured": true,
                       "availabilityStatus": "available",
                       "accessLevel": "free",
@@ -38593,14 +38740,14 @@
                           "resourceType": "raw",
                           "size": 1,
                           "originalFileName": "John Doe",
-                          "uploadedAt": "2026-04-21T12:34:12.665Z"
+                          "uploadedAt": "2026-04-22T07:01:44.301Z"
                         }
                       ],
                       "ratingAverage": 5,
                       "ratingCount": 5,
                       "addedBy": "Added By",
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -38981,8 +39128,8 @@
                       "sortOrder": "desc",
                       "isActive": true,
                       "booksCount": 1,
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -39290,8 +39437,8 @@
                     "sortOrder": "desc",
                     "isActive": true,
                     "booksCount": 1,
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -40125,8 +40272,8 @@
                     "sortOrder": "desc",
                     "isActive": true,
                     "booksCount": 1,
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -40445,8 +40592,8 @@
                     "sortOrder": "desc",
                     "isActive": true,
                     "booksCount": 1,
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -40963,10 +41110,10 @@
                         "65f19a9a6f8f4a2b3c4d5e6f"
                       ],
                       "isActive": true,
-                      "startsAt": "2026-04-21T12:34:12.665Z",
-                      "endsAt": "2026-04-21T12:34:12.665Z",
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "startsAt": "2026-04-22T07:01:44.301Z",
+                      "endsAt": "2026-04-22T07:01:44.301Z",
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -41412,10 +41559,10 @@
                       "65f19a9a6f8f4a2b3c4d5e6f"
                     ],
                     "isActive": true,
-                    "startsAt": "2026-04-21T12:34:12.665Z",
-                    "endsAt": "2026-04-21T12:34:12.665Z",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "startsAt": "2026-04-22T07:01:44.301Z",
+                    "endsAt": "2026-04-22T07:01:44.301Z",
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -41809,8 +41956,8 @@
                   "65f19a9a6f8f4a2b3c4d5e6f"
                 ],
                 "isActive": true,
-                "startsAt": "2026-04-21T12:34:12.665Z",
-                "endsAt": "2026-04-21T12:34:12.665Z"
+                "startsAt": "2026-04-22T07:01:44.301Z",
+                "endsAt": "2026-04-22T07:01:44.301Z"
               }
             }
           }
@@ -42326,10 +42473,10 @@
                       "65f19a9a6f8f4a2b3c4d5e6f"
                     ],
                     "isActive": true,
-                    "startsAt": "2026-04-21T12:34:12.665Z",
-                    "endsAt": "2026-04-21T12:34:12.665Z",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "startsAt": "2026-04-22T07:01:44.301Z",
+                    "endsAt": "2026-04-22T07:01:44.301Z",
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -42786,10 +42933,10 @@
                       "65f19a9a6f8f4a2b3c4d5e6f"
                     ],
                     "isActive": true,
-                    "startsAt": "2026-04-21T12:34:12.665Z",
-                    "endsAt": "2026-04-21T12:34:12.665Z",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "startsAt": "2026-04-22T07:01:44.301Z",
+                    "endsAt": "2026-04-22T07:01:44.301Z",
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -43256,10 +43403,10 @@
                       "65f19a9a6f8f4a2b3c4d5e6f"
                     ],
                     "isActive": true,
-                    "startsAt": "2026-04-21T12:34:12.665Z",
-                    "endsAt": "2026-04-21T12:34:12.665Z",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "startsAt": "2026-04-22T07:01:44.301Z",
+                    "endsAt": "2026-04-22T07:01:44.301Z",
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -43720,7 +43867,7 @@
                   "message": "Created successfully.",
                   "data": {
                     "valid": "65f19a9a6f8f4a2b3c4d5e6f",
-                    "coupon": "2026-04-21T12:34:12.665Z",
+                    "coupon": "2026-04-22T07:01:44.301Z",
                     "discountAmount": 99.99,
                     "payableAmount": 99.99
                   },
@@ -44184,7 +44331,7 @@
                       "readingStats": {
                         "totalBooksRead": 1,
                         "booksCurrentlyReading": 1,
-                        "totalReadingTime": "2026-04-21T12:34:12.665Z",
+                        "totalReadingTime": "2026-04-22T07:01:44.301Z",
                         "averageRatingGiven": 5
                       },
                       "accessStats": {
@@ -44195,7 +44342,7 @@
                         "currentPlan": "Current Plan",
                         "daysRemaining": 1,
                         "isActive": true,
-                        "renewalDate": "2026-04-21T12:34:12.665Z"
+                        "renewalDate": "2026-04-22T07:01:44.301Z"
                       },
                       "libraryStats": {
                         "wishlistCount": 1,
@@ -44203,7 +44350,7 @@
                       }
                     },
                     "recommendations": [
-                      "2026-04-21T12:34:12.665Z"
+                      "2026-04-22T07:01:44.301Z"
                     ]
                   },
                   "meta": {}
@@ -45051,7 +45198,7 @@
                       "categoryIds": [
                         "65f19a9a6f8f4a2b3c4d5e6f"
                       ],
-                      "reason": "2026-04-21T12:34:12.665Z",
+                      "reason": "2026-04-22T07:01:44.301Z",
                       "coverImage": "https://example.com/images/sample.jpg",
                       "ratingAverage": 5,
                       "ratingCount": 5
@@ -45500,7 +45647,7 @@
                     "readingStats": {
                       "totalBooksRead": 1,
                       "booksCurrentlyReading": 1,
-                      "totalReadingTime": "2026-04-21T12:34:12.665Z",
+                      "totalReadingTime": "2026-04-22T07:01:44.301Z",
                       "averageRatingGiven": 5
                     },
                     "accessStats": {
@@ -45511,7 +45658,7 @@
                       "currentPlan": "Current Plan",
                       "daysRemaining": 1,
                       "isActive": true,
-                      "renewalDate": "2026-04-21T12:34:12.665Z"
+                      "renewalDate": "2026-04-22T07:01:44.301Z"
                     },
                     "libraryStats": {
                       "wishlistCount": 1,
@@ -45991,10 +46138,10 @@
                         "65f19a9a6f8f4a2b3c4d5e6f"
                       ],
                       "isActive": true,
-                      "startsAt": "2026-04-21T12:34:12.665Z",
-                      "endsAt": "2026-04-21T12:34:12.665Z",
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "startsAt": "2026-04-22T07:01:44.301Z",
+                      "endsAt": "2026-04-22T07:01:44.301Z",
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -46406,10 +46553,10 @@
                       "65f19a9a6f8f4a2b3c4d5e6f"
                     ],
                     "isActive": true,
-                    "startsAt": "2026-04-21T12:34:12.665Z",
-                    "endsAt": "2026-04-21T12:34:12.665Z",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "startsAt": "2026-04-22T07:01:44.301Z",
+                    "endsAt": "2026-04-22T07:01:44.301Z",
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -46773,8 +46920,8 @@
                   "65f19a9a6f8f4a2b3c4d5e6f"
                 ],
                 "isActive": true,
-                "startsAt": "2026-04-21T12:34:12.665Z",
-                "endsAt": "2026-04-21T12:34:12.665Z"
+                "startsAt": "2026-04-22T07:01:44.301Z",
+                "endsAt": "2026-04-22T07:01:44.301Z"
               }
             }
           }
@@ -47256,10 +47403,10 @@
                       "65f19a9a6f8f4a2b3c4d5e6f"
                     ],
                     "isActive": true,
-                    "startsAt": "2026-04-21T12:34:12.665Z",
-                    "endsAt": "2026-04-21T12:34:12.665Z",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "startsAt": "2026-04-22T07:01:44.301Z",
+                    "endsAt": "2026-04-22T07:01:44.301Z",
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -47692,10 +47839,10 @@
                       "65f19a9a6f8f4a2b3c4d5e6f"
                     ],
                     "isActive": true,
-                    "startsAt": "2026-04-21T12:34:12.665Z",
-                    "endsAt": "2026-04-21T12:34:12.665Z",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "startsAt": "2026-04-22T07:01:44.301Z",
+                    "endsAt": "2026-04-22T07:01:44.301Z",
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -48170,10 +48317,10 @@
                         "65f19a9a6f8f4a2b3c4d5e6f"
                       ],
                       "isActive": true,
-                      "startsAt": "2026-04-21T12:34:12.665Z",
-                      "endsAt": "2026-04-21T12:34:12.665Z",
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "startsAt": "2026-04-22T07:01:44.301Z",
+                      "endsAt": "2026-04-22T07:01:44.301Z",
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -48507,9 +48654,9 @@
                     "status": "ok",
                     "service": "Service",
                     "environment": "Environment",
-                    "version": "2026-04-21T12:34:12.665Z",
-                    "timestamp": "2026-04-21T12:34:12.665Z",
-                    "uptimeSeconds": "2026-04-21T12:34:12.665Z",
+                    "version": "2026-04-22T07:01:44.301Z",
+                    "timestamp": "2026-04-22T07:01:44.301Z",
+                    "uptimeSeconds": "2026-04-22T07:01:44.301Z",
                     "requestId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "checks": {
                       "database": "Database",
@@ -49179,7 +49326,7 @@
                     "status": "ready",
                     "service": "Service",
                     "database": "Database",
-                    "timestamp": "2026-04-21T12:34:12.665Z"
+                    "timestamp": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -50636,7 +50783,7 @@
                   "message": "Request successful.",
                   "data": {
                     "matched": 1,
-                    "updated": "2026-04-21T12:34:12.665Z"
+                    "updated": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -51401,7 +51548,7 @@
                   "data": {
                     "id": "65f19a9a6f8f4a2b3c4d5e6f",
                     "status": "completed",
-                    "completedAt": "2026-04-21T12:34:12.665Z",
+                    "completedAt": "2026-04-22T07:01:44.301Z",
                     "selectedPlanCode": "Selected Plan Code"
                   },
                   "meta": {}
@@ -51767,11 +51914,23 @@
                             "status": {
                               "type": "string"
                             },
+                            "interests": {
+                              "type": "array",
+                              "items": {}
+                            },
+                            "selectedLanguage": {
+                              "nullable": true
+                            },
                             "selectedPlanCode": {},
+                            "selectedPlanName": {},
+                            "selectedPlanPrice": {},
+                            "selectedAt": {},
                             "completedAt": {}
                           },
                           "required": [
-                            "status"
+                            "status",
+                            "interests",
+                            "selectedLanguage"
                           ]
                         },
                         {
@@ -51788,6 +51947,24 @@
                             "selectedPlanCode": {
                               "type": "string"
                             },
+                            "selectedPlanName": {
+                              "type": "string"
+                            },
+                            "selectedPlanPrice": {
+                              "type": "number"
+                            },
+                            "selectedAt": {
+                              "type": "string"
+                            },
+                            "interests": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "selectedLanguage": {
+                              "type": "string"
+                            },
                             "completedAt": {
                               "type": "string"
                             }
@@ -51795,6 +51972,11 @@
                           "required": [
                             "status",
                             "selectedPlanCode",
+                            "selectedPlanName",
+                            "selectedPlanPrice",
+                            "selectedAt",
+                            "interests",
+                            "selectedLanguage",
                             "completedAt"
                           ]
                         },
@@ -51835,7 +52017,14 @@
                   "message": "Created successfully.",
                   "data": {
                     "status": "active",
-                    "completedAt": "2026-04-21T12:34:12.665Z"
+                    "interests": [
+                      null
+                    ],
+                    "selectedLanguage": null,
+                    "selectedPlanName": "John Doe",
+                    "selectedPlanPrice": 99.99,
+                    "selectedAt": "2026-04-22T07:01:44.301Z",
+                    "completedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -52172,6 +52361,451 @@
       }
     },
     "/api/v1/onboarding/interests": {
+      "get": {
+        "tags": [
+          "onboarding"
+        ],
+        "summary": "Get Interest Options",
+        "description": "GET /api/v1/onboarding/interests",
+        "operationId": "onboarding_get__api_v1_onboarding_interests",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "description": "Page number (starts at 1).",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "example": 1
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "description": "Number of records per page.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            },
+            "example": 20
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "description": "Search keyword.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "keyword"
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "required": false,
+            "description": "Field to sort by.",
+            "schema": {
+              "type": "string"
+            },
+            "example": "createdAt"
+          },
+          {
+            "name": "sortOrder",
+            "in": "query",
+            "required": false,
+            "description": "Sort direction. Allowed: asc, desc.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            },
+            "example": "desc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "enum": [
+                              "fiction",
+                              "non-fiction",
+                              "poetry",
+                              "history",
+                              "science",
+                              "philosophy",
+                              "art-design",
+                              "technology"
+                            ]
+                          },
+                          "label": {
+                            "type": "string",
+                            "enum": [
+                              "Fiction",
+                              "Non-Fiction",
+                              "Poetry",
+                              "History",
+                              "Science",
+                              "Philosophy",
+                              "Art & Design",
+                              "Technology"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "code",
+                          "label"
+                        ]
+                      }
+                    },
+                    "meta": {
+                      "type": "object",
+                      "additionalProperties": true
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message",
+                    "data"
+                  ]
+                },
+                "example": {
+                  "success": true,
+                  "message": "Request successful.",
+                  "data": [
+                    {
+                      "code": "fiction",
+                      "label": "Fiction"
+                    }
+                  ],
+                  "meta": {}
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Validation error.",
+                  "code": "BAD_REQUEST",
+                  "data": null
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized.",
+                  "code": "UNAUTHORIZED",
+                  "data": null
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Forbidden.",
+                  "code": "FORBIDDEN",
+                  "data": null
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Resource not found.",
+                  "code": "NOT_FOUND",
+                  "data": null
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Too many requests.",
+                  "code": "TOO_MANY_REQUESTS",
+                  "data": null
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": false
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    },
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "field": {
+                            "type": "string"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "data": {
+                      "nullable": true
+                    }
+                  },
+                  "required": [
+                    "success",
+                    "message"
+                  ]
+                },
+                "example": {
+                  "success": false,
+                  "message": "Internal server error.",
+                  "code": "INTERNAL_SERVER_ERROR",
+                  "data": null
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerUserAuth": []
+          }
+        ]
+      },
       "patch": {
         "tags": [
           "onboarding"
@@ -53055,10 +53689,16 @@
                       "items": {
                         "type": "object",
                         "properties": {
+                          "id": {
+                            "type": "string"
+                          },
                           "code": {
                             "type": "string"
                           },
                           "name": {
+                            "type": "string"
+                          },
+                          "description": {
                             "type": "string"
                           },
                           "price": {
@@ -53067,10 +53707,13 @@
                           "currency": {
                             "type": "string"
                           },
-                          "billingCycle": {
-                            "type": "string"
+                          "durationDays": {
+                            "type": "number"
                           },
-                          "isPaid": {
+                          "maxDevices": {
+                            "type": "number"
+                          },
+                          "downloadEnabled": {
                             "oneOf": [
                               {
                                 "type": "boolean"
@@ -53080,105 +53723,59 @@
                               }
                             ]
                           },
-                          "isCurrentPlan": {
-                            "oneOf": [
-                              {
-                                "type": "boolean"
-                              },
-                              {
-                                "type": "boolean"
-                              }
-                            ]
-                          },
-                          "canSelect": {
-                            "oneOf": [
-                              {
-                                "type": "boolean"
-                              },
-                              {
-                                "type": "boolean"
-                              }
-                            ]
-                          },
-                          "canUpgrade": {
-                            "oneOf": [
-                              {
-                                "type": "boolean"
-                              },
-                              {
-                                "type": "boolean"
-                              }
-                            ]
-                          },
-                          "canDowngrade": {
-                            "oneOf": [
-                              {
-                                "type": "boolean"
-                              },
-                              {
-                                "type": "boolean"
-                              }
-                            ]
-                          },
-                          "canCancel": {
-                            "oneOf": [
-                              {
-                                "type": "boolean"
-                              },
-                              {
-                                "type": "boolean"
-                              }
-                            ]
-                          },
-                          "canRenew": {
-                            "oneOf": [
-                              {
-                                "type": "boolean"
-                              },
-                              {
-                                "type": "boolean"
-                              }
-                            ]
-                          },
-                          "scheduledDowngrade": {
-                            "type": "object",
-                            "properties": {
-                              "planId": {
-                                "type": "string"
-                              },
-                              "effectiveDate": {
-                                "type": "string"
-                              }
-                            },
-                            "required": [
-                              "planId",
-                              "effectiveDate"
-                            ]
-                          },
-                          "onboardingStatus": {
+                          "accessLevel": {
                             "type": "string",
                             "enum": [
-                              "completed",
-                              "pending",
-                              "selected"
+                              "free",
+                              "basic",
+                              "premium"
                             ]
+                          },
+                          "features": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "isFree": {
+                            "oneOf": [
+                              {
+                                "type": "boolean"
+                              },
+                              {
+                                "type": "boolean"
+                              }
+                            ]
+                          },
+                          "isActive": {
+                            "oneOf": [
+                              {
+                                "type": "boolean"
+                              },
+                              {
+                                "type": "boolean"
+                              }
+                            ]
+                          },
+                          "sortOrder": {
+                            "type": "number"
                           }
                         },
                         "required": [
+                          "id",
                           "code",
                           "name",
+                          "description",
                           "price",
                           "currency",
-                          "billingCycle",
-                          "isPaid",
-                          "isCurrentPlan",
-                          "canSelect",
-                          "canUpgrade",
-                          "canDowngrade",
-                          "canCancel",
-                          "canRenew",
-                          "scheduledDowngrade",
-                          "onboardingStatus"
+                          "durationDays",
+                          "maxDevices",
+                          "downloadEnabled",
+                          "accessLevel",
+                          "features",
+                          "isFree",
+                          "isActive",
+                          "sortOrder"
                         ]
                       }
                     },
@@ -53198,23 +53795,22 @@
                   "message": "Request successful.",
                   "data": [
                     {
+                      "id": "65f19a9a6f8f4a2b3c4d5e6f",
                       "code": "123456",
                       "name": "John Doe",
+                      "description": "Brief description here.",
                       "price": 99.99,
                       "currency": "BDT",
-                      "billingCycle": "Billing Cycle",
-                      "isPaid": "65f19a9a6f8f4a2b3c4d5e6f",
-                      "isCurrentPlan": true,
-                      "canSelect": true,
-                      "canUpgrade": true,
-                      "canDowngrade": true,
-                      "canCancel": true,
-                      "canRenew": true,
-                      "scheduledDowngrade": {
-                        "planId": "65f19a9a6f8f4a2b3c4d5e6f",
-                        "effectiveDate": "2026-04-21T12:34:12.665Z"
-                      },
-                      "onboardingStatus": "completed"
+                      "durationDays": 1,
+                      "maxDevices": 1,
+                      "downloadEnabled": true,
+                      "accessLevel": "free",
+                      "features": [
+                        "Feature"
+                      ],
+                      "isFree": true,
+                      "isActive": true,
+                      "sortOrder": "desc"
                     }
                   ],
                   "meta": {}
@@ -53549,140 +54145,48 @@
                       "type": "string"
                     },
                     "data": {
-                      "oneOf": [
-                        {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "string"
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "success": {
+                          "oneOf": [
+                            {
+                              "type": "boolean"
                             },
-                            "plan": {
-                              "type": "object",
-                              "properties": {
-                                "code": {
-                                  "type": "string"
-                                },
-                                "name": {
-                                  "type": "string"
-                                },
-                                "price": {
-                                  "type": "number"
-                                },
-                                "currency": {
-                                  "type": "string"
-                                },
-                                "isPaid": {
-                                  "oneOf": [
-                                    {
-                                      "type": "boolean"
-                                    },
-                                    {
-                                      "type": "boolean"
-                                    }
-                                  ]
-                                }
-                              },
-                              "required": [
-                                "code",
-                                "name",
-                                "price",
-                                "currency",
-                                "isPaid"
-                              ]
-                            },
-                            "status": {
-                              "type": "string",
-                              "enum": [
-                                "completed",
-                                "pending",
-                                "selected"
-                              ]
-                            },
-                            "nextStep": {
-                              "type": "string"
-                            },
-                            "checkout_url": {},
-                            "paymentId": {},
-                            "sessionId": {}
-                          },
-                          "required": [
-                            "id",
-                            "plan",
-                            "status",
-                            "nextStep"
+                            {
+                              "type": "boolean"
+                            }
                           ]
                         },
-                        {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "string"
+                        "subscriptionCreated": {
+                          "oneOf": [
+                            {
+                              "type": "boolean"
                             },
-                            "plan": {
-                              "type": "object",
-                              "properties": {
-                                "code": {
-                                  "type": "string"
-                                },
-                                "name": {
-                                  "type": "string"
-                                },
-                                "price": {
-                                  "type": "number"
-                                },
-                                "currency": {
-                                  "type": "string"
-                                },
-                                "isPaid": {
-                                  "oneOf": [
-                                    {
-                                      "type": "boolean"
-                                    },
-                                    {
-                                      "type": "boolean"
-                                    }
-                                  ]
-                                }
-                              },
-                              "required": [
-                                "code",
-                                "name",
-                                "price",
-                                "currency",
-                                "isPaid"
-                              ]
-                            },
-                            "status": {
-                              "type": "string",
-                              "enum": [
-                                "completed",
-                                "pending",
-                                "selected"
-                              ]
-                            },
-                            "nextStep": {
-                              "type": "string"
-                            },
-                            "checkout_url": {
-                              "type": "string"
-                            },
-                            "paymentId": {
-                              "type": "string"
-                            },
-                            "sessionId": {
-                              "type": "string"
+                            {
+                              "type": "boolean"
                             }
-                          },
-                          "required": [
-                            "id",
-                            "plan",
-                            "status",
-                            "nextStep",
-                            "checkout_url",
-                            "paymentId",
-                            "sessionId"
                           ]
+                        },
+                        "subscriptionId": {
+                          "type": "string"
+                        },
+                        "selectedPlanCode": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string"
                         }
+                      },
+                      "required": [
+                        "id",
+                        "success",
+                        "subscriptionCreated",
+                        "subscriptionId",
+                        "selectedPlanCode",
+                        "status"
                       ]
                     },
                     "meta": {
@@ -53701,18 +54205,11 @@
                   "message": "Created successfully.",
                   "data": {
                     "id": "65f19a9a6f8f4a2b3c4d5e6f",
-                    "plan": {
-                      "code": "123456",
-                      "name": "John Doe",
-                      "price": 99.99,
-                      "currency": "BDT",
-                      "isPaid": "65f19a9a6f8f4a2b3c4d5e6f"
-                    },
-                    "status": "completed",
-                    "nextStep": "Next Step",
-                    "checkout_url": "https://example.com",
-                    "paymentId": "65f19a9a6f8f4a2b3c4d5e6f",
-                    "sessionId": "65f19a9a6f8f4a2b3c4d5e6f"
+                    "success": true,
+                    "subscriptionCreated": true,
+                    "subscriptionId": "65f19a9a6f8f4a2b3c4d5e6f",
+                    "selectedPlanCode": "Selected Plan Code",
+                    "status": "active"
                   },
                   "meta": {}
                 }
@@ -54134,11 +54631,23 @@
                             "status": {
                               "type": "string"
                             },
+                            "interests": {
+                              "type": "array",
+                              "items": {}
+                            },
+                            "selectedLanguage": {
+                              "nullable": true
+                            },
                             "selectedPlanCode": {},
+                            "selectedPlanName": {},
+                            "selectedPlanPrice": {},
+                            "selectedAt": {},
                             "completedAt": {}
                           },
                           "required": [
-                            "status"
+                            "status",
+                            "interests",
+                            "selectedLanguage"
                           ]
                         },
                         {
@@ -54155,6 +54664,24 @@
                             "selectedPlanCode": {
                               "type": "string"
                             },
+                            "selectedPlanName": {
+                              "type": "string"
+                            },
+                            "selectedPlanPrice": {
+                              "type": "number"
+                            },
+                            "selectedAt": {
+                              "type": "string"
+                            },
+                            "interests": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "selectedLanguage": {
+                              "type": "string"
+                            },
                             "completedAt": {
                               "type": "string"
                             }
@@ -54162,6 +54689,11 @@
                           "required": [
                             "status",
                             "selectedPlanCode",
+                            "selectedPlanName",
+                            "selectedPlanPrice",
+                            "selectedAt",
+                            "interests",
+                            "selectedLanguage",
                             "completedAt"
                           ]
                         }
@@ -54183,7 +54715,14 @@
                   "message": "Request successful.",
                   "data": {
                     "status": "active",
-                    "completedAt": "2026-04-21T12:34:12.665Z"
+                    "interests": [
+                      null
+                    ],
+                    "selectedLanguage": null,
+                    "selectedPlanName": "John Doe",
+                    "selectedPlanPrice": 99.99,
+                    "selectedAt": "2026-04-22T07:01:44.301Z",
+                    "completedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -54710,11 +55249,11 @@
                       "providerPaymentId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "gatewayTransactionId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "reference": "Reference",
-                      "verifiedAt": "2026-04-21T12:34:12.665Z",
-                      "refundedAt": "2026-04-21T12:34:12.665Z",
-                      "refundReason": "2026-04-21T12:34:12.665Z",
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "verifiedAt": "2026-04-22T07:01:44.301Z",
+                      "refundedAt": "2026-04-22T07:01:44.301Z",
+                      "refundReason": "2026-04-22T07:01:44.301Z",
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -55192,11 +55731,11 @@
                     "providerPaymentId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "gatewayTransactionId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "reference": "Reference",
-                    "verifiedAt": "2026-04-21T12:34:12.665Z",
-                    "refundedAt": "2026-04-21T12:34:12.665Z",
-                    "refundReason": "2026-04-21T12:34:12.665Z",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "verifiedAt": "2026-04-22T07:01:44.301Z",
+                    "refundedAt": "2026-04-22T07:01:44.301Z",
+                    "refundReason": "2026-04-22T07:01:44.301Z",
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -55673,11 +56212,11 @@
                     "providerPaymentId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "gatewayTransactionId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "reference": "Reference",
-                    "verifiedAt": "2026-04-21T12:34:12.665Z",
-                    "refundedAt": "2026-04-21T12:34:12.665Z",
-                    "refundReason": "2026-04-21T12:34:12.665Z",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "verifiedAt": "2026-04-22T07:01:44.301Z",
+                    "refundedAt": "2026-04-22T07:01:44.301Z",
+                    "refundReason": "2026-04-22T07:01:44.301Z",
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -56002,7 +56541,7 @@
                 ]
               },
               "example": {
-                "reason": "2026-04-21T12:34:12.665Z"
+                "reason": "2026-04-22T07:01:44.301Z"
               }
             }
           }
@@ -56189,11 +56728,11 @@
                       "providerPaymentId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "gatewayTransactionId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "reference": "Reference",
-                      "verifiedAt": "2026-04-21T12:34:12.665Z",
-                      "refundedAt": "2026-04-21T12:34:12.665Z",
-                      "refundReason": "2026-04-21T12:34:12.665Z",
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "verifiedAt": "2026-04-22T07:01:44.301Z",
+                      "refundedAt": "2026-04-22T07:01:44.301Z",
+                      "refundReason": "2026-04-22T07:01:44.301Z",
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     },
                     "onboardingCompleted": true,
                     "status": "active"
@@ -57182,11 +57721,11 @@
                       "providerPaymentId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "gatewayTransactionId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "reference": "Reference",
-                      "verifiedAt": "2026-04-21T12:34:12.665Z",
-                      "refundedAt": "2026-04-21T12:34:12.665Z",
-                      "refundReason": "2026-04-21T12:34:12.665Z",
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "verifiedAt": "2026-04-22T07:01:44.301Z",
+                      "refundedAt": "2026-04-22T07:01:44.301Z",
+                      "refundReason": "2026-04-22T07:01:44.301Z",
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     }
                   },
                   "meta": {}
@@ -57762,11 +58301,11 @@
                       "providerPaymentId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "gatewayTransactionId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "reference": "Reference",
-                      "verifiedAt": "2026-04-21T12:34:12.665Z",
-                      "refundedAt": "2026-04-21T12:34:12.665Z",
-                      "refundReason": "2026-04-21T12:34:12.665Z",
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "verifiedAt": "2026-04-22T07:01:44.301Z",
+                      "refundedAt": "2026-04-22T07:01:44.301Z",
+                      "refundReason": "2026-04-22T07:01:44.301Z",
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -58244,11 +58783,11 @@
                     "providerPaymentId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "gatewayTransactionId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "reference": "Reference",
-                    "verifiedAt": "2026-04-21T12:34:12.665Z",
-                    "refundedAt": "2026-04-21T12:34:12.665Z",
-                    "refundReason": "2026-04-21T12:34:12.665Z",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "verifiedAt": "2026-04-22T07:01:44.301Z",
+                    "refundedAt": "2026-04-22T07:01:44.301Z",
+                    "refundReason": "2026-04-22T07:01:44.301Z",
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -58653,7 +59192,7 @@
                     "expMonth": 1,
                     "expYear": 1,
                     "holderName": "John Doe",
-                    "expiresAt": "2026-04-21T12:34:12.665Z"
+                    "expiresAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -59496,11 +60035,11 @@
                     "providerPaymentId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "gatewayTransactionId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "reference": "Reference",
-                    "verifiedAt": "2026-04-21T12:34:12.665Z",
-                    "refundedAt": "2026-04-21T12:34:12.665Z",
-                    "refundReason": "2026-04-21T12:34:12.665Z",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "verifiedAt": "2026-04-22T07:01:44.301Z",
+                    "refundedAt": "2026-04-22T07:01:44.301Z",
+                    "refundReason": "2026-04-22T07:01:44.301Z",
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -60034,8 +60573,8 @@
                       "stripePriceId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "isActive": true,
                       "sortOrder": "desc",
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -60405,8 +60944,8 @@
                     "stripePriceId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "isActive": true,
                     "sortOrder": "desc",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -61003,8 +61542,8 @@
                     "stripePriceId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "isActive": true,
                     "sortOrder": "desc",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -61385,8 +61924,8 @@
                     "stripePriceId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "isActive": true,
                     "sortOrder": "desc",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -61880,8 +62419,8 @@
                     "stripePriceId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "isActive": true,
                     "sortOrder": "desc",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -62369,8 +62908,8 @@
                       "countryCode": "Country Code",
                       "foundedYear": 1,
                       "isActive": true,
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -62704,8 +63243,8 @@
                     "countryCode": "Country Code",
                     "foundedYear": 1,
                     "isActive": true,
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -63601,8 +64140,8 @@
                     "countryCode": "Country Code",
                     "foundedYear": 1,
                     "isActive": true,
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -63947,8 +64486,8 @@
                     "countryCode": "Country Code",
                     "foundedYear": 1,
                     "isActive": true,
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -64382,11 +64921,11 @@
                     "currentPage": 1,
                     "progressPercentage": 1,
                     "status": "completed",
-                    "startedAt": "2026-04-21T12:34:12.665Z",
-                    "lastReadAt": "2026-04-21T12:34:12.665Z",
-                    "completedAt": "2026-04-21T12:34:12.665Z",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "startedAt": "2026-04-22T07:01:44.301Z",
+                    "lastReadAt": "2026-04-22T07:01:44.301Z",
+                    "completedAt": "2026-04-22T07:01:44.301Z",
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -64842,13 +65381,13 @@
                     "userId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "bookId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "fileId": "65f19a9a6f8f4a2b3c4d5e6f",
-                    "startedAt": "2026-04-21T12:34:12.665Z",
-                    "endedAt": "2026-04-21T12:34:12.665Z",
+                    "startedAt": "2026-04-22T07:01:44.301Z",
+                    "endedAt": "2026-04-22T07:01:44.301Z",
                     "durationSeconds": 1,
                     "progressDelta": 1,
                     "device": "Device",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -65192,8 +65731,8 @@
               },
               "example": {
                 "fileId": "65f19a9a6f8f4a2b3c4d5e6f",
-                "startedAt": "2026-04-21T12:34:12.665Z",
-                "endedAt": "2026-04-21T12:34:12.665Z",
+                "startedAt": "2026-04-22T07:01:44.301Z",
+                "endedAt": "2026-04-22T07:01:44.301Z",
                 "progressDelta": 0,
                 "device": "aa"
               }
@@ -65319,11 +65858,11 @@
                     "currentPage": 1,
                     "progressPercentage": 1,
                     "status": "completed",
-                    "startedAt": "2026-04-21T12:34:12.665Z",
-                    "lastReadAt": "2026-04-21T12:34:12.665Z",
-                    "completedAt": "2026-04-21T12:34:12.665Z",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "startedAt": "2026-04-22T07:01:44.301Z",
+                    "lastReadAt": "2026-04-22T07:01:44.301Z",
+                    "completedAt": "2026-04-22T07:01:44.301Z",
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -65789,11 +66328,11 @@
                       "currentPage": 1,
                       "progressPercentage": 1,
                       "status": "completed",
-                      "startedAt": "2026-04-21T12:34:12.665Z",
-                      "lastReadAt": "2026-04-21T12:34:12.665Z",
-                      "completedAt": "2026-04-21T12:34:12.665Z",
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "startedAt": "2026-04-22T07:01:44.301Z",
+                      "lastReadAt": "2026-04-22T07:01:44.301Z",
+                      "completedAt": "2026-04-22T07:01:44.301Z",
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -66236,11 +66775,11 @@
                       "currentPage": 1,
                       "progressPercentage": 1,
                       "status": "completed",
-                      "startedAt": "2026-04-21T12:34:12.665Z",
-                      "lastReadAt": "2026-04-21T12:34:12.665Z",
-                      "completedAt": "2026-04-21T12:34:12.665Z",
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "startedAt": "2026-04-22T07:01:44.301Z",
+                      "lastReadAt": "2026-04-22T07:01:44.301Z",
+                      "completedAt": "2026-04-22T07:01:44.301Z",
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -66683,11 +67222,11 @@
                       "currentPage": 1,
                       "progressPercentage": 1,
                       "status": "completed",
-                      "startedAt": "2026-04-21T12:34:12.665Z",
-                      "lastReadAt": "2026-04-21T12:34:12.665Z",
-                      "completedAt": "2026-04-21T12:34:12.665Z",
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "startedAt": "2026-04-22T07:01:44.301Z",
+                      "lastReadAt": "2026-04-22T07:01:44.301Z",
+                      "completedAt": "2026-04-22T07:01:44.301Z",
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -67337,7 +67876,7 @@
                   "data": [
                     {
                       "query": "search term",
-                      "timestamp": "2026-04-21T12:34:12.665Z"
+                      "timestamp": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -69472,12 +70011,12 @@
                     "refreshToken": "eyJhbGciOiJIUzI1NiJ9...",
                     "staff": {
                       "permissions": [
-                        "2026-04-21T12:34:12.665Z"
+                        "2026-04-22T07:01:44.301Z"
                       ],
                       "twoFactorEnabled": true,
                       "isActive": true,
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z",
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z",
                       "roleId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "id": "65f19a9a6f8f4a2b3c4d5e6f",
                       "name": "John Doe",
@@ -70293,12 +70832,12 @@
                     "refreshToken": "eyJhbGciOiJIUzI1NiJ9...",
                     "staff": {
                       "permissions": [
-                        "2026-04-21T12:34:12.665Z"
+                        "2026-04-22T07:01:44.301Z"
                       ],
                       "twoFactorEnabled": true,
                       "isActive": true,
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z",
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z",
                       "roleId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "id": "65f19a9a6f8f4a2b3c4d5e6f",
                       "name": "John Doe",
@@ -71959,12 +72498,12 @@
                   "message": "Request successful.",
                   "data": {
                     "permissions": [
-                      "2026-04-21T12:34:12.665Z"
+                      "2026-04-22T07:01:44.301Z"
                     ],
                     "twoFactorEnabled": true,
                     "isActive": true,
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z",
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z",
                     "roleId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "id": "65f19a9a6f8f4a2b3c4d5e6f",
                     "name": "John Doe",
@@ -73987,24 +74526,24 @@
                       "planId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "previousPlanId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "status": "pending",
-                      "startedAt": "2026-04-21T12:34:12.665Z",
-                      "endsAt": "2026-04-21T12:34:12.665Z",
+                      "startedAt": "2026-04-22T07:01:44.301Z",
+                      "endsAt": "2026-04-22T07:01:44.301Z",
                       "currentPeriodEnd": "Current Period End",
                       "autoRenew": true,
-                      "cancelledAt": "2026-04-21T12:34:12.665Z",
-                      "cancellationReason": "2026-04-21T12:34:12.665Z",
+                      "cancelledAt": "2026-04-22T07:01:44.301Z",
+                      "cancellationReason": "2026-04-22T07:01:44.301Z",
                       "pendingInvoiceId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "retryStatus": "scheduled",
                       "retryAttemptCount": 1,
-                      "retryNextAt": "2026-04-21T12:34:12.665Z",
-                      "retryLastAttemptAt": "2026-04-21T12:34:12.665Z",
+                      "retryNextAt": "2026-04-22T07:01:44.301Z",
+                      "retryLastAttemptAt": "2026-04-22T07:01:44.301Z",
                       "retryLastError": "Retry Last Error",
                       "scheduledPlanId": "65f19a9a6f8f4a2b3c4d5e6f",
-                      "scheduledEffectiveDate": "2026-04-21T12:34:12.665Z",
+                      "scheduledEffectiveDate": "2026-04-22T07:01:44.301Z",
                       "latestPaymentId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "stripeSubscriptionId": "65f19a9a6f8f4a2b3c4d5e6f",
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -74477,24 +75016,24 @@
                     "planId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "previousPlanId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "status": "pending",
-                    "startedAt": "2026-04-21T12:34:12.665Z",
-                    "endsAt": "2026-04-21T12:34:12.665Z",
+                    "startedAt": "2026-04-22T07:01:44.301Z",
+                    "endsAt": "2026-04-22T07:01:44.301Z",
                     "currentPeriodEnd": "Current Period End",
                     "autoRenew": true,
-                    "cancelledAt": "2026-04-21T12:34:12.665Z",
-                    "cancellationReason": "2026-04-21T12:34:12.665Z",
+                    "cancelledAt": "2026-04-22T07:01:44.301Z",
+                    "cancellationReason": "2026-04-22T07:01:44.301Z",
                     "pendingInvoiceId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "retryStatus": "scheduled",
                     "retryAttemptCount": 1,
-                    "retryNextAt": "2026-04-21T12:34:12.665Z",
-                    "retryLastAttemptAt": "2026-04-21T12:34:12.665Z",
+                    "retryNextAt": "2026-04-22T07:01:44.301Z",
+                    "retryLastAttemptAt": "2026-04-22T07:01:44.301Z",
                     "retryLastError": "Retry Last Error",
                     "scheduledPlanId": "65f19a9a6f8f4a2b3c4d5e6f",
-                    "scheduledEffectiveDate": "2026-04-21T12:34:12.665Z",
+                    "scheduledEffectiveDate": "2026-04-22T07:01:44.301Z",
                     "latestPaymentId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "stripeSubscriptionId": "65f19a9a6f8f4a2b3c4d5e6f",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -75012,24 +75551,24 @@
                     "planId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "previousPlanId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "status": "pending",
-                    "startedAt": "2026-04-21T12:34:12.665Z",
-                    "endsAt": "2026-04-21T12:34:12.665Z",
+                    "startedAt": "2026-04-22T07:01:44.301Z",
+                    "endsAt": "2026-04-22T07:01:44.301Z",
                     "currentPeriodEnd": "Current Period End",
                     "autoRenew": true,
-                    "cancelledAt": "2026-04-21T12:34:12.665Z",
-                    "cancellationReason": "2026-04-21T12:34:12.665Z",
+                    "cancelledAt": "2026-04-22T07:01:44.301Z",
+                    "cancellationReason": "2026-04-22T07:01:44.301Z",
                     "pendingInvoiceId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "retryStatus": "scheduled",
                     "retryAttemptCount": 1,
-                    "retryNextAt": "2026-04-21T12:34:12.665Z",
-                    "retryLastAttemptAt": "2026-04-21T12:34:12.665Z",
+                    "retryNextAt": "2026-04-22T07:01:44.301Z",
+                    "retryLastAttemptAt": "2026-04-22T07:01:44.301Z",
                     "retryLastError": "Retry Last Error",
                     "scheduledPlanId": "65f19a9a6f8f4a2b3c4d5e6f",
-                    "scheduledEffectiveDate": "2026-04-21T12:34:12.665Z",
+                    "scheduledEffectiveDate": "2026-04-22T07:01:44.301Z",
                     "latestPaymentId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "stripeSubscriptionId": "65f19a9a6f8f4a2b3c4d5e6f",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -75513,24 +76052,24 @@
                     "planId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "previousPlanId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "status": "pending",
-                    "startedAt": "2026-04-21T12:34:12.665Z",
-                    "endsAt": "2026-04-21T12:34:12.665Z",
+                    "startedAt": "2026-04-22T07:01:44.301Z",
+                    "endsAt": "2026-04-22T07:01:44.301Z",
                     "currentPeriodEnd": "Current Period End",
                     "autoRenew": true,
-                    "cancelledAt": "2026-04-21T12:34:12.665Z",
-                    "cancellationReason": "2026-04-21T12:34:12.665Z",
+                    "cancelledAt": "2026-04-22T07:01:44.301Z",
+                    "cancellationReason": "2026-04-22T07:01:44.301Z",
                     "pendingInvoiceId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "retryStatus": "scheduled",
                     "retryAttemptCount": 1,
-                    "retryNextAt": "2026-04-21T12:34:12.665Z",
-                    "retryLastAttemptAt": "2026-04-21T12:34:12.665Z",
+                    "retryNextAt": "2026-04-22T07:01:44.301Z",
+                    "retryLastAttemptAt": "2026-04-22T07:01:44.301Z",
                     "retryLastError": "Retry Last Error",
                     "scheduledPlanId": "65f19a9a6f8f4a2b3c4d5e6f",
-                    "scheduledEffectiveDate": "2026-04-21T12:34:12.665Z",
+                    "scheduledEffectiveDate": "2026-04-22T07:01:44.301Z",
                     "latestPaymentId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "stripeSubscriptionId": "65f19a9a6f8f4a2b3c4d5e6f",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -76012,24 +76551,24 @@
                     "planId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "previousPlanId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "status": "pending",
-                    "startedAt": "2026-04-21T12:34:12.665Z",
-                    "endsAt": "2026-04-21T12:34:12.665Z",
+                    "startedAt": "2026-04-22T07:01:44.301Z",
+                    "endsAt": "2026-04-22T07:01:44.301Z",
                     "currentPeriodEnd": "Current Period End",
                     "autoRenew": true,
-                    "cancelledAt": "2026-04-21T12:34:12.665Z",
-                    "cancellationReason": "2026-04-21T12:34:12.665Z",
+                    "cancelledAt": "2026-04-22T07:01:44.301Z",
+                    "cancellationReason": "2026-04-22T07:01:44.301Z",
                     "pendingInvoiceId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "retryStatus": "scheduled",
                     "retryAttemptCount": 1,
-                    "retryNextAt": "2026-04-21T12:34:12.665Z",
-                    "retryLastAttemptAt": "2026-04-21T12:34:12.665Z",
+                    "retryNextAt": "2026-04-22T07:01:44.301Z",
+                    "retryLastAttemptAt": "2026-04-22T07:01:44.301Z",
                     "retryLastError": "Retry Last Error",
                     "scheduledPlanId": "65f19a9a6f8f4a2b3c4d5e6f",
-                    "scheduledEffectiveDate": "2026-04-21T12:34:12.665Z",
+                    "scheduledEffectiveDate": "2026-04-22T07:01:44.301Z",
                     "latestPaymentId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "stripeSubscriptionId": "65f19a9a6f8f4a2b3c4d5e6f",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -76503,24 +77042,24 @@
                     "planId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "previousPlanId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "status": "pending",
-                    "startedAt": "2026-04-21T12:34:12.665Z",
-                    "endsAt": "2026-04-21T12:34:12.665Z",
+                    "startedAt": "2026-04-22T07:01:44.301Z",
+                    "endsAt": "2026-04-22T07:01:44.301Z",
                     "currentPeriodEnd": "Current Period End",
                     "autoRenew": true,
-                    "cancelledAt": "2026-04-21T12:34:12.665Z",
-                    "cancellationReason": "2026-04-21T12:34:12.665Z",
+                    "cancelledAt": "2026-04-22T07:01:44.301Z",
+                    "cancellationReason": "2026-04-22T07:01:44.301Z",
                     "pendingInvoiceId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "retryStatus": "scheduled",
                     "retryAttemptCount": 1,
-                    "retryNextAt": "2026-04-21T12:34:12.665Z",
-                    "retryLastAttemptAt": "2026-04-21T12:34:12.665Z",
+                    "retryNextAt": "2026-04-22T07:01:44.301Z",
+                    "retryLastAttemptAt": "2026-04-22T07:01:44.301Z",
                     "retryLastError": "Retry Last Error",
                     "scheduledPlanId": "65f19a9a6f8f4a2b3c4d5e6f",
-                    "scheduledEffectiveDate": "2026-04-21T12:34:12.665Z",
+                    "scheduledEffectiveDate": "2026-04-22T07:01:44.301Z",
                     "latestPaymentId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "stripeSubscriptionId": "65f19a9a6f8f4a2b3c4d5e6f",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -76848,7 +77387,7 @@
                 ]
               },
               "example": {
-                "reason": "2026-04-21T12:34:12.665Z",
+                "reason": "2026-04-22T07:01:44.301Z",
                 "immediate": true
               }
             }
@@ -77021,24 +77560,24 @@
                     "planId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "previousPlanId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "status": "pending",
-                    "startedAt": "2026-04-21T12:34:12.665Z",
-                    "endsAt": "2026-04-21T12:34:12.665Z",
+                    "startedAt": "2026-04-22T07:01:44.301Z",
+                    "endsAt": "2026-04-22T07:01:44.301Z",
                     "currentPeriodEnd": "Current Period End",
                     "autoRenew": true,
-                    "cancelledAt": "2026-04-21T12:34:12.665Z",
-                    "cancellationReason": "2026-04-21T12:34:12.665Z",
+                    "cancelledAt": "2026-04-22T07:01:44.301Z",
+                    "cancellationReason": "2026-04-22T07:01:44.301Z",
                     "pendingInvoiceId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "retryStatus": "scheduled",
                     "retryAttemptCount": 1,
-                    "retryNextAt": "2026-04-21T12:34:12.665Z",
-                    "retryLastAttemptAt": "2026-04-21T12:34:12.665Z",
+                    "retryNextAt": "2026-04-22T07:01:44.301Z",
+                    "retryLastAttemptAt": "2026-04-22T07:01:44.301Z",
                     "retryLastError": "Retry Last Error",
                     "scheduledPlanId": "65f19a9a6f8f4a2b3c4d5e6f",
-                    "scheduledEffectiveDate": "2026-04-21T12:34:12.665Z",
+                    "scheduledEffectiveDate": "2026-04-22T07:01:44.301Z",
                     "latestPaymentId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "stripeSubscriptionId": "65f19a9a6f8f4a2b3c4d5e6f",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -77538,24 +78077,24 @@
                       "planId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "previousPlanId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "status": "pending",
-                      "startedAt": "2026-04-21T12:34:12.665Z",
-                      "endsAt": "2026-04-21T12:34:12.665Z",
+                      "startedAt": "2026-04-22T07:01:44.301Z",
+                      "endsAt": "2026-04-22T07:01:44.301Z",
                       "currentPeriodEnd": "Current Period End",
                       "autoRenew": true,
-                      "cancelledAt": "2026-04-21T12:34:12.665Z",
-                      "cancellationReason": "2026-04-21T12:34:12.665Z",
+                      "cancelledAt": "2026-04-22T07:01:44.301Z",
+                      "cancellationReason": "2026-04-22T07:01:44.301Z",
                       "pendingInvoiceId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "retryStatus": "scheduled",
                       "retryAttemptCount": 1,
-                      "retryNextAt": "2026-04-21T12:34:12.665Z",
-                      "retryLastAttemptAt": "2026-04-21T12:34:12.665Z",
+                      "retryNextAt": "2026-04-22T07:01:44.301Z",
+                      "retryLastAttemptAt": "2026-04-22T07:01:44.301Z",
                       "retryLastError": "Retry Last Error",
                       "scheduledPlanId": "65f19a9a6f8f4a2b3c4d5e6f",
-                      "scheduledEffectiveDate": "2026-04-21T12:34:12.665Z",
+                      "scheduledEffectiveDate": "2026-04-22T07:01:44.301Z",
                       "latestPaymentId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "stripeSubscriptionId": "65f19a9a6f8f4a2b3c4d5e6f",
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -78030,24 +78569,24 @@
                     "planId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "previousPlanId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "status": "pending",
-                    "startedAt": "2026-04-21T12:34:12.665Z",
-                    "endsAt": "2026-04-21T12:34:12.665Z",
+                    "startedAt": "2026-04-22T07:01:44.301Z",
+                    "endsAt": "2026-04-22T07:01:44.301Z",
                     "currentPeriodEnd": "Current Period End",
                     "autoRenew": true,
-                    "cancelledAt": "2026-04-21T12:34:12.665Z",
-                    "cancellationReason": "2026-04-21T12:34:12.665Z",
+                    "cancelledAt": "2026-04-22T07:01:44.301Z",
+                    "cancellationReason": "2026-04-22T07:01:44.301Z",
                     "pendingInvoiceId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "retryStatus": "scheduled",
                     "retryAttemptCount": 1,
-                    "retryNextAt": "2026-04-21T12:34:12.665Z",
-                    "retryLastAttemptAt": "2026-04-21T12:34:12.665Z",
+                    "retryNextAt": "2026-04-22T07:01:44.301Z",
+                    "retryLastAttemptAt": "2026-04-22T07:01:44.301Z",
                     "retryLastError": "Retry Last Error",
                     "scheduledPlanId": "65f19a9a6f8f4a2b3c4d5e6f",
-                    "scheduledEffectiveDate": "2026-04-21T12:34:12.665Z",
+                    "scheduledEffectiveDate": "2026-04-22T07:01:44.301Z",
                     "latestPaymentId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "stripeSubscriptionId": "65f19a9a6f8f4a2b3c4d5e6f",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -78892,24 +79431,24 @@
                     "planId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "previousPlanId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "status": "pending",
-                    "startedAt": "2026-04-21T12:34:12.665Z",
-                    "endsAt": "2026-04-21T12:34:12.665Z",
+                    "startedAt": "2026-04-22T07:01:44.301Z",
+                    "endsAt": "2026-04-22T07:01:44.301Z",
                     "currentPeriodEnd": "Current Period End",
                     "autoRenew": true,
-                    "cancelledAt": "2026-04-21T12:34:12.665Z",
-                    "cancellationReason": "2026-04-21T12:34:12.665Z",
+                    "cancelledAt": "2026-04-22T07:01:44.301Z",
+                    "cancellationReason": "2026-04-22T07:01:44.301Z",
                     "pendingInvoiceId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "retryStatus": "scheduled",
                     "retryAttemptCount": 1,
-                    "retryNextAt": "2026-04-21T12:34:12.665Z",
-                    "retryLastAttemptAt": "2026-04-21T12:34:12.665Z",
+                    "retryNextAt": "2026-04-22T07:01:44.301Z",
+                    "retryLastAttemptAt": "2026-04-22T07:01:44.301Z",
                     "retryLastError": "Retry Last Error",
                     "scheduledPlanId": "65f19a9a6f8f4a2b3c4d5e6f",
-                    "scheduledEffectiveDate": "2026-04-21T12:34:12.665Z",
+                    "scheduledEffectiveDate": "2026-04-22T07:01:44.301Z",
                     "latestPaymentId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "stripeSubscriptionId": "65f19a9a6f8f4a2b3c4d5e6f",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
@@ -79705,8 +80244,8 @@
                       "id": "65f19a9a6f8f4a2b3c4d5e6f",
                       "userId": "65f19a9a6f8f4a2b3c4d5e6f",
                       "bookId": "65f19a9a6f8f4a2b3c4d5e6f",
-                      "createdAt": "2026-04-21T12:34:12.665Z",
-                      "updatedAt": "2026-04-21T12:34:12.665Z"
+                      "createdAt": "2026-04-22T07:01:44.301Z",
+                      "updatedAt": "2026-04-22T07:01:44.301Z"
                     }
                   ],
                   "meta": {}
@@ -80456,8 +80995,8 @@
                     "id": "65f19a9a6f8f4a2b3c4d5e6f",
                     "userId": "65f19a9a6f8f4a2b3c4d5e6f",
                     "bookId": "65f19a9a6f8f4a2b3c4d5e6f",
-                    "createdAt": "2026-04-21T12:34:12.665Z",
-                    "updatedAt": "2026-04-21T12:34:12.665Z"
+                    "createdAt": "2026-04-22T07:01:44.301Z",
+                    "updatedAt": "2026-04-22T07:01:44.301Z"
                   },
                   "meta": {}
                 }
