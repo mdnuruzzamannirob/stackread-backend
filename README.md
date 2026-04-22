@@ -127,7 +127,7 @@ Each module follows a consistent pattern:
 | Zod | 3.24.2 | Runtime schema validation with TypeScript inference |
 | Winston | 3.17.0 | Structured logging with rotation and archival |
 | Vitest | 4.1.0 | Fast unit and integration test framework |
-| pnpm | 10.30.2 | Fast deterministic package management |
+| pnpm | 10.33.0 | Fast deterministic package management |
 
 ---
 
@@ -267,6 +267,7 @@ pnpm dev:worker   # Terminal 2: Background worker
 | pnpm migrate | tsx src/scripts/migrate.ts |
 | pnpm seed:permissions | tsx src/seeds/permissions.seed.ts |
 | pnpm seed:plans | tsx src/seeds/plans.seed.ts |
+| pnpm seed:plans:stripe-sync | tsx src/scripts/sync-stripe-plans.ts |
 | pnpm seed:settings | tsx src/seeds/settings.seed.ts |
 | pnpm seed:super-admin | tsx src/seeds/superAdmin.seed.ts |
 | pnpm seed:all | tsx src/scripts/seed.ts |
@@ -475,6 +476,6 @@ A: Create payment processor in src/modules/payments/, implement webhook handlers
 
 ---
 
-**Last Generated:** 3/24/2026, 7:48:38 PM
+**Last Generated:** 4/22/2026, 6:42:16 PM
 
 Built with ❤️ using Node.js • Express • TypeScript • MongoDB
