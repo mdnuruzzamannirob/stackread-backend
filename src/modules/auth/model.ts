@@ -150,7 +150,7 @@ const userEphemeralTokenSchema = new Schema<UserEphemeralToken>(
       enum: ['password-reset', 'two-factor-challenge'],
       index: true,
     },
-    expiresAt: { type: Date, required: true, index: true },
+    expiresAt: { type: Date, required: true },
     usedAt: { type: Date, required: false, default: undefined, index: true },
   },
   {

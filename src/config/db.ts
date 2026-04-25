@@ -1,9 +1,17 @@
 import mongoose from 'mongoose'
+import dns from 'node:dns'
 
 import { config } from './index'
 import { logger } from './logger'
 
 export const connectToDatabase = async (): Promise<void> => {
+  if (config.mongodbDnsServers.length > 0) {
+    dns.setServers(config.mongodbDnsServers)
+    logger.info('MongoDB DNS servers configured', {
+      servers: config.mongodbDnsServers,
+    })
+  }
+
   await mongoose.connect(config.mongodbUri)
   logger.info('MongoDB connection established', {
     database: mongoose.connection.name,

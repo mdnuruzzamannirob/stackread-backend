@@ -13,6 +13,7 @@ const envSchema = z.object({
 
   // Database
   MONGODB_URI: z.string().trim().min(1, 'MONGODB_URI is required'),
+  MONGODB_DNS_SERVERS: z.string().trim().optional(),
 
   // HTTP
   CORS_ORIGINS: z.string().trim().default('http://localhost:3000'),
@@ -249,6 +250,11 @@ export const env = {
   apiVersion: rawEnv.API_VERSION,
   apiPrefix: `/api/${rawEnv.API_VERSION}`,
   mongodbUri: rawEnv.MONGODB_URI,
+  mongodbDnsServers: rawEnv.MONGODB_DNS_SERVERS
+    ? rawEnv.MONGODB_DNS_SERVERS.split(',')
+        .map((server) => server.trim())
+        .filter(Boolean)
+    : [],
   corsOrigins: rawEnv.CORS_ORIGINS.split(',')
     .map((origin) => origin.trim())
     .filter(Boolean),
